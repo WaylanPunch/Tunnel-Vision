@@ -25,4 +25,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.google.code.gson:gson:2.5'
+    compile files('libs/AMap_Android_3DMapSDK_V3.1.0_20151124.jar')
+    compile files('libs/AMap_android_API_2DMap_Lib_V2.7.0_20151124.jar')
+    compile files('libs/AMap_Services_V2.7.0_20151125.jar')
 }
