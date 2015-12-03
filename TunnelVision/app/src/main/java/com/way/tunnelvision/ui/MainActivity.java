@@ -1,5 +1,6 @@
 package com.way.tunnelvision.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -8,20 +9,22 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.util.ActivityCollector;
+import com.way.tunnelvision.util.ToastUtil;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private final String TAG = MainActivity.class.getName();
+    private static int MENU_ITEM_INDEX = 1;
 
+    private FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +39,11 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Replace with your own action, action " + MENU_ITEM_INDEX, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -57,18 +60,24 @@ public class MainActivity extends AppCompatActivity
         navigationHeaderView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "fdfd", Toast.LENGTH_SHORT).show();
+                ToastUtil.show(MainActivity.this, "Go Home");
+                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(intent);
             }
         });
-
-        Log.d(TAG, "initView debug, HomeFragment Transaction start");
-        HomeFragment homeFragment = new HomeFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.content_container, homeFragment);
-        fragmentTransaction.commit();
-        //fragmentTransaction.show(homeFragment);
-        Log.d(TAG, "initView debug, HomeFragment Transaction start");
+        setFirstFramentVisible();
         Log.d(TAG, "initView debug, end");
+    }
+
+    private void setFirstFramentVisible() {
+        Log.d(TAG, "setFirstFramentVisible debug, FindFragment Transaction start");
+        FindFragment findFragment = new FindFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.content_container, findFragment);
+        fragmentTransaction.commit();
+        MENU_ITEM_INDEX = 1;
+        setFloatingActionButtonVisible(MENU_ITEM_INDEX);
+        Log.d(TAG, "setFirstFramentVisible debug, FindFragment Transaction start");
     }
 
     @Override
@@ -102,6 +111,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
             return true;
         }
         Log.d(TAG, "onOptionsItemSelected debug, end");
@@ -113,51 +123,109 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         Log.d(TAG, "onNavigationItemSelected debug, start");
-//        if(item.isChecked()) {
-//            item.setChecked(false);
-//        }
-//        else {
-//            item.setChecked(true);
-//        }
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            // Handle the home action
-            Log.d(TAG, "onNavigationItemSelected debug, HomeFragment Transaction start");
-            HomeFragment homeFragment = new HomeFragment();
+        if (id == R.id.nav_find) {
+            // Handle the find action
+            Log.d(TAG, "onNavigationItemSelected debug, FindFragment Transaction start");
+            FindFragment findFragment = new FindFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.content_container, homeFragment);
+            fragmentTransaction.replace(R.id.content_container, findFragment);
             fragmentTransaction.commit();
-            Log.d(TAG, "onNavigationItemSelected debug, HomeFragment Transaction end");
-        } else if (id == R.id.nav_camera) {
-            // Handle the camera action
-            Log.d(TAG, "onNavigationItemSelected debug, CameraFragment Transaction start");
-            Log.d(TAG, "onNavigationItemSelected debug, CameraFragment Transaction end");
-        } else if (id == R.id.nav_gallery) {
-            Log.d(TAG, "onNavigationItemSelected debug, GalleryFragment Transaction start");
-            GalleryFragment galleryFragment = new GalleryFragment();
+            MENU_ITEM_INDEX = 1;
+            Log.d(TAG, "onNavigationItemSelected debug, FindFragment Transaction end");
+        } else if (id == R.id.nav_message) {
+            // Handle the message action
+            Log.d(TAG, "onNavigationItemSelected debug, MessageFragment Transaction start");
+            MessageFragment messageFragment = new MessageFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.content_container, galleryFragment);
+            fragmentTransaction.replace(R.id.content_container, messageFragment);
             fragmentTransaction.commit();
-            Log.d(TAG, "onNavigationItemSelected debug, GalleryFragment Transaction end");
-        } else if (id == R.id.nav_slideshow) {
-            Log.d(TAG, "onNavigationItemSelected debug, SlideShowFragment Transaction start");
-            Log.d(TAG, "onNavigationItemSelected debug, SlideShowFragment Transaction end");
+            MENU_ITEM_INDEX = 2;
+            Log.d(TAG, "onNavigationItemSelected debug, MessageFragment Transaction end");
+        } else if (id == R.id.nav_chat) {
+            Log.d(TAG, "onNavigationItemSelected debug, ChatFragment Transaction start");
+            ChatFragment chatFragment = new ChatFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.content_container, chatFragment);
+            fragmentTransaction.commit();
+            MENU_ITEM_INDEX = 3;
+            Log.d(TAG, "onNavigationItemSelected debug, ChatFragment Transaction end");
+        } else if (id == R.id.nav_friend) {
+            Log.d(TAG, "onNavigationItemSelected debug, FriendFragment Transaction start");
+            FriendFragment friendFragment = new FriendFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.content_container, friendFragment);
+            fragmentTransaction.commit();
+            MENU_ITEM_INDEX = 4;
+            Log.d(TAG, "onNavigationItemSelected debug, FriendFragment Transaction end");
+        } else if (id == R.id.nav_diary) {
+            Log.d(TAG, "onNavigationItemSelected debug, DiaryFragment Transaction start");
+            DiaryFragment diaryFragment = new DiaryFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.content_container, diaryFragment);
+            fragmentTransaction.commit();
+            MENU_ITEM_INDEX = 5;
+            Log.d(TAG, "onNavigationItemSelected debug, DiaryFragment Transaction end");
+        } else if (id == R.id.nav_collection) {
+            Log.d(TAG, "onNavigationItemSelected debug, CollectionFragment Transaction start");
+            CollectionFragment collectionFragment = new CollectionFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.content_container, collectionFragment);
+            fragmentTransaction.commit();
+            MENU_ITEM_INDEX = 6;
+            Log.d(TAG, "onNavigationItemSelected debug, CollectionFragment Transaction end");
         } else if (id == R.id.nav_manage) {
             Log.d(TAG, "onNavigationItemSelected debug, ManageFragment Transaction start");
+            ManageFragment manageFragment = new ManageFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.content_container, manageFragment);
+            fragmentTransaction.commit();
+            MENU_ITEM_INDEX = 7;
             Log.d(TAG, "onNavigationItemSelected debug, ManageFragment Transaction end");
+        } else if (id == R.id.nav_scan) {
+            Log.d(TAG, "onNavigationItemSelected debug, ScanFragment Transaction start");
+            ScanFragment scanFragment = new ScanFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.content_container, scanFragment);
+            fragmentTransaction.commit();
+            MENU_ITEM_INDEX = 8;
+            Log.d(TAG, "onNavigationItemSelected debug, ScanFragment Transaction end");
         } else if (id == R.id.nav_share) {
             Log.d(TAG, "onNavigationItemSelected debug, ShareFragment Transaction start");
+            ShareFragment shareFragment = new ShareFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.content_container, shareFragment);
+            fragmentTransaction.commit();
+            MENU_ITEM_INDEX = 9;
             Log.d(TAG, "onNavigationItemSelected debug, ShareFragment Transaction end");
-        } else if (id == R.id.nav_send) {
-            Log.d(TAG, "onNavigationItemSelected debug, SendFragment Transaction start");
-            Log.d(TAG, "onNavigationItemSelected debug, SendFragment Transaction end");
+        } else if (id == R.id.nav_about) {
+            Log.d(TAG, "onNavigationItemSelected debug, AboutFragment Transaction start");
+            AboutFragment aboutFragment = new AboutFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.content_container, aboutFragment);
+            fragmentTransaction.commit();
+            MENU_ITEM_INDEX = 10;
+            Log.d(TAG, "onNavigationItemSelected debug, AboutFragment Transaction end");
+        } else if (id == R.id.nav_exit) {
+            Log.d(TAG, "onNavigationItemSelected debug, Exit Action start");
+            MENU_ITEM_INDEX = 11;
+            ActivityCollector.finishAll();
+            Log.d(TAG, "onNavigationItemSelected debug, Exit Action end");
         }
-
+        setFloatingActionButtonVisible(MENU_ITEM_INDEX);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         Log.d(TAG, "onNavigationItemSelected debug, end");
         return true;
+    }
+
+    private void setFloatingActionButtonVisible(int i_menu_item_index) {
+        if (i_menu_item_index == 1 || i_menu_item_index == 5 || i_menu_item_index == 10) {
+            fab.setVisibility(View.VISIBLE);
+        } else {
+            fab.setVisibility(View.GONE);
+        }
     }
 
 }
