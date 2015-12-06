@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import com.way.tunnelvision.R;
 
 /**
- * Created by pc on 2015/11/29.
+ * Created by pc on 2015/12/6.
  */
 public class AboutFragment extends Fragment {
     private final static String TAG = AboutFragment.class.getName();
@@ -25,31 +25,27 @@ public class AboutFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView debug, start");
+        View rootView = null;
+        try {
+            rootView = inflater.inflate(R.layout.content_about, container, false);
+            //tv_about_tip = (TextView) rootView.findViewById(R.id.tv_about_tip);
+            pb_about_progress = (ProgressBar) rootView.findViewById(R.id.pb_about_progress);
+            wv_about_content = (WebView) rootView.findViewById(R.id.wv_about_content);
+        } catch (Exception e) {
+            Log.e(TAG, "onCreateView error", e);
+        }
         Log.d(TAG, "onCreateView debug, end");
-        return inflater.inflate(R.layout.content_about, container, false);
+        return rootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "onActivityCreated debug, start");
-        findView();
         initView();
         Log.d(TAG, "onActivityCreated debug, end");
-    }
-
-    private void findView() {
-        Log.d(TAG, "findView debug, start");
-        try {
-            //tv_about_tip = (TextView) getView().findViewById(R.id.tv_about_tip);
-            pb_about_progress = (ProgressBar) getView().findViewById(R.id.pb_about_progress);
-            wv_about_content = (WebView) getView().findViewById(R.id.wv_about_content);
-        } catch (Exception e) {
-            Log.e(TAG, "findView error", e);
-        }
-        Log.d(TAG, "findView debug, end");
     }
 
     private void initView() {

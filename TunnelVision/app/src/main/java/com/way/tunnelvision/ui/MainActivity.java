@@ -25,6 +25,7 @@ public class MainActivity extends BaseActivity
     private static int MENU_ITEM_INDEX = 1;
 
     private FloatingActionButton fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +51,7 @@ public class MainActivity extends BaseActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -65,6 +66,7 @@ public class MainActivity extends BaseActivity
                 startActivity(intent);
             }
         });
+
         setFirstFramentVisible();
         Log.d(TAG, "initView debug, end");
     }
@@ -77,27 +79,33 @@ public class MainActivity extends BaseActivity
         fragmentTransaction.commit();
         MENU_ITEM_INDEX = 1;
         setFloatingActionButtonVisible(MENU_ITEM_INDEX);
-        Log.d(TAG, "setFirstFramentVisible debug, FindFragment Transaction start");
+        Log.d(TAG, "setFirstFramentVisible debug, FindFragment Transaction end");
+    }
+
+    private void setFloatingActionButtonVisible(int menuItemIndex) {
+        Log.d(TAG, "setFloatingActionButtonVisible debug, FindFragment Transaction start");
+        if (menuItemIndex == 1 || menuItemIndex == 5 || menuItemIndex == 10) {
+            fab.setVisibility(View.VISIBLE);
+        } else {
+            fab.setVisibility(View.GONE);
+        }
+        Log.d(TAG, "setFloatingActionButtonVisible debug, FindFragment Transaction end");
     }
 
     @Override
     public void onBackPressed() {
-        Log.d(TAG, "onBackPressed debug, start");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
-        Log.d(TAG, "onBackPressed debug, end");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        Log.d(TAG, "onCreateOptionsMenu debug, start");
         getMenuInflater().inflate(R.menu.main, menu);
-        Log.d(TAG, "onCreateOptionsMenu debug, end");
         return true;
     }
 
@@ -106,15 +114,13 @@ public class MainActivity extends BaseActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        Log.d(TAG, "onOptionsItemSelected debug, start");
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-
             return true;
         }
-        Log.d(TAG, "onOptionsItemSelected debug, end");
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -122,7 +128,6 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        Log.d(TAG, "onNavigationItemSelected debug, start");
         int id = item.getItemId();
 
         if (id == R.id.nav_find) {
@@ -214,18 +219,9 @@ public class MainActivity extends BaseActivity
             Log.d(TAG, "onNavigationItemSelected debug, Exit Action end");
         }
         setFloatingActionButtonVisible(MENU_ITEM_INDEX);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        Log.d(TAG, "onNavigationItemSelected debug, end");
         return true;
     }
-
-    private void setFloatingActionButtonVisible(int i_menu_item_index) {
-        if (i_menu_item_index == 1 || i_menu_item_index == 5 || i_menu_item_index == 10) {
-            fab.setVisibility(View.VISIBLE);
-        } else {
-            fab.setVisibility(View.GONE);
-        }
-    }
-
 }
