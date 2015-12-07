@@ -9,4 +9,9 @@
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="progress_bar_height">2dp</dimen>
+    <dimen name="edittext_normal_height">50dip</dimen>
+    <dimen name="button_normal_height">50dip</dimen>
+    <dimen name="imageview_normal_width">400dip</dimen>
+    <dimen name="imageview_normal_height">400dip</dimen>
+    <dimen name="textview_normal_height">50dip</dimen>
 </resources>

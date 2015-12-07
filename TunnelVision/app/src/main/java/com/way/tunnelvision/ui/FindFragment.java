@@ -14,6 +14,8 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.PostAdapter;
+import com.way.tunnelvision.entity.Post;
+import com.way.tunnelvision.util.ToastUtil;
 
 import java.util.ArrayList;
 
@@ -25,7 +27,7 @@ public class FindFragment extends Fragment {
 
     private XRecyclerView mRecyclerView;
     private PostAdapter mAdapter;
-    private ArrayList<String> listData;
+    private ArrayList<Post> listData;
     private int refreshTime = 0;
     private int times = 0;
 
@@ -80,8 +82,15 @@ public class FindFragment extends Fragment {
                         public void run() {
 
                             listData.clear();
-                            for (int i = 0; i < 15; i++) {
-                                listData.add("item" + i + "after " + refreshTime + " times of refresh");
+                            for (int i = 0; i < 5; i++) {
+                                Post post1 = new Post();
+                                post1.setTitle("Blue + " + i);
+                                post1.setIconResourceId("http://img0.ph.126.net/EnGLTAd9XWpTk4Q0LSzCOw==/6631364633840836611.jpg");
+                                Post post2 = new Post();
+                                post2.setTitle("Sky + " + i);
+                                post2.setIconResourceId("http://img1.ph.126.net/Q_duX-c5BQc65K8IeoOXyQ==/6631249185119739310.jpg");
+                                listData.add(post1);
+                                listData.add(post2);
                             }
                             mAdapter.notifyDataSetChanged();
                             mRecyclerView.refreshComplete();
@@ -96,8 +105,15 @@ public class FindFragment extends Fragment {
                         new Handler().postDelayed(new Runnable() {
                             public void run() {
                                 mRecyclerView.loadMoreComplete();
-                                for (int i = 0; i < 15; i++) {
-                                    listData.add("item" + (i + listData.size()));
+                                for (int i = 0; i < 5; i++) {
+                                    Post post1 = new Post();
+                                    post1.setTitle("Blue - " + i);
+                                    post1.setIconResourceId("http://img0.ph.126.net/EnGLTAd9XWpTk4Q0LSzCOw==/6631364633840836611.jpg");
+                                    Post post2 = new Post();
+                                    post2.setTitle("Sky - " + i);
+                                    post2.setIconResourceId("http://img1.ph.126.net/Q_duX-c5BQc65K8IeoOXyQ==/6631249185119739310.jpg");
+                                    listData.add(post1);
+                                    listData.add(post2);
                                 }
                                 mAdapter.notifyDataSetChanged();
                                 mRecyclerView.refreshComplete();
@@ -116,16 +132,36 @@ public class FindFragment extends Fragment {
                 }
             });
 
-            listData = new ArrayList<String>();
-            for (int i = 0; i < 15; i++) {
-                listData.add("item" + (i + listData.size()));
+            listData = new ArrayList<Post>();
+            for (int i = 0; i < 10; i++) {
+                Post post1 = new Post();
+                post1.setTitle("Blue * " + i);
+                post1.setIconResourceId("http://img0.ph.126.net/EnGLTAd9XWpTk4Q0LSzCOw==/6631364633840836611.jpg");
+                Post post2 = new Post();
+                post2.setTitle("Sky * " + i);
+                post2.setIconResourceId("http://img1.ph.126.net/Q_duX-c5BQc65K8IeoOXyQ==/6631249185119739310.jpg");
+                listData.add(post1);
+                listData.add(post2);
             }
-            mAdapter = new PostAdapter(listData);
-
+            mAdapter = new PostAdapter(listData, getContext());
+            mAdapter.setOnRecyclerViewListener(onRecyclerViewListener);
             mRecyclerView.setAdapter(mAdapter);
         } catch (Exception e) {
             Log.e(TAG, "initView error", e);
         }
         Log.d(TAG, "initView debug, end");
     }
+
+    PostAdapter.OnRecyclerViewListener onRecyclerViewListener = new PostAdapter.OnRecyclerViewListener() {
+        @Override
+        public void onItemClick(int position) {
+            ToastUtil.show(getActivity(), "Item Click");
+        }
+
+        @Override
+        public boolean onItemLongClick(int position) {
+            ToastUtil.show(getActivity(), "Item Long Click");
+            return false;
+        }
+    };
 }
