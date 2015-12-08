@@ -2,9 +2,7 @@ package com.way.tunnelvision.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,8 +22,6 @@ public class MainActivity extends BaseActivity
     private final String TAG = MainActivity.class.getName();
     private static int MENU_ITEM_INDEX = 1;
 
-    private FloatingActionButton fab;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,15 +35,6 @@ public class MainActivity extends BaseActivity
         Log.d(TAG, "initView debug, start");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action, action " + MENU_ITEM_INDEX, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -78,18 +65,8 @@ public class MainActivity extends BaseActivity
         fragmentTransaction.add(R.id.content_container, findFragment);
         fragmentTransaction.commit();
         MENU_ITEM_INDEX = 1;
-        setFloatingActionButtonVisible(MENU_ITEM_INDEX);
+        //setFloatingActionButtonVisible(MENU_ITEM_INDEX);
         Log.d(TAG, "setFirstFramentVisible debug, FindFragment Transaction end");
-    }
-
-    private void setFloatingActionButtonVisible(int menuItemIndex) {
-        Log.d(TAG, "setFloatingActionButtonVisible debug, FindFragment Transaction start");
-        if (menuItemIndex == 1 || menuItemIndex == 5 || menuItemIndex == 10) {
-            fab.setVisibility(View.VISIBLE);
-        } else {
-            fab.setVisibility(View.GONE);
-        }
-        Log.d(TAG, "setFloatingActionButtonVisible debug, FindFragment Transaction end");
     }
 
     @Override
@@ -218,7 +195,6 @@ public class MainActivity extends BaseActivity
             ActivityCollector.finishAll();
             Log.d(TAG, "onNavigationItemSelected debug, Exit Action end");
         }
-        setFloatingActionButtonVisible(MENU_ITEM_INDEX);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

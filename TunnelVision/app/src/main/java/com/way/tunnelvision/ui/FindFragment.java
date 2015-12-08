@@ -3,6 +3,8 @@ package com.way.tunnelvision.ui;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -14,6 +16,7 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.PostAdapter;
+import com.way.tunnelvision.animator.RecyclerViewItemClickAnimator;
 import com.way.tunnelvision.entity.Post;
 import com.way.tunnelvision.util.ToastUtil;
 
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 public class FindFragment extends Fragment {
     private final static String TAG = FindFragment.class.getName();
 
+    private FloatingActionButton fab;
     private XRecyclerView mRecyclerView;
     private PostAdapter mAdapter;
     private ArrayList<Post> listData;
@@ -38,9 +42,10 @@ public class FindFragment extends Fragment {
         View rootView = null;
         try {
             rootView = inflater.inflate(R.layout.content_find, container, false);
-            mRecyclerView = (XRecyclerView) rootView.findViewById(R.id.xrv_post_list);
-            View header = LayoutInflater.from(getActivity()).inflate(R.layout.layout_post_list_header, container, false);
-            mRecyclerView.addHeaderView(header);
+            fab = (FloatingActionButton) rootView.findViewById(R.id.fab_find_button);
+            mRecyclerView = (XRecyclerView) rootView.findViewById(R.id.xrv_find_list);
+//            View header = LayoutInflater.from(getActivity()).inflate(R.layout.layout_post_list_header, container, false);
+//            mRecyclerView.addHeaderView(header);
         } catch (Exception e) {
             Log.e(TAG, "onCreateView error", e);
         }
@@ -59,10 +64,18 @@ public class FindFragment extends Fragment {
     private void initView() {
         Log.d(TAG, "initView debug, start");
         try {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Replace with your own action, find.", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
+
             LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(layoutManager);
-
+            mRecyclerView.setItemAnimator(new RecyclerViewItemClickAnimator());
             mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
             mRecyclerView.setLaodingMoreProgressStyle(ProgressStyle.BallRotate);
             mRecyclerView.setArrowImageView(R.drawable.ic_arrow_down_gray);
