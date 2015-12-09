@@ -8,6 +8,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="card_margin">10dp</dimen>
+    <dimen name="image_margin">10dp</dimen>
     <dimen name="progress_bar_height">2dp</dimen>
     <dimen name="edittext_normal_height">50dip</dimen>
     <dimen name="button_normal_height">50dip</dimen>

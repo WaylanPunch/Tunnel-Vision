@@ -14,7 +14,7 @@ import com.way.tunnelvision.R;
 
 public class HomeActivity extends BaseActivity {
     private final static String TAG = HomeActivity.class.getName();
-
+    private boolean showHomeAsUp = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,10 +30,27 @@ public class HomeActivity extends BaseActivity {
         try{
             final TextView tv_home_large_text = (TextView) findViewById(R.id.tv_home_large_text);
 
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_home);
             setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(showHomeAsUp);
+            if (null != toolbar) {
+                //toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
 
-            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+                //toolbar.setTitle(R.string.title_activity_settings);
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                       finish();
+                    }
+                });
+
+                // Inflate a menu to be displayed in the toolbar
+                toolbar.inflateMenu(R.menu.menu_home);
+            }
+
+            //getSupportActionBar().
+
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_home_button);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -65,9 +82,9 @@ public class HomeActivity extends BaseActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_home_settings) {
+        if (id == android.R.id.home) {
+            Log.d(TAG, "action bar clicked");
+        } else if (id == R.id.action_home_settings) {
 
             return true;
         }

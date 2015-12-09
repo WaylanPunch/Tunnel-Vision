@@ -10,9 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.Request;
+import com.bumptech.glide.request.target.ImageViewTarget;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.entity.Post;
+import com.way.tunnelvision.util.ToastUtil;
 
 import java.util.ArrayList;
 
@@ -48,12 +52,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     //将数据与界面进行绑定的操作
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
         Post post = datas.get(position);
         viewHolder.position = position;
         viewHolder.mTextView.setText(post.getTitle());
         //viewHolder.mImageView.setImageResource(R.drawable.ic_android_black_18dp);
-        ///*
+        /*
         Picasso.with(ctx)
                 .load(post.getIconResourceId())
                 .resize(200, 200)
@@ -61,7 +65,39 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 .placeholder(R.drawable.ic_android_black_18dp)
                 .error(R.drawable.ic_android_black_18dp)
                 .into(viewHolder.mImageView);
-        //*/
+        */
+        Glide.with(ctx)
+                .load(post.getIconResourceId())
+                .centerCrop()
+                //.animate(ViewPropertyAnimation.Animator)
+                .dontAnimate()
+                .placeholder(R.drawable.ic_android_black_18dp)
+                .error(R.drawable.ic_android_black_18dp)
+                .into(new ImageViewTarget<GlideDrawable>(viewHolder.mImageView) {
+                    @Override
+                    protected void setResource(GlideDrawable resource) {
+                        viewHolder.mImageView.setImageDrawable(resource);
+                    }
+
+                    @Override
+                    public void setRequest(Request request) {
+                        viewHolder.mImageView.setTag(position);
+                        viewHolder.mImageView.setTag(R.id.glide_tag_id, request);
+                    }
+
+                    @Override
+                    public Request getRequest() {
+                        return (Request) viewHolder.mImageView.getTag(R.id.glide_tag_id);
+                    }
+                });
+
+        viewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = (int) v.getTag();
+                ToastUtil.show(ctx, datas.get(position).getIconResourceId());
+            }
+        });
     }
 
     //获取数据的数量

@@ -34,9 +34,13 @@
         <activity
             android:name=".ui.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+
+        <meta-data
+            android:name="com.way.tunnelvision.util.MyGlideMoudle"
+            android:value="GlideModule" />
     </application>
 
 </manifest>
