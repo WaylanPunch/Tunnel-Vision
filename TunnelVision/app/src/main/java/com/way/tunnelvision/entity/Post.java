@@ -5,14 +5,32 @@ package com.way.tunnelvision.entity;
  */
 public class Post {
     private String iconResourceId;
-    private String title;
+    private int repeatsCount;
+    private int commentsCount;
+    private int likesCount;
 
-    public String getTitle() {
-        return title;
+    public int getRepeatsCount() {
+        return repeatsCount;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setRepeatsCount(int repeatsCount) {
+        this.repeatsCount = repeatsCount;
+    }
+
+    public int getCommentsCount() {
+        return commentsCount;
+    }
+
+    public void setCommentsCount(int commentsCount) {
+        this.commentsCount = commentsCount;
+    }
+
+    public int getLikesCount() {
+        return likesCount;
+    }
+
+    public void setLikesCount(int likesCount) {
+        this.likesCount = likesCount;
     }
 
     public String getIconResourceId() {

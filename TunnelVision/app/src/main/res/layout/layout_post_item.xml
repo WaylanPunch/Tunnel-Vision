@@ -5,27 +5,53 @@
     android:layout_margin="@dimen/card_margin"
     android:clickable="true">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_post_item_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_post_item_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:minHeight="@dimen/imageview_normal_height"
+            android:layout_gravity="center|top"
             android:scaleType="centerCrop"
             android:layout_margin="@dimen/image_margin"
             android:background="#999999" />
 
         <TextView
-            android:id="@+id/tv_post_item_title"
-            android:layout_width="match_parent"
+            android:id="@+id/tv_post_item_repeat"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/textview_normal_height"
-            android:layout_margin="@dimen/text_margin"
-            android:layout_gravity="center" />
-    </LinearLayout>
+            android:layout_marginTop="@dimen/text_margin"
+            android:layout_below="@+id/iv_post_item_icon"
+            android:layout_alignLeft="@+id/iv_post_item_icon"
+            android:drawableLeft="@drawable/ic_repeat_primary"
+            android:gravity="center"
+            android:text="@string/repeat"/>
+
+        <TextView
+            android:id="@+id/tv_post_item_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/textview_normal_height"
+            android:layout_marginTop="@dimen/text_margin"
+            android:layout_below="@+id/iv_post_item_icon"
+            android:layout_centerHorizontal="true"
+            android:drawableLeft="@drawable/ic_comment_outline_primary"
+            android:gravity="center"
+            android:text="@string/comment"/>
+
+        <TextView
+            android:id="@+id/tv_post_item_like"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/textview_normal_height"
+            android:layout_marginTop="@dimen/text_margin"
+            android:layout_below="@+id/iv_post_item_icon"
+            android:layout_alignRight="@+id/iv_post_item_icon"
+            android:drawableLeft="@drawable/ic_heart_primary"
+            android:gravity="center"
+            android:text="@string/like"/>
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

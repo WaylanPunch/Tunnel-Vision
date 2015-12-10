@@ -95,6 +95,10 @@ public class MainActivity extends BaseActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            ToastUtil.show(MainActivity.this, "Settings");
+            return true;
+        } else if(id == R.id.action_messages) {
+            ToastUtil.show(MainActivity.this, "Messages");
             return true;
         }
 
@@ -116,22 +120,13 @@ public class MainActivity extends BaseActivity
             fragmentTransaction.commit();
             MENU_ITEM_INDEX = 1;
             Log.d(TAG, "onNavigationItemSelected debug, FindFragment Transaction end");
-        } else if (id == R.id.nav_message) {
-            // Handle the message action
-            Log.d(TAG, "onNavigationItemSelected debug, MessageFragment Transaction start");
-            MessageFragment messageFragment = new MessageFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.content_container, messageFragment);
-            fragmentTransaction.commit();
-            MENU_ITEM_INDEX = 2;
-            Log.d(TAG, "onNavigationItemSelected debug, MessageFragment Transaction end");
         } else if (id == R.id.nav_chat) {
             Log.d(TAG, "onNavigationItemSelected debug, ChatFragment Transaction start");
             ChatFragment chatFragment = new ChatFragment();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_container, chatFragment);
             fragmentTransaction.commit();
-            MENU_ITEM_INDEX = 3;
+            MENU_ITEM_INDEX = 2;
             Log.d(TAG, "onNavigationItemSelected debug, ChatFragment Transaction end");
         } else if (id == R.id.nav_friend) {
             Log.d(TAG, "onNavigationItemSelected debug, FriendFragment Transaction start");
@@ -139,7 +134,7 @@ public class MainActivity extends BaseActivity
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_container, friendFragment);
             fragmentTransaction.commit();
-            MENU_ITEM_INDEX = 4;
+            MENU_ITEM_INDEX = 3;
             Log.d(TAG, "onNavigationItemSelected debug, FriendFragment Transaction end");
         } else if (id == R.id.nav_diary) {
             Log.d(TAG, "onNavigationItemSelected debug, DiaryFragment Transaction start");
@@ -147,7 +142,7 @@ public class MainActivity extends BaseActivity
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_container, diaryFragment);
             fragmentTransaction.commit();
-            MENU_ITEM_INDEX = 5;
+            MENU_ITEM_INDEX = 4;
             Log.d(TAG, "onNavigationItemSelected debug, DiaryFragment Transaction end");
         } else if (id == R.id.nav_collection) {
             Log.d(TAG, "onNavigationItemSelected debug, CollectionFragment Transaction start");
@@ -155,7 +150,7 @@ public class MainActivity extends BaseActivity
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_container, collectionFragment);
             fragmentTransaction.commit();
-            MENU_ITEM_INDEX = 6;
+            MENU_ITEM_INDEX = 5;
             Log.d(TAG, "onNavigationItemSelected debug, CollectionFragment Transaction end");
         } else if (id == R.id.nav_manage) {
             Log.d(TAG, "onNavigationItemSelected debug, ManageFragment Transaction start");
@@ -163,7 +158,7 @@ public class MainActivity extends BaseActivity
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_container, manageFragment);
             fragmentTransaction.commit();
-            MENU_ITEM_INDEX = 7;
+            MENU_ITEM_INDEX = 6;
             Log.d(TAG, "onNavigationItemSelected debug, ManageFragment Transaction end");
         } else if (id == R.id.nav_scan) {
             Log.d(TAG, "onNavigationItemSelected debug, ScanFragment Transaction start");
@@ -171,7 +166,7 @@ public class MainActivity extends BaseActivity
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_container, scanFragment);
             fragmentTransaction.commit();
-            MENU_ITEM_INDEX = 8;
+            MENU_ITEM_INDEX = 7;
             Log.d(TAG, "onNavigationItemSelected debug, ScanFragment Transaction end");
         } else if (id == R.id.nav_share) {
             Log.d(TAG, "onNavigationItemSelected debug, ShareFragment Transaction start");
@@ -179,7 +174,7 @@ public class MainActivity extends BaseActivity
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_container, shareFragment);
             fragmentTransaction.commit();
-            MENU_ITEM_INDEX = 9;
+            MENU_ITEM_INDEX = 8;
             Log.d(TAG, "onNavigationItemSelected debug, ShareFragment Transaction end");
         } else if (id == R.id.nav_about) {
             Log.d(TAG, "onNavigationItemSelected debug, AboutFragment Transaction start");
@@ -187,11 +182,11 @@ public class MainActivity extends BaseActivity
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_container, aboutFragment);
             fragmentTransaction.commit();
-            MENU_ITEM_INDEX = 10;
+            MENU_ITEM_INDEX = 9;
             Log.d(TAG, "onNavigationItemSelected debug, AboutFragment Transaction end");
         } else if (id == R.id.nav_exit) {
             Log.d(TAG, "onNavigationItemSelected debug, Exit Action start");
-            MENU_ITEM_INDEX = 11;
+            MENU_ITEM_INDEX = 10;
             ActivityCollector.finishAll();
             Log.d(TAG, "onNavigationItemSelected debug, Exit Action end");
         }

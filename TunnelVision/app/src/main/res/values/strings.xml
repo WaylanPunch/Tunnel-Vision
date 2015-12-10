@@ -96,4 +96,8 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_home_settings">Home Settings</string>
+    <string name="comment">Comments</string>
+    <string name="like">Likes</string>
+    <string name="repeat">Repeats</string>
+    <string name="action_messages">Messages</string>
 </resources>

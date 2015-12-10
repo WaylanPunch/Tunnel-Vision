@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/side_nav_bar"
@@ -8,27 +8,41 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:orientation="vertical"
     android:gravity="bottom">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:layout_width="@dimen/icon_header_width"
+        android:layout_height="@dimen/icon_header_height"
+        android:layout_centerVertical="true"
         android:src="@drawable/ic_default_avatar_highlighted"
-        android:id="@+id/imageView" />
+        android:id="@+id/iv_header_avatar" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Android Studio"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/iv_header_avatar"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:id="@+id/tv_header_username" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="android.studio@android.com"
-        android:id="@+id/textView" />
+        android:id="@+id/tv_header_signature"
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_below="@+id/tv_header_username"
+        android:layout_toEndOf="@+id/iv_header_avatar"
+        android:layout_marginLeft="@dimen/text_margin"/>
 
-</LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_header_gender"
+        android:background="@drawable/ic_gender_female_accent"
+        android:layout_alignTop="@+id/tv_header_username"
+        android:layout_toEndOf="@+id/tv_header_username" />
+
+</RelativeLayout>

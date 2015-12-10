@@ -31,7 +31,7 @@ public class FindFragment extends Fragment {
     private FloatingActionButton fab;
     private XRecyclerView mRecyclerView;
     private PostAdapter mAdapter;
-    private ArrayList<Post> listData;
+    private static  ArrayList<Post> listData;
     private int refreshTime = 0;
     private int times = 0;
 
@@ -72,6 +72,7 @@ public class FindFragment extends Fragment {
                 }
             });
 
+            mRecyclerView.setHasFixedSize(true);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             mRecyclerView.setLayoutManager(layoutManager);
@@ -95,16 +96,21 @@ public class FindFragment extends Fragment {
                         public void run() {
 
                             listData.clear();
-                            for (int i = 0; i < 5; i++) {
+                            for (int i = 0; i < 1; i++) {
                                 Post post1 = new Post();
-                                post1.setTitle("Blue + " + i);
+                                post1.setRepeatsCount(i);
+                                post1.setCommentsCount(i);
+                                post1.setLikesCount(i);
                                 post1.setIconResourceId("http://img0.ph.126.net/EnGLTAd9XWpTk4Q0LSzCOw==/6631364633840836611.jpg");
                                 Post post2 = new Post();
-                                post2.setTitle("Sky + " + i);
+                                post2.setRepeatsCount(i);
+                                post2.setCommentsCount(i);
+                                post2.setLikesCount(i);
                                 post2.setIconResourceId("http://img1.ph.126.net/Q_duX-c5BQc65K8IeoOXyQ==/6631249185119739310.jpg");
                                 listData.add(post1);
                                 listData.add(post2);
                             }
+                            Log.d(TAG, "initView debug, listData Size 1 = " + listData.size());
                             mAdapter.notifyDataSetChanged();
                             mRecyclerView.refreshComplete();
                         }
@@ -118,16 +124,21 @@ public class FindFragment extends Fragment {
                         new Handler().postDelayed(new Runnable() {
                             public void run() {
                                 mRecyclerView.loadMoreComplete();
-                                for (int i = 0; i < 5; i++) {
+                                for (int i = 0; i < 1; i++) {
                                     Post post1 = new Post();
-                                    post1.setTitle("Blue - " + i);
+                                    post1.setRepeatsCount(i);
+                                    post1.setCommentsCount(i);
+                                    post1.setLikesCount(i);
                                     post1.setIconResourceId("http://img0.ph.126.net/EnGLTAd9XWpTk4Q0LSzCOw==/6631364633840836611.jpg");
                                     Post post2 = new Post();
-                                    post2.setTitle("Sky - " + i);
+                                    post2.setRepeatsCount(i);
+                                    post2.setCommentsCount(i);
+                                    post2.setLikesCount(i);
                                     post2.setIconResourceId("http://img1.ph.126.net/Q_duX-c5BQc65K8IeoOXyQ==/6631249185119739310.jpg");
                                     listData.add(post1);
                                     listData.add(post2);
                                 }
+                                Log.d(TAG, "initView debug, listData Size 2 = " + listData.size());
                                 mAdapter.notifyDataSetChanged();
                                 mRecyclerView.refreshComplete();
                             }
@@ -146,16 +157,21 @@ public class FindFragment extends Fragment {
             });
 
             listData = new ArrayList<Post>();
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 1; i++) {
                 Post post1 = new Post();
-                post1.setTitle("Blue * " + i);
+                post1.setRepeatsCount(i);
+                post1.setCommentsCount(i);
+                post1.setLikesCount(i);
                 post1.setIconResourceId("http://img0.ph.126.net/EnGLTAd9XWpTk4Q0LSzCOw==/6631364633840836611.jpg");
                 Post post2 = new Post();
-                post2.setTitle("Sky * " + i);
+                post2.setRepeatsCount(i);
+                post2.setCommentsCount(i);
+                post2.setLikesCount(i);
                 post2.setIconResourceId("http://img1.ph.126.net/Q_duX-c5BQc65K8IeoOXyQ==/6631249185119739310.jpg");
                 listData.add(post1);
                 listData.add(post2);
             }
+            Log.d(TAG, "initView debug, listData Size 0 = " + listData.size());
             mAdapter = new PostAdapter(listData, getContext());
             mAdapter.setOnRecyclerViewListener(onRecyclerViewListener);
             mRecyclerView.setAdapter(mAdapter);
