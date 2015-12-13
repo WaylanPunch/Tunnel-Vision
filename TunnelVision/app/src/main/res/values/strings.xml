@@ -5,7 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">Home</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -100,4 +100,24 @@
     <string name="like">Likes</string>
     <string name="repeat">Repeats</string>
     <string name="action_messages">Messages</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_signin">Sign In</string>
+    <string name="action_signin_signup">Sign Up</string>
+    <string name="button_signin_text">SIGN IN</string>
+    <string name="signin_show_password">Show Password</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

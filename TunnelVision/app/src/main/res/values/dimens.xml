@@ -15,7 +15,12 @@
     <dimen name="progress_bar_height">2dp</dimen>
     <dimen name="edittext_normal_height">50dip</dimen>
     <dimen name="button_normal_height">50dip</dimen>
-    <dimen name="imageview_normal_width">200dip</dimen>
-    <dimen name="imageview_normal_height">200dip</dimen>
+    <dimen name="icon_list_normal_width">80dip</dimen>
+    <dimen name="icon_list_normal_height">80dip</dimen>
     <dimen name="textview_normal_height">50dip</dimen>
+    <dimen name="imageview_list_normal_height">200dip</dimen>
+    <dimen name="imageview_normal_width">100dip</dimen>
+    <dimen name="imageview_normal_height">100dip</dimen>
+    <dimen name="text_margin_top">100dip</dimen>
+    <dimen name="text_size_normal">16sp</dimen>
 </resources>

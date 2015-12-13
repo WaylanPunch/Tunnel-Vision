@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/side_nav_bar"
+    android:background="@drawable/ic_header_background"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -25,7 +25,8 @@
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/iv_header_avatar"
         android:layout_marginLeft="@dimen/text_margin"
-        android:id="@+id/tv_header_username" />
+        android:id="@+id/tv_header_username"
+        android:textColor="@color/colorSecondaryText"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -35,7 +36,8 @@
         android:layout_marginTop="@dimen/text_margin"
         android:layout_below="@+id/tv_header_username"
         android:layout_toEndOf="@+id/iv_header_avatar"
-        android:layout_marginLeft="@dimen/text_margin"/>
+        android:layout_marginLeft="@dimen/text_margin"
+        android:textColor="@color/colorSecondaryText"/>
 
     <ImageView
         android:layout_width="wrap_content"

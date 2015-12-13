@@ -14,7 +14,7 @@
             android:id="@+id/iv_post_item_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="@dimen/imageview_normal_height"
+            android:minHeight="@dimen/imageview_list_normal_height"
             android:layout_gravity="center|top"
             android:scaleType="centerCrop"
             android:layout_margin="@dimen/image_margin"

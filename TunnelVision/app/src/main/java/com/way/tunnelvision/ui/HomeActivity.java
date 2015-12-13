@@ -59,7 +59,7 @@ public class HomeActivity extends BaseActivity {
                 }
             });
         } catch (Exception e){
-
+            Log.e(TAG, "initView error", e);
         }
         Log.d(TAG, "initView debug, end");
     }
