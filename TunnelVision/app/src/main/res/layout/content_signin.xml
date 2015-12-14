@@ -46,14 +46,16 @@
         android:layout_alignLeft="@+id/cv_signin_password_container"
         android:layout_below="@+id/cv_signin_password_container"
         android:text="@string/signin_show_password"
-        android:textColor="@color/colorAccent"/>
+        android:textColor="@color/colorAccent" />
+
     <TextView
         android:id="@+id/tv_signin_privacypolicy_tip1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cb_signin_show_password"
         android:layout_alignLeft="@+id/cv_signin_password_container"
-        android:text="By creating an account, you are agreeing to our Privacy Policy."/>
+        android:layout_below="@+id/cb_signin_show_password"
+        android:text="By creating an account, you are agreeing to our Privacy Policy." />
+
     <android.support.v7.widget.CardView
         android:id="@+id/cv_signin_login_container"
         android:layout_width="match_parent"
@@ -64,12 +66,32 @@
         android:layout_marginTop="@dimen/text_margin"
         android:background="@color/colorPrimaryDark">
 
-        <Button
-            android:id="@+id/btn_signin_login"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
-            android:text="@string/button_signin_text"
-            android:textColor="@color/white" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_signin_register"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:text="@string/button_signup_text"
+                android:textColor="@color/colorPrimary" />
+
+
+
+            <Button
+                android:id="@+id/btn_signin_login"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="@string/button_signin_text"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
     </android.support.v7.widget.CardView>
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.way.tunnelvision.ui;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -28,6 +29,7 @@ public class FriendFragment extends Fragment {
     private final String TAG = FriendFragment.class.getName();
 
     private XRecyclerView friendRecyclerView;
+    private FloatingActionButton fab;
     private static List<Friend> friends;
     private FriendAdapter friendAdapter;
     private static int times = 0;
@@ -40,6 +42,7 @@ public class FriendFragment extends Fragment {
         try {
             rootView = inflater.inflate(R.layout.content_friend, container, false);
             friendRecyclerView = (XRecyclerView) rootView.findViewById(R.id.xrv_friend_list);
+            fab = (FloatingActionButton) rootView.findViewById(R.id.fab_friend_button);
 
         } catch (Exception e) {
             Log.e(TAG, "onCreateView error", e);
@@ -59,6 +62,26 @@ public class FriendFragment extends Fragment {
     private void initView() {
         Log.d(TAG, "initView debug, start");
         try {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (null != friends && null != friendAdapter) {
+                        for (int i = 0; i < 2; i++) {
+                            Friend friend = new Friend();
+                            friend.setDisplayName("fis1");
+                            friend.setIconResourceId("http://img0.ph.126.net/EnGLTAd9XWpTk4Q0LSzCOw==/6631364633840836611.jpg");
+                            friend.setSignature("sig1");
+                            friend.setUserId("id1");
+                            friend.setUsername("name1");
+                            friends.add(friend);
+                        }
+                        Log.d(TAG, "initView debug, Friends Size from button = " + friends.size());
+                        friendAdapter.notifyDataSetChanged();
+                        friendRecyclerView.refreshComplete();
+                    }
+                }
+            });
+
             friendRecyclerView.setHasFixedSize(true);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

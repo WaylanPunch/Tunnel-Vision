@@ -23,4 +23,6 @@
     <dimen name="imageview_normal_height">100dip</dimen>
     <dimen name="text_margin_top">100dip</dimen>
     <dimen name="text_size_normal">16sp</dimen>
+    <dimen name="radio_button_conner_radius">5dp</dimen>
+    <dimen name="radio_button_stroke_border">1dp</dimen>
 </resources>
