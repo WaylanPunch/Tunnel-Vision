@@ -1,16 +1,15 @@
 package com.way.tunnelvision.entity;
 
-import com.way.tunnelvision.adapter.section.Categorizable;
-
 /**
  * Created by pc on 2015/12/13.
  */
-public class Friend implements Categorizable {
+public class Friend {
     private String iconResourceId;
     private String userId;
     private String username;
     private String signature;
     private String displayName;
+    private int gender;
 
     public String getIconResourceId() {
         return iconResourceId;
@@ -52,11 +51,16 @@ public class Friend implements Categorizable {
         this.displayName = displayName;
     }
 
-    public Friend() {
+    public int getGender() {
+        return gender;
     }
 
-    @Override
-    public String getCategory() {
-        return this.displayName.substring(0, 1);
+    public void setGender(int gender) {
+        this.gender = gender;
     }
+
+    public Friend() {
+        setGender(0);
+    }
+
 }

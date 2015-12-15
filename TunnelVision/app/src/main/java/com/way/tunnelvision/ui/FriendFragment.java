@@ -18,9 +18,9 @@ import com.way.tunnelvision.adapter.FriendAdapter;
 import com.way.tunnelvision.animator.RecyclerViewItemClickAnimator;
 import com.way.tunnelvision.entity.Friend;
 import com.way.tunnelvision.util.ToastUtil;
+import com.way.tunnelvision.view.IconCenterEditText;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by pc on 2015/12/6.
@@ -30,9 +30,10 @@ public class FriendFragment extends Fragment {
 
     private XRecyclerView friendRecyclerView;
     private FloatingActionButton fab;
-    private static List<Friend> friends;
+    private static ArrayList<Friend> friends;
     private FriendAdapter friendAdapter;
     private static int times = 0;
+    private IconCenterEditText icet_search;
 
     @Nullable
     @Override
@@ -43,7 +44,7 @@ public class FriendFragment extends Fragment {
             rootView = inflater.inflate(R.layout.content_friend, container, false);
             friendRecyclerView = (XRecyclerView) rootView.findViewById(R.id.xrv_friend_list);
             fab = (FloatingActionButton) rootView.findViewById(R.id.fab_friend_button);
-
+            icet_search = (IconCenterEditText) rootView.findViewById(R.id.icet_friend_search);
         } catch (Exception e) {
             Log.e(TAG, "onCreateView error", e);
         }
@@ -65,6 +66,7 @@ public class FriendFragment extends Fragment {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    /*
                     if (null != friends && null != friendAdapter) {
                         for (int i = 0; i < 2; i++) {
                             Friend friend = new Friend();
@@ -79,6 +81,15 @@ public class FriendFragment extends Fragment {
                         friendAdapter.notifyDataSetChanged();
                         friendRecyclerView.refreshComplete();
                     }
+                    */
+                }
+            });
+
+            // 实现TextWatcher监听即可
+            icet_search.setOnSearchClickListener(new IconCenterEditText.OnSearchClickListener() {
+                @Override
+                public void onSearchClick(View view) {
+                    ToastUtil.show(getContext(), "i'm going to seach");
                 }
             });
 
@@ -104,6 +115,7 @@ public class FriendFragment extends Fragment {
                                 friend.setSignature("sig1");
                                 friend.setUserId("id1");
                                 friend.setUsername("name1");
+                                friend.setGender(0);
                                 friends.add(friend);
                             }
                             Log.d(TAG, "initView debug, Friends Size 1 = " + friends.size());
@@ -127,6 +139,7 @@ public class FriendFragment extends Fragment {
                                     friend.setSignature("sig2");
                                     friend.setUserId("id2");
                                     friend.setUsername("name2");
+                                    friend.setGender(1);
                                     friends.add(friend);
                                 }
                                 Log.d(TAG, "initView debug, Friends Size 2 = " + friends.size());
@@ -155,10 +168,11 @@ public class FriendFragment extends Fragment {
                 friend.setSignature("sig0");
                 friend.setUserId("id0");
                 friend.setUsername("name0");
+                friend.setGender(1);
                 friends.add(friend);
             }
             Log.d(TAG, "initView debug, Friends Size 0 = " + friends.size());
-            friendAdapter = new FriendAdapter(friends);
+            friendAdapter = new FriendAdapter(friends, getContext());
             friendAdapter.setOnRecyclerViewListener(onRecyclerViewListener);
             friendRecyclerView.setAdapter(friendAdapter);
         } catch (Exception e) {
@@ -169,14 +183,16 @@ public class FriendFragment extends Fragment {
 
     FriendAdapter.OnRecyclerViewListener onRecyclerViewListener = new FriendAdapter.OnRecyclerViewListener() {
         @Override
-        public void OnItemClick(String userid) {
-            ToastUtil.show(getActivity(), "item click " + userid);
+        public void onItemClick(int position) {
+            ToastUtil.show(getContext(), "Item Click : " + position);
         }
 
         @Override
-        public boolean OnItemLongClick(String userid) {
-            ToastUtil.show(getActivity(), "item long click " + userid);
+        public boolean onItemLongClick(int position) {
+            ToastUtil.show(getContext(), "Item Long Click : " + position);
             return false;
         }
     };
+
+
 }

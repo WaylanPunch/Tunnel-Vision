@@ -1,86 +1,157 @@
 package com.way.tunnelvision.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.Request;
+import com.bumptech.glide.request.target.ImageViewTarget;
 import com.way.tunnelvision.R;
-import com.way.tunnelvision.adapter.section.SectionedAdapter;
 import com.way.tunnelvision.entity.Friend;
+import com.way.tunnelvision.util.ToastUtil;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by pc on 2015/12/13.
  */
-public class FriendAdapter extends SectionedAdapter<Friend> {
+public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendViewHolder> {
+    private static final String TAG = FriendAdapter.class.getName();
 
+    private static final int TYPE_REFRESH_HEADER = -5;
+    private static final int TYPE_HEADER = -4;
+    private static final int TYPE_NORMAL = 0;
+    private static final int TYPE_FOOTER = -3;
 
+    public ArrayList<Friend> datas = null;
     private OnRecyclerViewListener onRecyclerViewListener;
-    public FriendAdapter(List<Friend> friends) {
-        this.setItemList(friends);
+    private Context ctx;
+
+    public FriendAdapter(ArrayList<Friend> datas, Context context) {
+        this.datas = datas;
+        this.ctx = context;
     }
 
     public void setOnRecyclerViewListener(OnRecyclerViewListener onRecyclerViewListener) {
         this.onRecyclerViewListener = onRecyclerViewListener;
     }
 
+    //创建新View，被LayoutManager所调用
     @Override
-    public void onBindItemViewHolder(RecyclerView.ViewHolder holder, Friend item, @ViewType int viewType) {
-        FriendViewHolder friendViewHolder = (FriendViewHolder)holder;
-        friendViewHolder.userid = item.getUserId();
-        friendViewHolder.tv_displayname.setText(item.getDisplayName());
-        friendViewHolder.iv_icon.setBackgroundResource(R.drawable.ic_android_black_18dp);
+    public FriendViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_friend_item, viewGroup, false);
+        FriendViewHolder vh = new FriendViewHolder(view);
+        return vh;
     }
 
+    //将数据与界面进行绑定的操作
     @Override
-    public RecyclerView.ViewHolder onCreateItemViewHolder(ViewGroup parent, @ViewType int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_friend_item, parent, false);
-        return new FriendViewHolder(view);
+    public void onBindViewHolder(final FriendViewHolder viewHolder, final int position) {
+        Log.d(TAG, "onBindViewHolder debug, start");
+        try {
+            Friend friend = datas.get(position);
+            viewHolder.position = position;
+            viewHolder.mImageView_icon.setTag(position);
+            viewHolder.mTextView_displayname.setTag(position);
+            viewHolder.mImageView_gender.setTag(position);
+
+            viewHolder.mTextView_displayname.setText(friend.getDisplayName());
+            if(0 == friend.getGender()) {
+                viewHolder.mImageView_gender.setBackgroundResource(R.drawable.ic_gender_female_primary);
+            } else if(1 == friend.getGender()) {
+                viewHolder.mImageView_gender.setBackgroundResource(R.drawable.ic_gender_male_accent);
+            } else {
+                viewHolder.mImageView_gender.setBackgroundResource(R.drawable.ic_gender_female_primary);
+            }
+
+            Glide.with(ctx)
+                    .load(friend.getIconResourceId())
+                    .centerCrop()
+                    //.animate(ViewPropertyAnimation.Animator)
+                    .dontAnimate()
+                    .placeholder(R.drawable.ic_android_black_18dp)
+                    .error(R.drawable.ic_android_black_18dp)
+                    .into(new ImageViewTarget<GlideDrawable>(viewHolder.mImageView_icon) {
+                        @Override
+                        protected void setResource(GlideDrawable resource) {
+                            viewHolder.mImageView_icon.setImageDrawable(resource);
+                        }
+
+                        @Override
+                        public void setRequest(Request request) {
+                            viewHolder.mImageView_icon.setTag(position);
+                            viewHolder.mImageView_icon.setTag(R.id.glide_tag_id, request);
+                        }
+
+                        @Override
+                        public Request getRequest() {
+                            return (Request) viewHolder.mImageView_icon.getTag(R.id.glide_tag_id);
+                        }
+                    });
+
+            viewHolder.mImageView_icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = (int) v.getTag();
+                    ToastUtil.show(ctx, datas.get(position).getIconResourceId());
+                }
+            });
+        } catch (Exception e) {
+            Log.e(TAG, "onBindViewHolder error", e);
+        }
+        Log.d(TAG, "onBindViewHolder debug, end");
     }
 
+    //获取数据的数量
     @Override
     public int getItemCount() {
-        return super.getItemCount();
+        return datas.size();
     }
 
-    @Override
-    public long getItemId(int position) {
-        return super.getItemId(position);
-    }
+    //自定义的ViewHolder，持有每个Item的的所有界面元素
+    class FriendViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+        public View rootView;
+        public ImageView mImageView_icon;
+        public TextView mTextView_displayname;
+        public ImageView mImageView_gender;
+        public int position;
 
-    class FriendViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
-        String userid;
-        ImageView iv_icon;
-        TextView tv_displayname;
-
-        public FriendViewHolder(View itemView) {
-            super(itemView);
-            this.iv_icon = (ImageView) itemView.findViewById(R.id.iv_friend_item_icon);
-            this.tv_displayname = (TextView) itemView.findViewById(R.id.tv_friend_item_displayname);
+        public FriendViewHolder(View view) {
+            super(view);
+            rootView = view.findViewById(R.id.cv_friend_item_container);
+            mImageView_icon = (ImageView) view.findViewById(R.id.iv_friend_item_icon);
+            mTextView_displayname = (TextView) view.findViewById(R.id.tv_friend_item_displayname);
+            mImageView_gender = (ImageView) view.findViewById(R.id.iv_friend_item_gender);
+            rootView.setOnClickListener(this);
+            rootView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            if(null !=onRecyclerViewListener){
-                onRecyclerViewListener.OnItemClick(userid);
+            if (null != onRecyclerViewListener) {
+                onRecyclerViewListener.onItemClick(position);
             }
         }
 
         @Override
         public boolean onLongClick(View v) {
-            if(null !=onRecyclerViewListener){
-                onRecyclerViewListener.OnItemLongClick(userid);
+            if (null != onRecyclerViewListener) {
+                return onRecyclerViewListener.onItemLongClick(position);
             }
             return false;
         }
     }
 
-    public interface OnRecyclerViewListener{
-        void OnItemClick(String userid);
-        boolean OnItemLongClick(String userid);
+    public interface OnRecyclerViewListener {
+        void onItemClick(int position);
+
+        boolean onItemLongClick(int position);
     }
 }
