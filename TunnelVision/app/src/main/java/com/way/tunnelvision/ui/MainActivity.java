@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
 import com.way.tunnelvision.util.ToastUtil;
 

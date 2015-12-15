@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.ui.base.BaseActivity;
 
 public class SigninActivity extends BaseActivity {
     private final String TAG = SigninActivity.class.getName();

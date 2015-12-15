@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.ui.base.BaseActivity;
 
 public class HomeActivity extends BaseActivity {
     private final static String TAG = HomeActivity.class.getName();
