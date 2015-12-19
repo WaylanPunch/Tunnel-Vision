@@ -38,14 +38,16 @@
         </FrameLayout>
 
 
-        <ImageView
+        <com.github.siyamed.shapeimageview.CircularImageView
             android:id="@+id/iv_post_item_avatar"
             android:layout_width="48dip"
             android:layout_height="48dip"
             android:layout_alignLeft="@+id/fl_post_item_icon_container"
             android:layout_below="@+id/fl_post_item_icon_container"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:background="#999999" />
+            android:src="@drawable/ic_user_avatar_1"
+            app:siBorderColor="@color/grayLight"
+            app:siBorderWidth="1dp"/>
 
         <TextView
             android:id="@+id/tv_post_item_displayname"
