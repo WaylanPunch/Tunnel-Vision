@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:background="@color/gray">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <TextView
-        android:text="collection"
+        android:id="@+id/tv_collection_tip"
         android:layout_width="match_parent"
         android:layout_height="50dip"
-        android:textColor="@color/white"
-        android:background="@color/black"/>
+        android:text="collection" />
+
+    <!-- https://github.com/siyamed/android-shape-imageview -->
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/civ_collection_enter"
+        android:layout_width="80dip"
+        android:layout_height="80dip"
+        android:layout_below="@+id/tv_collection_tip"
+        android:src="@drawable/ic_android_black_18dp"
+        app:siBorderColor="@color/gray"
+        app:siBorderWidth="10dp" />
+
+    <ImageView
+        android:id="@+id/iv_collection_tip1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/civ_collection_enter" />
 </RelativeLayout>

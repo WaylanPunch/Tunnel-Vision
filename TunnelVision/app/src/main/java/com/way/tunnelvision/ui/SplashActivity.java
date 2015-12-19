@@ -6,7 +6,6 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -19,6 +18,8 @@ import android.widget.TextView;
 
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.ui.base.BaseActivity;
+
+import at.markushi.ui.CircleButton;
 
 public class SplashActivity extends BaseActivity {
 
@@ -109,9 +110,10 @@ public class SplashActivity extends BaseActivity {
             int FRAGMENT_INDEX = getArguments().getInt(ARG_SECTION_NUMBER);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(getString(R.string.section_format, FRAGMENT_INDEX));
-            FloatingActionButton fab_enter = (FloatingActionButton) rootView.findViewById(R.id.fab_splash_button);
+            //FloatingActionButton fab_enter = (FloatingActionButton) rootView.findViewById(R.id.fab_splash_button);
+            CircleButton cbtn_enter = (CircleButton) rootView.findViewById(R.id.cbtn_splash_enter);
             ImageView fra_background = (ImageView) rootView.findViewById(R.id.iv_splash_background);
-            fab_enter.setOnClickListener(new View.OnClickListener() {
+            cbtn_enter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(ctx, SigninActivity.class);
@@ -119,13 +121,13 @@ public class SplashActivity extends BaseActivity {
                 }
             });
             if (1 == FRAGMENT_INDEX){
-                fab_enter.setVisibility(View.INVISIBLE);
+                cbtn_enter.setVisibility(View.INVISIBLE);
                 fra_background.setBackgroundResource(R.drawable.ic_splash_background_0);
             }else if (2 == FRAGMENT_INDEX){
-                fab_enter.setVisibility(View.INVISIBLE);
+                cbtn_enter.setVisibility(View.INVISIBLE);
                 fra_background.setBackgroundResource(R.drawable.ic_splash_background_1);
             } else if (3 == FRAGMENT_INDEX) {
-                fab_enter.setVisibility(View.VISIBLE);
+                cbtn_enter.setVisibility(View.VISIBLE);
                 fra_background.setBackgroundResource(R.drawable.ic_splash_background_2);
             }
             return rootView;
