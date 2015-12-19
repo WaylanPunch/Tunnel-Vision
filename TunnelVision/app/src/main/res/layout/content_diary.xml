@@ -1,93 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:background="@color/gray">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrv_diary_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_horizontal_margin" />
 
-
-        <RelativeLayout
-            android:id="@+id/rl_radio_button_group1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="80dp"
-            android:background="#7C4DFF"
-            android:gravity="center">
-
-            <com.way.tunnelvision.view.SegmentedGroup
-                android:id="@+id/segmented2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="horizontal"
-                app:sc_border_width="1dp"
-                app:sc_corner_radius="10dp"
-                app:sc_tint_color="#FFEB3B"
-                app:sc_checked_text_color="#7C4DFF">
-
-                <RadioButton
-                    android:id="@+id/button21"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="One"
-                    style="@style/RadioButton" />
-
-                <RadioButton
-                    android:id="@+id/button22"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Two"
-                    style="@style/RadioButton" />
-            </com.way.tunnelvision.view.SegmentedGroup>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_radio_button_group2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="80dp"
-            android:background="#455A64"
-            android:layout_below="@+id/rl_radio_button_group1"
-            android:gravity="center">
-
-            <com.way.tunnelvision.view.SegmentedGroup
-                android:id="@+id/segmented3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:orientation="horizontal"
-                app:sc_border_width="1dp"
-                app:sc_corner_radius="5dp"
-                app:sc_tint_color="#009688">
-
-                <RadioButton
-                    android:id="@+id/button31"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="One"
-                    style="@style/RadioButton" />
-
-                <RadioButton
-                    android:id="@+id/button32"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Two"
-                    style="@style/RadioButton" />
-
-                <RadioButton
-                    android:id="@+id/button33"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Three"
-                    style="@style/RadioButton" />
-            </com.way.tunnelvision.view.SegmentedGroup>
-
-        </RelativeLayout>
-</RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_diary_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_button_pencil_white" />
+</FrameLayout>

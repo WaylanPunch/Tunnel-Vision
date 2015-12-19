@@ -16,6 +16,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.adapter.interf.OnRecyclerViewListener;
 import com.way.tunnelvision.entity.LatestMessage;
 import com.way.tunnelvision.util.ToastUtil;
 
@@ -133,7 +134,7 @@ public class LatestMessageAdapter extends RecyclerView.Adapter<LatestMessageAdap
     }
 
     //自定义的ViewHolder，持有每个Item的的所有界面元素
-    public class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener, OnLongClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener, OnLongClickListener {
         public View rootView;
         public ImageView mImageView_icon;
         public TextView mTextView_displayname;
@@ -168,9 +169,9 @@ public class LatestMessageAdapter extends RecyclerView.Adapter<LatestMessageAdap
         }
     }
 
-    public interface OnRecyclerViewListener {
-        void onItemClick(int position);
-
-        boolean onItemLongClick(int position);
-    }
+//    interface OnRecyclerViewListener {
+//        void onItemClick(int position);
+//
+//        boolean onItemLongClick(int position);
+//    }
 }

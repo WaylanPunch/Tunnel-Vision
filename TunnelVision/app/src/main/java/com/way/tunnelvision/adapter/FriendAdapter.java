@@ -14,6 +14,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.target.ImageViewTarget;
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.adapter.interf.OnRecyclerViewListener;
 import com.way.tunnelvision.entity.Friend;
 import com.way.tunnelvision.util.ToastUtil;
 
@@ -149,9 +150,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
         }
     }
 
-    public interface OnRecyclerViewListener {
-        void onItemClick(int position);
-
-        boolean onItemLongClick(int position);
-    }
+//    interface OnRecyclerViewListener {
+//        void onItemClick(int position);
+//
+//        boolean onItemLongClick(int position);
+//    }
 }

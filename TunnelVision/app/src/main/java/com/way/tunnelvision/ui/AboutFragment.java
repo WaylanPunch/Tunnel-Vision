@@ -56,7 +56,7 @@ public class AboutFragment extends Fragment {
         Log.d(TAG, "initView debug, start");
         try {
             if (haveNetworkConnection()) {
-                //startWebView("http://codetic.net/demo/webview-app/");
+                //startWebView("https://github.com/WaylanPunch/Tunnel-Vision/blob/master/TunnelVision/app/src/main/java/com/way/tunnelvision/ui/AboutFragment.java");
                 startWebView("file:///android_asset/about.html");
             } else {
                 wv_about_content.loadUrl("file:///android_asset/error.html");
@@ -179,4 +179,6 @@ public class AboutFragment extends Fragment {
         wv_about_content.loadUrl(url);
         Log.d(TAG, "startWebView debug, end");
     }
+
+
 }

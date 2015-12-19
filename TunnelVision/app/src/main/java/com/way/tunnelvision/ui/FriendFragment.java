@@ -15,6 +15,7 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.FriendAdapter;
+import com.way.tunnelvision.adapter.interf.OnRecyclerViewListener;
 import com.way.tunnelvision.animator.RecyclerViewItemClickAnimator;
 import com.way.tunnelvision.entity.Friend;
 import com.way.tunnelvision.util.ToastUtil;
@@ -181,7 +182,7 @@ public class FriendFragment extends Fragment {
         Log.d(TAG, "initView debug, end");
     }
 
-    FriendAdapter.OnRecyclerViewListener onRecyclerViewListener = new FriendAdapter.OnRecyclerViewListener() {
+    OnRecyclerViewListener onRecyclerViewListener = new OnRecyclerViewListener() {
         @Override
         public void onItemClick(int position) {
             ToastUtil.show(getContext(), "Item Click : " + position);

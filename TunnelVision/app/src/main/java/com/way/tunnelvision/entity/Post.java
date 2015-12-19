@@ -5,9 +5,11 @@ package com.way.tunnelvision.entity;
  */
 public class Post {
     private String iconResourceId;
+    private String content;
     private int repeatsCount;
     private int commentsCount;
     private int likesCount;
+    private String createdDate;
 
     public int getRepeatsCount() {
         return repeatsCount;
@@ -15,6 +17,22 @@ public class Post {
 
     public void setRepeatsCount(int repeatsCount) {
         this.repeatsCount = repeatsCount;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
     }
 
     public int getCommentsCount() {

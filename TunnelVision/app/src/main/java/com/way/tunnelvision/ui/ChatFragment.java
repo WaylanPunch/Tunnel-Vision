@@ -16,6 +16,7 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.LatestMessageAdapter;
+import com.way.tunnelvision.adapter.interf.OnRecyclerViewListener;
 import com.way.tunnelvision.animator.RecyclerViewItemClickAnimator;
 import com.way.tunnelvision.entity.LatestMessage;
 import com.way.tunnelvision.util.ToastUtil;
@@ -171,7 +172,7 @@ public class ChatFragment extends Fragment {
         Log.d(TAG, "initView debug, end");
     }
 
-    LatestMessageAdapter.OnRecyclerViewListener onRecyclerViewListener = new LatestMessageAdapter.OnRecyclerViewListener() {
+    OnRecyclerViewListener onRecyclerViewListener = new OnRecyclerViewListener() {
         @Override
         public void onItemClick(int position) {
             ToastUtil.show(getActivity(), "Item Click");

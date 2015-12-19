@@ -19,14 +19,52 @@
             android:scaleType="centerCrop"
             android:layout_margin="@dimen/image_margin"
             android:background="#999999" />
-
+        <ImageView
+            android:id="@+id/iv_post_item_avatar"
+            android:layout_width="48dip"
+            android:layout_height="48dip"
+            android:layout_below="@+id/iv_post_item_icon"
+            android:layout_alignLeft="@+id/iv_post_item_icon"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="#999999" />
+        <TextView
+            android:id="@+id/tv_post_item_displayname"
+            android:layout_width="wrap_content"
+            android:layout_height="20dip"
+            android:layout_below="@+id/iv_post_item_icon"
+            android:layout_toEndOf="@+id/iv_post_item_avatar"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:drawableLeft="@drawable/ic_gender_female_accent"
+            android:gravity="center"
+            android:text="1111111"/>
+        <TextView
+            android:id="@+id/tv_post_item_createddate"
+            android:layout_width="wrap_content"
+            android:layout_height="20dip"
+            android:layout_toEndOf="@+id/iv_post_item_avatar"
+            android:layout_below="@+id/tv_post_item_displayname"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:drawableLeft="@drawable/ic_clock_gray"
+            android:gravity="center"
+            android:text="2222222"/>
+        <TextView
+            android:id="@+id/tv_post_item_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/iv_post_item_avatar"
+            android:layout_alignRight="@+id/iv_post_item_icon"
+            android:layout_below="@+id/iv_post_item_avatar"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:text="33333333"/>
         <TextView
             android:id="@+id/tv_post_item_repeat"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/textview_normal_height"
-            android:layout_marginTop="@dimen/text_margin"
-            android:layout_below="@+id/iv_post_item_icon"
-            android:layout_alignLeft="@+id/iv_post_item_icon"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_below="@+id/tv_post_item_content"
+            android:layout_alignLeft="@+id/tv_post_item_content"
             android:drawableLeft="@drawable/ic_repeat_primary"
             android:gravity="center"
             android:text="@string/repeat"/>
@@ -35,8 +73,8 @@
             android:id="@+id/tv_post_item_comment"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/textview_normal_height"
-            android:layout_marginTop="@dimen/text_margin"
-            android:layout_below="@+id/iv_post_item_icon"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_below="@+id/tv_post_item_content"
             android:layout_centerHorizontal="true"
             android:drawableLeft="@drawable/ic_comment_outline_primary"
             android:gravity="center"
@@ -46,9 +84,9 @@
             android:id="@+id/tv_post_item_like"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/textview_normal_height"
-            android:layout_marginTop="@dimen/text_margin"
-            android:layout_below="@+id/iv_post_item_icon"
-            android:layout_alignRight="@+id/iv_post_item_icon"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_below="@+id/tv_post_item_content"
+            android:layout_alignRight="@+id/tv_post_item_content"
             android:drawableLeft="@drawable/ic_heart_primary"
             android:gravity="center"
             android:text="@string/like"/>
