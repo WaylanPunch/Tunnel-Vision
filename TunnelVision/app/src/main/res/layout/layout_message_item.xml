@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/card_margin"
+    android:layout_marginBottom="@dimen/card_margin"
+    android:layout_marginTop="@dimen/card_margin"
     android:clickable="true">
 
     <RelativeLayout
@@ -10,45 +13,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/iv_message_item_icon"
-            android:layout_width="@dimen/icon_list_normal_width"
-            android:layout_height="@dimen/icon_list_normal_height"
-            android:layout_gravity="center_vertical"
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/civ_message_item_avatar"
+            android:layout_width="48dip"
+            android:layout_height="48dip"
+            android:layout_gravity="center_vertical|left"
             android:layout_margin="@dimen/image_margin"
-            android:background="#999999"
-            android:scaleType="centerCrop" />
+            android:src="@drawable/ic_user_avatar_3"
+            app:siBorderColor="@color/grayLight"
+            app:siBorderWidth="1dp" />
 
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/icon_list_normal_height"
-            android:layout_alignTop="@+id/iv_message_item_icon"
-            android:layout_toEndOf="@+id/iv_message_item_icon"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_message_item_displayname"
+            android:layout_width="wrap_content"
+            android:layout_height="24dip"
+            android:layout_toEndOf="@+id/civ_message_item_avatar"
+            android:layout_marginTop="@dimen/image_margin"
+            android:text="@string/repeat" />
 
-            <TextView
-                android:id="@+id/tv_message_item_displayname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|start"
-                android:text="@string/repeat" />
+        <TextView
+            android:id="@+id/tv_message_item_latestcontent"
+            android:layout_width="wrap_content"
+            android:layout_height="24dip"
+            android:layout_toEndOf="@+id/civ_message_item_avatar"
+            android:layout_below="@+id/tv_message_item_displayname"
+            android:layout_alignBottom="@+id/civ_message_item_avatar"
+            android:gravity="bottom"
+            android:text="@string/comment" />
 
-            <TextView
-                android:id="@+id/tv_message_item_latestcontent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|start"
-                android:text="@string/comment" />
-
-            <TextView
-                android:id="@+id/tv_message_item_latestdatetime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|end"
-                android:layout_marginRight="@dimen/text_margin"
-                android:text="@string/like" />
-        </FrameLayout>
+        <TextView
+            android:id="@+id/tv_message_item_latestdatetime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/image_margin"
+            android:text="2015-1-9" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

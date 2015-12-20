@@ -9,14 +9,14 @@ public class LatestMessage {
     private String displayName;
     private String latestContent;
     private String latestDateTime;
-    private String iconResourceId;
+    private String avatarResourceId;
 
-    public String getIconResourceId() {
-        return iconResourceId;
+    public String getAvatarResourceId() {
+        return avatarResourceId;
     }
 
-    public void setIconResourceId(String iconresourceId) {
-        this.iconResourceId = iconresourceId;
+    public void setAvatarResourceId(String avatarResourceId) {
+        this.avatarResourceId = avatarResourceId;
     }
 
     public String getUserID() {

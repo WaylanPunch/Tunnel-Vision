@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.target.ImageViewTarget;
+import com.github.siyamed.shapeimageview.CircularImageView;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.interf.OnRecyclerViewListener;
 import com.way.tunnelvision.entity.Friend;
@@ -59,9 +60,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
         try {
             Friend friend = datas.get(position);
             viewHolder.position = position;
-            viewHolder.mImageView_icon.setTag(position);
-            viewHolder.mTextView_displayname.setTag(position);
-            viewHolder.mImageView_gender.setTag(position);
+            //viewHolder.mImageView_avatar.setTag(position);
+            //viewHolder.mTextView_displayname.setTag(position);
+            //viewHolder.mImageView_gender.setTag(position);
 
             viewHolder.mTextView_displayname.setText(friend.getDisplayName());
             if(0 == friend.getGender()) {
@@ -73,35 +74,35 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
             }
 
             Glide.with(ctx)
-                    .load(friend.getIconResourceId())
+                    .load(friend.getAvatarResourceId())
                     .centerCrop()
                     //.animate(ViewPropertyAnimation.Animator)
                     .dontAnimate()
                     .placeholder(R.drawable.ic_android_black_18dp)
                     .error(R.drawable.ic_android_black_18dp)
-                    .into(new ImageViewTarget<GlideDrawable>(viewHolder.mImageView_icon) {
+                    .into(new ImageViewTarget<GlideDrawable>(viewHolder.mImageView_avatar) {
                         @Override
                         protected void setResource(GlideDrawable resource) {
-                            viewHolder.mImageView_icon.setImageDrawable(resource);
+                            viewHolder.mImageView_avatar.setImageDrawable(resource);
                         }
 
                         @Override
                         public void setRequest(Request request) {
-                            viewHolder.mImageView_icon.setTag(position);
-                            viewHolder.mImageView_icon.setTag(R.id.glide_tag_id, request);
+                            viewHolder.mImageView_avatar.setTag(position);
+                            viewHolder.mImageView_avatar.setTag(R.id.glide_tag_id, request);
                         }
 
                         @Override
                         public Request getRequest() {
-                            return (Request) viewHolder.mImageView_icon.getTag(R.id.glide_tag_id);
+                            return (Request) viewHolder.mImageView_avatar.getTag(R.id.glide_tag_id);
                         }
                     });
 
-            viewHolder.mImageView_icon.setOnClickListener(new View.OnClickListener() {
+            viewHolder.mImageView_avatar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = (int) v.getTag();
-                    ToastUtil.show(ctx, datas.get(position).getIconResourceId());
+                    ToastUtil.show(ctx, datas.get(position).getAvatarResourceId());
                 }
             });
         } catch (Exception e) {
@@ -119,7 +120,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
     //自定义的ViewHolder，持有每个Item的的所有界面元素
     class FriendViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         public View rootView;
-        public ImageView mImageView_icon;
+        public CircularImageView mImageView_avatar;
         public TextView mTextView_displayname;
         public ImageView mImageView_gender;
         public int position;
@@ -127,7 +128,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
         public FriendViewHolder(View view) {
             super(view);
             rootView = view.findViewById(R.id.cv_friend_item_container);
-            mImageView_icon = (ImageView) view.findViewById(R.id.iv_friend_item_icon);
+            mImageView_avatar = (CircularImageView) view.findViewById(R.id.civ_friend_item_avatar);
             mTextView_displayname = (TextView) view.findViewById(R.id.tv_friend_item_displayname);
             mImageView_gender = (ImageView) view.findViewById(R.id.iv_friend_item_gender);
             rootView.setOnClickListener(this);

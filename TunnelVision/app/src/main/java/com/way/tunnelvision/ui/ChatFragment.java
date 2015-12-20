@@ -95,8 +95,8 @@ public class ChatFragment extends Fragment {
                                     latestMessage.setUserName("username 111");
                                     latestMessage.setLatestContent("content 111");
                                     latestMessage.setUserID("userid 111");
-                                    latestMessage.setLatestDateTime("2015.01.01");
-                                    latestMessage.setIconResourceId("http://i12.tietuku.com/f45f8b32289d8797.jpg");
+                                    latestMessage.setLatestDateTime("2015-12-11");
+                                    latestMessage.setAvatarResourceId("http://i12.tietuku.com/f45f8b32289d8797.jpg");
                                     latestMessage.setDisplayName("displayname 111");
                                     listData.add(latestMessage);
                                 }
@@ -128,8 +128,8 @@ public class ChatFragment extends Fragment {
                                     latestMessage.setUserName("username 222");
                                     latestMessage.setLatestContent("content 222");
                                     latestMessage.setUserID("userid 222");
-                                    latestMessage.setLatestDateTime("2015.02.02");
-                                    latestMessage.setIconResourceId("http://i12.tietuku.com/f45f8b32289d8797.jpg");
+                                    latestMessage.setLatestDateTime("2015-12-12");
+                                    latestMessage.setAvatarResourceId("http://i12.tietuku.com/f45f8b32289d8797.jpg");
                                     latestMessage.setDisplayName("displayname 222");
                                     listData.add(latestMessage);
                                 }
@@ -157,8 +157,8 @@ public class ChatFragment extends Fragment {
                 latestMessage.setUserName("username 000");
                 latestMessage.setLatestContent("content 000");
                 latestMessage.setUserID("userid 000");
-                latestMessage.setLatestDateTime("2015.00.00");
-                latestMessage.setIconResourceId("http://i12.tietuku.com/f45f8b32289d8797.jpg");
+                latestMessage.setLatestDateTime("2015-12-14");
+                latestMessage.setAvatarResourceId("http://i12.tietuku.com/f45f8b32289d8797.jpg");
                 latestMessage.setDisplayName("displayname 000");
                 listData.add(latestMessage);
             }

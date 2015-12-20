@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/card_margin"
+    android:layout_marginTop="@dimen/card_margin"
+    android:layout_marginBottom="@dimen/card_margin"
     android:clickable="true">
 
     <RelativeLayout
@@ -16,19 +17,19 @@
             android:id="@+id/fl_post_item_icon_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|top"
-            android:layout_margin="@dimen/image_margin">
+            android:layout_gravity="center|top">
 
             <ImageView
                 android:id="@+id/iv_post_item_icon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|top"
-                android:background="#999999"
+                android:background="@color/grayLight"
                 android:minHeight="@dimen/imageview_list_normal_height"
                 android:scaleType="centerCrop" />
             <!-- https://github.com/H07000223/FlycoLabelView -->
             <com.flyco.labelview.LabelView
+                android:id="@+id/lv_post_item_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
@@ -39,13 +40,13 @@
 
 
         <com.github.siyamed.shapeimageview.CircularImageView
-            android:id="@+id/iv_post_item_avatar"
+            android:id="@+id/civ_post_item_avatar"
             android:layout_width="48dip"
             android:layout_height="48dip"
-            android:layout_alignLeft="@+id/fl_post_item_icon_container"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_below="@+id/fl_post_item_icon_container"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_user_avatar_1"
+            android:src="@drawable/ic_user_avatar_3"
             app:siBorderColor="@color/grayLight"
             app:siBorderWidth="1dp"/>
 
@@ -56,7 +57,7 @@
             android:layout_below="@+id/fl_post_item_icon_container"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:layout_toEndOf="@+id/iv_post_item_avatar"
+            android:layout_toEndOf="@+id/civ_post_item_avatar"
             android:drawableLeft="@drawable/ic_gender_female_accent"
             android:gravity="center"
             android:text="1111111" />
@@ -68,7 +69,7 @@
             android:layout_below="@+id/tv_post_item_displayname"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:layout_toEndOf="@+id/iv_post_item_avatar"
+            android:layout_toEndOf="@+id/civ_post_item_avatar"
             android:drawableLeft="@drawable/ic_clock_gray"
             android:gravity="center"
             android:text="2222222" />
@@ -77,9 +78,10 @@
             android:id="@+id/tv_post_item_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/iv_post_item_avatar"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_alignLeft="@+id/civ_post_item_avatar"
             android:layout_alignRight="@+id/fl_post_item_icon_container"
-            android:layout_below="@+id/iv_post_item_avatar"
+            android:layout_below="@+id/civ_post_item_avatar"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:text="33333333" />
 

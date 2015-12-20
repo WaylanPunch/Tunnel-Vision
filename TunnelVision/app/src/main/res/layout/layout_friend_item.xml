@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cv_friend_item_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/activity_vertical_margin"
+    android:layout_marginBottom="@dimen/card_margin"
+    android:layout_marginTop="@dimen/card_margin"
     android:clickable="true">
 
     <RelativeLayout
@@ -11,14 +14,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/iv_friend_item_icon"
-            android:layout_width="@dimen/icon_list_normal_width"
-            android:layout_height="@dimen/icon_list_normal_height"
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/civ_friend_item_avatar"
+            android:layout_width="48dip"
+            android:layout_height="48dip"
             android:layout_gravity="center_vertical"
             android:layout_margin="@dimen/image_margin"
-            android:background="#999999"
-            android:scaleType="centerCrop" />
+            android:src="@drawable/ic_user_avatar_3"
+            app:siBorderColor="@color/grayLight"
+            app:siBorderWidth="1dp" />
 
         <TextView
             android:id="@+id/tv_friend_item_displayname"
@@ -26,15 +30,17 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:layout_toEndOf="@+id/iv_friend_item_icon"
-            android:text="@string/repeat" />
+            android:layout_toEndOf="@+id/civ_friend_item_avatar"
+            android:text="sdfsfsdsd" />
 
         <ImageView
             android:id="@+id/iv_friend_item_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:background="@drawable/ic_gender_female_primary"
-            android:layout_alignParentEnd="true"/>
+            android:layout_margin="@dimen/image_margin"
+            android:layout_centerVertical="true"/>
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

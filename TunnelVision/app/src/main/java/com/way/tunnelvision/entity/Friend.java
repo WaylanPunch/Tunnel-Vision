@@ -4,19 +4,19 @@ package com.way.tunnelvision.entity;
  * Created by pc on 2015/12/13.
  */
 public class Friend {
-    private String iconResourceId;
+    private String avatarResourceId;
     private String userId;
     private String username;
     private String signature;
     private String displayName;
     private int gender;
 
-    public String getIconResourceId() {
-        return iconResourceId;
+    public String getAvatarResourceId() {
+        return avatarResourceId;
     }
 
-    public void setIconResourceId(String iconResourceId) {
-        this.iconResourceId = iconResourceId;
+    public void setAvatarResourceId(String avatarResourceId) {
+        this.avatarResourceId = avatarResourceId;
     }
 
     public String getUserId() {

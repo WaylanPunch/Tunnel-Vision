@@ -112,7 +112,7 @@ public class FriendFragment extends Fragment {
                             for (int i = 0; i < 2; i++) {
                                 Friend friend = new Friend();
                                 friend.setDisplayName("dis1");
-                                friend.setIconResourceId("http://img0.ph.126.net/EnGLTAd9XWpTk4Q0LSzCOw==/6631364633840836611.jpg");
+                                friend.setAvatarResourceId("http://img0.ph.126.net/EnGLTAd9XWpTk4Q0LSzCOw==/6631364633840836611.jpg");
                                 friend.setSignature("sig1");
                                 friend.setUserId("id1");
                                 friend.setUsername("name1");
@@ -136,7 +136,7 @@ public class FriendFragment extends Fragment {
                                 for (int i = 0; i < 2; i++) {
                                     Friend friend = new Friend();
                                     friend.setDisplayName("cis2");
-                                    friend.setIconResourceId("http://img1.ph.126.net/Q_duX-c5BQc65K8IeoOXyQ==/6631249185119739310.jpg");
+                                    friend.setAvatarResourceId("http://img1.ph.126.net/Q_duX-c5BQc65K8IeoOXyQ==/6631249185119739310.jpg");
                                     friend.setSignature("sig2");
                                     friend.setUserId("id2");
                                     friend.setUsername("name2");
@@ -165,7 +165,7 @@ public class FriendFragment extends Fragment {
             for (int i = 0; i < 2; i++) {
                 Friend friend = new Friend();
                 friend.setDisplayName("ais0");
-                friend.setIconResourceId("http://img0.ph.126.net/EnGLTAd9XWpTk4Q0LSzCOw==/6631364633840836611.jpg");
+                friend.setAvatarResourceId("http://img0.ph.126.net/EnGLTAd9XWpTk4Q0LSzCOw==/6631364633840836611.jpg");
                 friend.setSignature("sig0");
                 friend.setUserId("id0");
                 friend.setUsername("name0");

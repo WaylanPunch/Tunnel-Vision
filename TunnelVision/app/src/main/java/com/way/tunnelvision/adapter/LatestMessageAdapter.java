@@ -8,13 +8,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.target.ImageViewTarget;
+import com.github.siyamed.shapeimageview.CircularImageView;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.interf.OnRecyclerViewListener;
 import com.way.tunnelvision.entity.LatestMessage;
@@ -61,66 +61,66 @@ public class LatestMessageAdapter extends RecyclerView.Adapter<LatestMessageAdap
         try {
             LatestMessage latestMessage = datas.get(position);
             viewHolder.position = position;
-            viewHolder.mTextView_displayname.setTag(position);
-            viewHolder.mTextView_latestcontent.setTag(position);
-            viewHolder.mTextView_latestdatetime.setTag(position);
+//            viewHolder.mTextView_displayname.setTag(position);
+//            viewHolder.mTextView_latestcontent.setTag(position);
+//            viewHolder.mTextView_latestdatetime.setTag(position);
             viewHolder.mTextView_displayname.setText(latestMessage.getDisplayName());
             viewHolder.mTextView_latestcontent.setText(latestMessage.getLatestContent());
             viewHolder.mTextView_latestdatetime.setText(latestMessage.getLatestDateTime());
 
             Glide.with(ctx)
-                    .load(latestMessage.getIconResourceId())
+                    .load(latestMessage.getAvatarResourceId())
                     .centerCrop()
                     //.animate(ViewPropertyAnimation.Animator)
                     .dontAnimate()
                     .placeholder(R.drawable.ic_android_black_18dp)
                     .error(R.drawable.ic_android_black_18dp)
-                    .into(new ImageViewTarget<GlideDrawable>(viewHolder.mImageView_icon) {
+                    .into(new ImageViewTarget<GlideDrawable>(viewHolder.mImageView_avatar) {
                         @Override
                         protected void setResource(GlideDrawable resource) {
-                            viewHolder.mImageView_icon.setImageDrawable(resource);
+                            viewHolder.mImageView_avatar.setImageDrawable(resource);
                         }
 
                         @Override
                         public void setRequest(Request request) {
-                            viewHolder.mImageView_icon.setTag(position);
-                            viewHolder.mImageView_icon.setTag(R.id.glide_tag_id, request);
+                            viewHolder.mImageView_avatar.setTag(position);
+                            viewHolder.mImageView_avatar.setTag(R.id.glide_tag_id, request);
                         }
 
                         @Override
                         public Request getRequest() {
-                            return (Request) viewHolder.mImageView_icon.getTag(R.id.glide_tag_id);
+                            return (Request) viewHolder.mImageView_avatar.getTag(R.id.glide_tag_id);
                         }
                     });
 
-            viewHolder.mImageView_icon.setOnClickListener(new OnClickListener() {
+            viewHolder.mImageView_avatar.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = (int) v.getTag();
                     ToastUtil.show(ctx, datas.get(position).getUserName());
                 }
             });
-            viewHolder.mTextView_displayname.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = (int) v.getTag();
-                    ToastUtil.show(ctx, "mTextView_displayname" + position);
-                }
-            });
-            viewHolder.mTextView_latestcontent.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = (int) v.getTag();
-                    ToastUtil.show(ctx, "mTextView_latestcontent" + position);
-                }
-            });
-            viewHolder.mTextView_latestdatetime.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = (int) v.getTag();
-                    ToastUtil.show(ctx, "mTextView_latestdatetime" + position);
-                }
-            });
+//            viewHolder.mTextView_displayname.setOnClickListener(new OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int position = (int) v.getTag();
+//                    ToastUtil.show(ctx, "mTextView_displayname" + position);
+//                }
+//            });
+//            viewHolder.mTextView_latestcontent.setOnClickListener(new OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int position = (int) v.getTag();
+//                    ToastUtil.show(ctx, "mTextView_latestcontent" + position);
+//                }
+//            });
+//            viewHolder.mTextView_latestdatetime.setOnClickListener(new OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int position = (int) v.getTag();
+//                    ToastUtil.show(ctx, "mTextView_latestdatetime" + position);
+//                }
+//            });
         } catch (Exception e) {
             Log.e(TAG, "onBindViewHolder error", e);
         }
@@ -136,7 +136,7 @@ public class LatestMessageAdapter extends RecyclerView.Adapter<LatestMessageAdap
     //自定义的ViewHolder，持有每个Item的的所有界面元素
     class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener, OnLongClickListener {
         public View rootView;
-        public ImageView mImageView_icon;
+        public CircularImageView mImageView_avatar;
         public TextView mTextView_displayname;
         public TextView mTextView_latestcontent;
         public TextView mTextView_latestdatetime;
@@ -145,7 +145,7 @@ public class LatestMessageAdapter extends RecyclerView.Adapter<LatestMessageAdap
         public ViewHolder(View view) {
             super(view);
             rootView = view.findViewById(R.id.ll_message_item_container);
-            mImageView_icon = (ImageView) view.findViewById(R.id.iv_message_item_icon);
+            mImageView_avatar = (CircularImageView) view.findViewById(R.id.civ_message_item_avatar);
             mTextView_displayname = (TextView) view.findViewById(R.id.tv_message_item_displayname);
             mTextView_latestcontent = (TextView) view.findViewById(R.id.tv_message_item_latestcontent);
             mTextView_latestdatetime = (TextView) view.findViewById(R.id.tv_message_item_latestdatetime);
