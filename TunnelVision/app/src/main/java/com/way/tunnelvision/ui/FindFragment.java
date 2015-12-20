@@ -236,4 +236,10 @@ public class FindFragment extends Fragment {
             return false;
         }
     };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        listData = null;
+    }
 }

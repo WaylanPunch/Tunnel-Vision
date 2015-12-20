@@ -13,6 +13,7 @@ import com.way.tunnelvision.R;
  * Created by pc on 2015/12/6.
  */
 public class ManageFragment extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -22,5 +23,11 @@ public class ManageFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //listData = null;
     }
 }

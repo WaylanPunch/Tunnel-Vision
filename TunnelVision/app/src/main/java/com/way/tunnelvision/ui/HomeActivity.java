@@ -16,6 +16,7 @@ import com.way.tunnelvision.ui.base.BaseActivity;
 public class HomeActivity extends BaseActivity {
     private final static String TAG = HomeActivity.class.getName();
     private boolean showHomeAsUp = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +69,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finish();
     }
 
     @Override
@@ -90,5 +92,11 @@ public class HomeActivity extends BaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //listData = null;
     }
 }

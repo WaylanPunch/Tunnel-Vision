@@ -185,4 +185,9 @@ public class ChatFragment extends Fragment {
         }
     };
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        listData = null;
+    }
 }

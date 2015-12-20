@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.ui.base.BaseActivity;
+import com.way.tunnelvision.util.ActivityCollector;
 
 import at.markushi.ui.CircleButton;
 
@@ -169,5 +170,18 @@ public class SplashActivity extends BaseActivity {
             }
             return null;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ActivityCollector.finishAll();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //listData = null;
+        ActivityCollector.finishAll();
     }
 }

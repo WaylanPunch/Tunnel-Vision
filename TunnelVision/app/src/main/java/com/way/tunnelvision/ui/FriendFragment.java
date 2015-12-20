@@ -195,5 +195,9 @@ public class FriendFragment extends Fragment {
         }
     };
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        friends = null;
+    }
 }

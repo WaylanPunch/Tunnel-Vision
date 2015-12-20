@@ -77,6 +77,7 @@ public class MainActivity extends BaseActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            ActivityCollector.finishAll();
         }
     }
 
@@ -199,5 +200,12 @@ public class MainActivity extends BaseActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //listData = null;
+        ActivityCollector.finishAll();
     }
 }

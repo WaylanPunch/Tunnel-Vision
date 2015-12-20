@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.ui.base.BaseActivity;
+import com.way.tunnelvision.util.ActivityCollector;
 
 public class SigninActivity extends BaseActivity {
     private final String TAG = SigninActivity.class.getName();
@@ -77,6 +78,7 @@ public class SigninActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        ActivityCollector.finishAll();
     }
 
     @Override
@@ -92,5 +94,11 @@ public class SigninActivity extends BaseActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ActivityCollector.finishAll();
     }
 }

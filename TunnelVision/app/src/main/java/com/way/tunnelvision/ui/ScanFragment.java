@@ -163,4 +163,10 @@ public class ScanFragment extends Fragment {
         }
         return content;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //listData = null;
+    }
 }

@@ -180,5 +180,9 @@ public class AboutFragment extends Fragment {
         Log.d(TAG, "startWebView debug, end");
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //listData = null;
+    }
 }
