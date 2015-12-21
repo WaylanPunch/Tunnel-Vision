@@ -174,25 +174,9 @@ public class MainActivity extends BaseActivity
             fragmentTransaction.commit();
             MENU_ITEM_INDEX = 7;
             Log.d(TAG, "onNavigationItemSelected debug, ScanFragment Transaction end");
-        } else if (id == R.id.nav_share) {
-            Log.d(TAG, "onNavigationItemSelected debug, ShareFragment Transaction start");
-            ShareFragment shareFragment = new ShareFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.content_container, shareFragment);
-            fragmentTransaction.commit();
-            MENU_ITEM_INDEX = 8;
-            Log.d(TAG, "onNavigationItemSelected debug, ShareFragment Transaction end");
-        } else if (id == R.id.nav_about) {
-            Log.d(TAG, "onNavigationItemSelected debug, AboutFragment Transaction start");
-            AboutFragment aboutFragment = new AboutFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.content_container, aboutFragment);
-            fragmentTransaction.commit();
-            MENU_ITEM_INDEX = 9;
-            Log.d(TAG, "onNavigationItemSelected debug, AboutFragment Transaction end");
         } else if (id == R.id.nav_exit) {
             Log.d(TAG, "onNavigationItemSelected debug, Exit Action start");
-            MENU_ITEM_INDEX = 10;
+            MENU_ITEM_INDEX = 8;
             ActivityCollector.finishAll();
             Log.d(TAG, "onNavigationItemSelected debug, Exit Action end");
         }

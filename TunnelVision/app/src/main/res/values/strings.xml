@@ -121,4 +121,6 @@
     <string name="title_activity_splash">SplashActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="button_signup_text">SIGN UP</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="action_about_settings">About Settings</string>
 </resources>
