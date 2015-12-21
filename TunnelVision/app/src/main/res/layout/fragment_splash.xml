@@ -12,24 +12,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/ic_splash_background_0"
         android:scaleType="centerCrop" />
-
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="test"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/text_size_normal" />
-
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab_splash_button"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|center_horizontal"-->
-        <!--android:layout_marginBottom="100dip"-->
-        <!--android:src="@drawable/ic_splash_enter" />-->
-
+    
     <!-- https://github.com/markushi/android-circlebutton -->
     <at.markushi.ui.CircleButton
         android:id="@+id/cbtn_splash_enter"

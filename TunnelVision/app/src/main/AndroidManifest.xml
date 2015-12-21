@@ -56,7 +56,15 @@
         <activity
             android:name=".ui.AboutActivity"
             android:label="@string/title_activity_about"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.TestActivity"
+            android:label="@string/title_activity_test"
+            android:parentActivityName=".ui.base.BaseActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.way.tunnelvision.ui.base.BaseActivity" />
+        </activity>
     </application>
 
 </manifest>

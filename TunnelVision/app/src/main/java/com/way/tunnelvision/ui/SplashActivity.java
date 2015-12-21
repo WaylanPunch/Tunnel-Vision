@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.ui.base.BaseActivity;
@@ -109,8 +108,8 @@ public class SplashActivity extends BaseActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_splash, container, false);
             int FRAGMENT_INDEX = getArguments().getInt(ARG_SECTION_NUMBER);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, FRAGMENT_INDEX));
+            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            //textView.setText(getString(R.string.section_format, FRAGMENT_INDEX));
             //FloatingActionButton fab_enter = (FloatingActionButton) rootView.findViewById(R.id.fab_splash_button);
             CircleButton cbtn_enter = (CircleButton) rootView.findViewById(R.id.cbtn_splash_enter);
             ImageView fra_background = (ImageView) rootView.findViewById(R.id.iv_splash_background);

@@ -98,8 +98,8 @@ public class MainActivity extends BaseActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             ToastUtil.show(MainActivity.this, "Settings");
-//            Intent intent = new Intent(MainActivity.this, SigninActivity.class);
-//            startActivity(intent);
+            Intent intent = new Intent(MainActivity.this, TestActivity.class);
+            startActivity(intent);
             return true;
         } else if(id == R.id.action_messages) {
             ToastUtil.show(MainActivity.this, "Messages");
