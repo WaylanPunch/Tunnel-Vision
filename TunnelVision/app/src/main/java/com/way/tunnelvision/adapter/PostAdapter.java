@@ -183,7 +183,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     //自定义的ViewHolder，持有每个Item的的所有界面元素
     class PostViewHolder extends RecyclerView.ViewHolder implements OnClickListener, OnLongClickListener {
-        public View rootView;
+        //public View rootView;
         public ImageView mImageView_icon;
         public LabelView mlabelView_label;
         public CircularImageView mImageView_avatar;
@@ -197,7 +197,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         public PostViewHolder(View view) {
             super(view);
-            rootView = view.findViewById(R.id.ll_post_item_container);
+            //rootView = view.findViewById(R.id.ll_post_item_container);
             mImageView_icon = (ImageView) view.findViewById(R.id.iv_post_item_icon);
             mlabelView_label = (LabelView) view.findViewById(R.id.lv_post_item_label);
             mImageView_avatar = (CircularImageView) view.findViewById(R.id.civ_post_item_avatar);
@@ -207,8 +207,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             mTextView_repeat = (TextView) view.findViewById(R.id.tv_post_item_repeat);
             mTextView_comment = (TextView) view.findViewById(R.id.tv_post_item_comment);
             mTextView_like = (TextView) view.findViewById(R.id.tv_post_item_like);
-            rootView.setOnClickListener(this);
-            rootView.setOnLongClickListener(this);
+            view.setOnClickListener(this);
+            view.setOnLongClickListener(this);
         }
 
         @Override

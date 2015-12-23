@@ -135,7 +135,7 @@ public class LatestMessageAdapter extends RecyclerView.Adapter<LatestMessageAdap
 
     //自定义的ViewHolder，持有每个Item的的所有界面元素
     class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener, OnLongClickListener {
-        public View rootView;
+        //public View rootView;
         public CircularImageView mImageView_avatar;
         public TextView mTextView_displayname;
         public TextView mTextView_latestcontent;
@@ -144,13 +144,13 @@ public class LatestMessageAdapter extends RecyclerView.Adapter<LatestMessageAdap
 
         public ViewHolder(View view) {
             super(view);
-            rootView = view.findViewById(R.id.ll_message_item_container);
+            //rootView = view.findViewById(R.id.ll_message_item_container);
             mImageView_avatar = (CircularImageView) view.findViewById(R.id.civ_message_item_avatar);
             mTextView_displayname = (TextView) view.findViewById(R.id.tv_message_item_displayname);
             mTextView_latestcontent = (TextView) view.findViewById(R.id.tv_message_item_latestcontent);
             mTextView_latestdatetime = (TextView) view.findViewById(R.id.tv_message_item_latestdatetime);
-            rootView.setOnClickListener(this);
-            rootView.setOnLongClickListener(this);
+            view.setOnClickListener(this);
+            view.setOnLongClickListener(this);
         }
 
         @Override

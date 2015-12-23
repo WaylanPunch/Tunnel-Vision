@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.andexert.library.RippleView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/ic_header_background"
@@ -8,7 +10,9 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:gravity="bottom">
+    android:gravity="bottom"
+    app:rv_centered="true"
+    app:rv_type="rectangle">
 
     <ImageView
         android:layout_width="@dimen/icon_header_width"
@@ -47,4 +51,4 @@
         android:layout_alignTop="@+id/tv_header_username"
         android:layout_toEndOf="@+id/tv_header_username" />
 
-</RelativeLayout>
+</com.andexert.library.RippleView>

@@ -119,7 +119,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
 
     //自定义的ViewHolder，持有每个Item的的所有界面元素
     class FriendViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        public View rootView;
+        //public View rootView;
         public CircularImageView mImageView_avatar;
         public TextView mTextView_displayname;
         public ImageView mImageView_gender;
@@ -127,12 +127,12 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
 
         public FriendViewHolder(View view) {
             super(view);
-            rootView = view.findViewById(R.id.cv_friend_item_container);
+            //rootView = view.findViewById(R.id.cv_friend_item_container);
             mImageView_avatar = (CircularImageView) view.findViewById(R.id.civ_friend_item_avatar);
             mTextView_displayname = (TextView) view.findViewById(R.id.tv_friend_item_displayname);
             mImageView_gender = (ImageView) view.findViewById(R.id.iv_friend_item_gender);
-            rootView.setOnClickListener(this);
-            rootView.setOnLongClickListener(this);
+            view.setOnClickListener(this);
+            view.setOnLongClickListener(this);
         }
 
         @Override

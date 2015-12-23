@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.way.tunnelvision">
+    package="com.way.tunnelvision"
+    android:versionCode="1"
+    android:versionName="1.1.0">
 
     <!-- 地图包、搜索包需要的基础权限 -->
     <uses-permission android:name="android.permission.INTERNET" />

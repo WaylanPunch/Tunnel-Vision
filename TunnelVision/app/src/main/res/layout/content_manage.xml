@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@android:color/transparent"
     app:rv_centered="true"
     app:rv_type="rectangle">
 
@@ -22,13 +23,13 @@
             android:id="@+id/tv_manage_accountmanagement"
             android:layout_width="match_parent"
             android:layout_height="48dip"
-            android:background="@color/colorIconsDark"
+            android:background="@android:color/transparent"
             android:drawableRight="@drawable/ic_chevron_right_gray_light"
             android:padding="@dimen/card_margin"
             android:text="Account Management"
             android:gravity="start|center_vertical"
             android:textAllCaps="true"
-            android:textColor="@color/white" />
+            android:textColor="@color/colorIconsDark" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -46,13 +47,13 @@
             android:id="@+id/tv_manage_notification"
             android:layout_width="match_parent"
             android:layout_height="48dip"
-            android:background="@color/colorIconsDark"
+            android:background="@android:color/transparent"
             android:drawableRight="@drawable/ic_chevron_right_gray_light"
             android:padding="@dimen/card_margin"
             android:text="Notification"
             android:gravity="start|center_vertical"
             android:textAllCaps="true"
-            android:textColor="@color/white" />
+            android:textColor="@color/colorIconsDark" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -70,13 +71,13 @@
             android:id="@+id/tv_manage_privacysafety"
             android:layout_width="match_parent"
             android:layout_height="48dip"
-            android:background="@color/colorIconsDark"
+            android:background="@android:color/transparent"
             android:drawableRight="@drawable/ic_chevron_right_gray_light"
             android:padding="@dimen/card_margin"
             android:text="Privacy and Safety"
             android:gravity="start|center_vertical"
             android:textAllCaps="true"
-            android:textColor="@color/white" />
+            android:textColor="@color/colorIconsDark" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -94,13 +95,13 @@
             android:id="@+id/tv_manage_generalsettings"
             android:layout_width="match_parent"
             android:layout_height="48dip"
-            android:background="@color/colorIconsDark"
+            android:background="@android:color/transparent"
             android:drawableRight="@drawable/ic_chevron_right_gray_light"
             android:padding="@dimen/card_margin"
             android:text="General Settings"
             android:gravity="start|center_vertical"
             android:textAllCaps="true"
-            android:textColor="@color/white" />
+            android:textColor="@color/colorIconsDark" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -118,13 +119,13 @@
             android:id="@+id/tv_manage_feedback"
             android:layout_width="match_parent"
             android:layout_height="48dip"
-            android:background="@color/colorIconsDark"
+            android:background="@android:color/transparent"
             android:drawableRight="@drawable/ic_chevron_right_gray_light"
             android:padding="@dimen/card_margin"
             android:text="Feedback"
             android:gravity="start|center_vertical"
             android:textAllCaps="true"
-            android:textColor="@color/white" />
+            android:textColor="@color/colorIconsDark" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -142,13 +143,13 @@
             android:id="@+id/tv_manage_about"
             android:layout_width="match_parent"
             android:layout_height="48dip"
-            android:background="@color/colorIconsDark"
+            android:background="@android:color/transparent"
             android:drawableRight="@drawable/ic_chevron_right_gray_light"
             android:padding="@dimen/card_margin"
             android:text="About"
             android:gravity="start|center_vertical"
             android:textAllCaps="true"
-            android:textColor="@color/white" />
+            android:textColor="@color/colorIconsDark" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -166,13 +167,13 @@
             android:id="@+id/tv_manage_clearcache"
             android:layout_width="match_parent"
             android:layout_height="48dip"
-            android:background="@color/colorIconsDark"
+            android:background="@android:color/transparent"
             android:drawableRight="@drawable/ic_chevron_right_gray_light"
             android:padding="@dimen/card_margin"
             android:text="Clear Cache(9.1MB)"
             android:gravity="start|center_vertical"
             android:textAllCaps="true"
-            android:textColor="@color/white" />
+            android:textColor="@color/colorIconsDark" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
