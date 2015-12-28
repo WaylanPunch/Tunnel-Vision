@@ -25,18 +25,19 @@ import java.util.ArrayList;
  * Created by pc on 2015/12/17.
  */
 public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHolder> {
-    private final static  String TAG = DiaryAdapter.class.getName();
+    private final static String TAG = DiaryAdapter.class.getName();
+
 
     public ArrayList<Post> datas = null;
     private OnRecyclerViewListener onRecyclerViewListener;
     private Context ctx;
 
-    public DiaryAdapter(ArrayList<Post> list, Context context){
+    public DiaryAdapter(ArrayList<Post> list, Context context) {
         this.datas = list;
         this.ctx = context;
     }
 
-    public void setOnRecyclerViewListener(OnRecyclerViewListener onRecyclerViewListener1){
+    public void setOnRecyclerViewListener(OnRecyclerViewListener onRecyclerViewListener1) {
         this.onRecyclerViewListener = onRecyclerViewListener1;
     }
 
@@ -47,30 +48,30 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
     }
 
     @Override
-    public void onBindViewHolder(final DiaryViewHolder holder,final int position) {
+    public void onBindViewHolder(final DiaryViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder debug, start");
-        try{
+        try {
             Post post = datas.get(position);
             holder.position = position;
             holder.textView_content.setText(post.getContent());
             String createdatestr = post.getCreatedDate();
             int dayofweek = TimeUtil.dayForWeek(createdatestr);
             holder.textView_date.setText(createdatestr);
-            if(1==dayofweek){
+            if (1 == dayofweek) {
                 holder.imageView_dateofweek.setBackgroundResource(R.drawable.ic_dateofweek_1);
-            }else if(2==dayofweek){
+            } else if (2 == dayofweek) {
                 holder.imageView_dateofweek.setBackgroundResource(R.drawable.ic_dateofweek_2);
-            }else if(3==dayofweek){
+            } else if (3 == dayofweek) {
                 holder.imageView_dateofweek.setBackgroundResource(R.drawable.ic_dateofweek_3);
-            }else if(4==dayofweek){
+            } else if (4 == dayofweek) {
                 holder.imageView_dateofweek.setBackgroundResource(R.drawable.ic_dateofweek_4);
-            }else if(5==dayofweek){
+            } else if (5 == dayofweek) {
                 holder.imageView_dateofweek.setBackgroundResource(R.drawable.ic_dateofweek_5);
-            }else if(6==dayofweek){
+            } else if (6 == dayofweek) {
                 holder.imageView_dateofweek.setBackgroundResource(R.drawable.ic_dateofweek_6);
-            }else if(7==dayofweek){
+            } else if (7 == dayofweek) {
                 holder.imageView_dateofweek.setBackgroundResource(R.drawable.ic_dateofweek_7);
-            }else {
+            } else {
                 holder.imageView_dateofweek.setBackgroundResource(R.drawable.ic_dateofweek_1);
             }
             Glide.with(ctx)
@@ -98,7 +99,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
                         }
                     });
 
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e(TAG, "onBindViewHolder error", e);
         }
         Log.d(TAG, "onBindViewHolder debug, end");
@@ -109,15 +110,22 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
         return datas.size();
     }
 
-    class  DiaryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+
+    class DiaryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         int position;
+
+        /********************
+         * item view
+         ********************/
         ImageView imageView_dateofweek;
         CardView cardView_container;
         ImageView imageView_icon;
         TextView textView_content;
         TextView textView_date;
 
-        DiaryViewHolder(View itemView){
+        /*************************************************/
+
+        DiaryViewHolder(View itemView) {
             super(itemView);
             imageView_dateofweek = (ImageView) itemView.findViewById(R.id.iv_diary_timeline_dateofweek_day);
             cardView_container = (CardView) itemView.findViewById(R.id.cv_diary_timeline_item_content_container);
@@ -144,8 +152,4 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
         }
     }
 
-//    interface OnRecyclerViewListener {
-//        void onItemClick(int position);
-//        boolean onItemLongClick(int posiyion);
-//    }
 }

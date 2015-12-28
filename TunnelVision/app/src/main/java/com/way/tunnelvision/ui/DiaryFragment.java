@@ -36,6 +36,7 @@ public class DiaryFragment extends Fragment {
     private int refreshTime = 0;
     private int times = 0;
 
+    private View headerView;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class DiaryFragment extends Fragment {
         View rootView = null;
         try {
             rootView = inflater.inflate(R.layout.content_diary, container, false);
+            headerView = inflater.inflate(R.layout.layout_base_list_header, container, false);
             fab = (FloatingActionButton) rootView.findViewById(R.id.fab_diary_button);
             mRecyclerView = (XRecyclerView) rootView.findViewById(R.id.xrv_diary_list);
 //            View header = LayoutInflater.from(getActivity()).inflate(R.layout.layout_post_list_header, container, false);
@@ -86,7 +88,7 @@ public class DiaryFragment extends Fragment {
 //            mRecyclerView.addHeaderView(header);
 
             //View myHeader = LayoutInflater.from(getActivity()).inflate(R.layout.layout_post_list_header, null);
-            //mRecyclerView.addHeaderView(myHeader);
+            mRecyclerView.addHeaderView(headerView);
 
             mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
                 @Override
@@ -168,7 +170,7 @@ public class DiaryFragment extends Fragment {
             }
             Log.d(TAG, "initView debug, listData Size 0 = " + listData.size());
             mAdapter = new DiaryAdapter(listData, getContext());
-            mAdapter.setOnRecyclerViewListener(onRecyclerViewListener);
+            //mAdapter.setOnRecyclerViewListener(onRecyclerViewListener);
             mRecyclerView.setAdapter(mAdapter);
         } catch (Exception e) {
             Log.e(TAG, "initView error", e);
@@ -176,6 +178,7 @@ public class DiaryFragment extends Fragment {
         Log.d(TAG, "initView debug, end");
     }
 
+    ///*
     OnRecyclerViewListener onRecyclerViewListener = new OnRecyclerViewListener() {
         @Override
         public void onItemClick(int position) {
@@ -188,6 +191,7 @@ public class DiaryFragment extends Fragment {
             return false;
         }
     };
+    //*/
 
     @Override
     public void onDestroy() {

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.andexert.library.RippleView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="1dp"
+    android:background="@android:color/transparent">
+
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/civ_base_header_avatar"
+        android:layout_width="96dip"
+        android:layout_height="96dip"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_user_avatar_1"
+        app:siBorderColor="@color/grayLight"
+        app:siBorderWidth="1dp" />
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/civ_base_header_profile"
+        android:layout_width="28dip"
+        android:layout_height="28dip"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_header_profile_gray_light"
+        app:siBorderColor="@color/grayLight"
+        app:siBorderWidth="1dp" />
+
+    <TextView
+        android:id="@+id/tv_base_header_displayname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/civ_base_header_avatar"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:text="Waylan Punch" />
+
+    <TextView
+        android:id="@+id/tv_base_header_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_base_header_displayname"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:text="Hangzhou" />
+
+    <TextView
+        android:id="@+id/tv_base_header_signature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_base_header_city"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:text="What We See!" />
+
+    <LinearLayout
+        android:id="@+id/ll_base_header_bottom_container_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_base_header_signature"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_base_header_followee_value"
+            android:layout_width="0dip"
+            android:layout_height="24dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/tv_base_header_follower_value"
+            android:layout_width="0dip"
+            android:layout_height="24dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="23"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/tv_base_header_diary_value"
+            android:layout_width="0dip"
+            android:layout_height="24dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="56"
+            android:textColor="@color/colorAccent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_base_header_bottom_container_key"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_base_header_bottom_container_value"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_base_header_followee_key"
+            android:layout_width="0dip"
+            android:layout_height="24dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Followee"
+            android:textColor="@color/grayLight" />
+
+        <TextView
+            android:id="@+id/tv_base_header_follower_key"
+            android:layout_width="0dip"
+            android:layout_height="24dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Follower"
+            android:textColor="@color/grayLight" />
+
+        <TextView
+            android:id="@+id/tv_base_header_diary_key"
+            android:layout_width="0dip"
+            android:layout_height="24dip"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Collection"
+            android:textColor="@color/grayLight" />
+    </LinearLayout>
+</com.andexert.library.RippleView>
