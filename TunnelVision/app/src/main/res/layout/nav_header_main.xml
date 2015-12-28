@@ -10,45 +10,49 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:gravity="bottom"
     app:rv_centered="true"
     app:rv_type="rectangle">
 
     <ImageView
-        android:layout_width="@dimen/icon_header_width"
-        android:layout_height="@dimen/icon_header_height"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_default_avatar_highlighted"
-        android:id="@+id/iv_header_avatar" />
+        android:id="@+id/iv_header_avatar"
+        android:layout_width="72dip"
+        android:layout_height="72dip"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/tv_header_displayname"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_default_avatar_highlighted" />
 
     <TextView
+        android:id="@+id/tv_header_displayname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_header_city"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
         android:text="Android Studio"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/iv_header_avatar"
-        android:layout_marginLeft="@dimen/text_margin"
-        android:id="@+id/tv_header_username"
-        android:textColor="@color/colorSecondaryText"/>
+        android:textColor="@color/colorPrimaryText" />
 
     <TextView
+        android:id="@+id/tv_header_city"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="android.studio@android.com"
-        android:id="@+id/tv_header_signature"
-        android:layout_marginTop="@dimen/text_margin"
-        android:layout_below="@+id/tv_header_username"
-        android:layout_toEndOf="@+id/iv_header_avatar"
-        android:layout_marginLeft="@dimen/text_margin"
-        android:textColor="@color/colorSecondaryText"/>
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/tv_header_signature"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:text="Hangzhou"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/colorSecondaryText" />
 
-    <ImageView
+    <TextView
+        android:id="@+id/tv_header_signature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/iv_header_gender"
-        android:background="@drawable/ic_gender_female_accent"
-        android:layout_alignTop="@+id/tv_header_username"
-        android:layout_toEndOf="@+id/tv_header_username" />
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:text="android.studio@android.com"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/colorSecondaryText" />
 
 </com.andexert.library.RippleView>
