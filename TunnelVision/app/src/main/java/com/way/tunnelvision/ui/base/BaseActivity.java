@@ -1,6 +1,7 @@
 package com.way.tunnelvision.ui.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
@@ -9,16 +10,34 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.way.tunnelvision.R;
 import com.way.tunnelvision.util.ActivityCollector;
 
 /**
- * Created by pc on 2015/12/6.
+ * Created by pc on 2016/1/6.
  */
 public class BaseActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityCollector.addActivity(this);
+    }
+
+    /**
+     * 打开activity
+     */
+    protected void openActivity(Class<?> cls) {
+        openActivity(this, cls);
+        overridePendingTransition(R.anim.create_zoomin, R.anim.create_zoomout);
+    }
+
+    /**
+     * 打开activity
+     */
+    public static void openActivity(Context context, Class<?> cls) {
+        Intent intent = new Intent(context, cls);
+        context.startActivity(intent);
     }
 
     @Override
@@ -76,5 +95,11 @@ public class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.finish_zoomin, R.anim.finish_zoomout);
     }
 }

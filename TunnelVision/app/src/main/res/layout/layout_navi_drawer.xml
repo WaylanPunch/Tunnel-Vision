@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/left_drawer"
+    android:layout_width="300dip"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <RelativeLayout
+        android:id="@+id/rl_left_drawer_header"
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:background="@drawable/ic_drawer_header_background">
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/civ_drawer_header_user_avatar"
+            android:layout_width="64dip"
+            android:layout_height="64dip"
+            android:layout_above="@+id/tv_drawer_header_user_signature"
+            android:layout_marginLeft="@dimen/cardMarginVertical"
+            android:src="@drawable/ic_user_avatar_default"
+            app:siBorderColor="@color/gray"
+            app:siBorderWidth="1dp" />
+
+        <TextView
+            android:id="@+id/tv_drawer_header_user_signature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_margin="@dimen/cardMarginVertical"
+            android:text="New Text" />
+
+        <TextView
+            android:id="@+id/tv_drawer_header_add_feeds_click"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/civ_drawer_header_user_avatar"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="13dp"
+            android:layout_marginRight="@dimen/cardMarginVertical"
+            android:background="@drawable/selector_btn"
+            android:drawableStart="@drawable/ic_plus_white"
+            android:gravity="center"
+            android:shadowRadius="5"
+            android:padding="@dimen/textPadding"
+            android:text="@string/action_add_feeds"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_drawer_header_user_display_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/civ_drawer_header_user_avatar"
+            android:layout_marginLeft="12dip"
+            android:layout_toEndOf="@+id/civ_drawer_header_user_avatar"
+            android:text="Zhang San"
+            android:textColor="@color/colorPrimaryText" />
+
+        <TextView
+            android:id="@+id/tv_drawer_header_collection_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="16dip"
+            android:layout_alignBottom="@+id/tv_drawer_header_add_feeds_click"
+            android:layout_marginLeft="12dip"
+            android:layout_toEndOf="@+id/civ_drawer_header_user_avatar"
+            android:drawableStart="@drawable/ic_bookmark_12_12_primary"
+            android:gravity="center_vertical|end"
+            android:text="12"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_drawer_header_user_email"
+            android:layout_width="wrap_content"
+            android:layout_height="16dip"
+            android:layout_alignTop="@+id/tv_drawer_header_add_feeds_click"
+            android:layout_marginLeft="12dip"
+            android:layout_toEndOf="@+id/civ_drawer_header_user_avatar"
+            android:gravity="center"
+            android:text="way@gmail.com"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="100dip"
+        android:layout_height="2dip"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimaryDark">
+
+    </View>
+
+    <ListView
+        android:id="@+id/rv_menu_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@color/colorPrimary"
+        android:elevation="1dp"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_btn"
+            android:clickable="true">
+
+            <Button
+                android:id="@+id/btn_drawer_bottom_settings_click"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/transparent"
+                android:drawableStart="@drawable/ic_menu_settings_white"
+                android:gravity="center|start"
+                android:text="@string/action_settings"
+                android:textColor="@color/white" />
+        </FrameLayout>
+
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dip"
+            android:layout_marginTop="4dip"
+            android:background="@color/grayLight">
+
+        </View>
+
+        <FrameLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_btn"
+            android:clickable="true">
+
+            <Button
+                android:id="@+id/btn_drawer_bottom_exit_click"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/transparent"
+                android:drawableStart="@drawable/ic_menu_exit_white"
+                android:gravity="center|start"
+                android:text="@string/action_exit"
+                android:textColor="@color/white" />
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

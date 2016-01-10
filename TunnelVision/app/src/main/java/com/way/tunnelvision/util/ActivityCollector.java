@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by pc on 2015/12/6.
+ * Created by pc on 2016/1/6.
  */
 public class ActivityCollector {
     private final static String TAG = ActivityCollector.class.getName();
@@ -48,3 +48,4 @@ public class ActivityCollector {
         Log.d(TAG, "finishAll debug, end");
     }
 }
+

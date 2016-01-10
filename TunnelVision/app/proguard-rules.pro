@@ -15,8 +15,3 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
-# youmi sdk
--dontwarn net.youmi.android.**
--keep class net.youmi.android.** {
-*;
-}
