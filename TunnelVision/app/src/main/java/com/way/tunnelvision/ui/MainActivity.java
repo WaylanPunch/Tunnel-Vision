@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -163,10 +162,9 @@ public class MainActivity extends BaseActivity {
         TextView drawer_user_signature = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_header_user_signature);
         TextView drawer_add_feeds_click = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_header_add_feeds_click);
         TextView drawer_user_display_name = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_header_user_display_name);
-        TextView drawer_collection_amount = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_header_collection_amount);
         TextView drawer_user_email = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_header_user_email);
-        Button drawer_settings_click = (Button) leftDrawerMenu.findViewById(R.id.btn_drawer_bottom_settings_click);
-        Button drawer_exit_click = (Button) leftDrawerMenu.findViewById(R.id.btn_drawer_bottom_exit_click);
+        TextView drawer_settings_click = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_bottom_settings_click);
+        TextView drawer_exit_click = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_bottom_exit_click);
         ListView drawer_menu_list = (ListView) leftDrawerMenu.findViewById(R.id.rv_menu_list);
         drawer_user_avatar.setOnClickListener(viewOnClickListener);
         drawer_add_feeds_click.setOnClickListener(viewOnClickListener);
@@ -204,9 +202,9 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(MainActivity.this, "To My Home.", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.tv_drawer_header_add_feeds_click) {
                 Toast.makeText(MainActivity.this, "To Add feeds.", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.btn_drawer_bottom_settings_click) {
+            } else if (id == R.id.tv_drawer_bottom_settings_click) {
                 Toast.makeText(MainActivity.this, "To App Settings.", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.btn_drawer_bottom_exit_click) {
+            } else if (id == R.id.tv_drawer_bottom_exit_click) {
                 Toast.makeText(MainActivity.this, "To Exit App.", Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 //AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
