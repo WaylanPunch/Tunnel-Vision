@@ -189,7 +189,7 @@ public class MainActivity extends BaseActivity {
             MenuModel menuModel1 = new MenuModel();
             menuModel1.setMenuId("0000" + i);
             menuModel1.setMenuTitle("36Ke " + i);
-            menuModel1.setMenuInitial("" + i);
+            //menuModel1.setMenuInitial("" + i);
             mMenuItems.add(menuModel1);
         }
     }

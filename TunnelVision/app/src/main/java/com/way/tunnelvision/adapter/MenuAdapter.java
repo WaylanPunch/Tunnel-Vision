@@ -58,6 +58,7 @@ public class MenuAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolderMenu holder;
+        MenuModel menuM = mMenuList.get(position);
         //观察convertView随ListView滚动情况
         //Log.d(TAG, "getView debug, position = " + position);
         if (convertView == null) {
@@ -78,9 +79,9 @@ public class MenuAdapter extends BaseAdapter {
                 .width(40)  // width in px
                 .height(40) // height in px
                 .endConfig()
-                .buildRound("A", getcolor);
+                .buildRound(menuM.getMenuInitial(), getcolor);
         holder.iv_icon.setImageDrawable(drawable);
-        holder.tv_title.setText(mMenuList.get(position).getMenuTitle());
+        holder.tv_title.setText(menuM.getMenuTitle());
         return convertView;
     }
 

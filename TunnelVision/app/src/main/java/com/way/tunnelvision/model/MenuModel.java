@@ -3,13 +3,15 @@ package com.way.tunnelvision.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.way.tunnelvision.util.TextCustomUtil;
+
 /**
  * Created by pc on 2016/1/10.
  */
 public class MenuModel implements Parcelable {
     private String menuId;
     private String menuTitle;
-    private String menuInitial;
+    //private String menuInitial;
 
     public String getMenuId() {
         return menuId;
@@ -28,12 +30,14 @@ public class MenuModel implements Parcelable {
     }
 
     public String getMenuInitial() {
-        return menuInitial;
+        return TextCustomUtil.getInitialOfString(this.menuTitle);
     }
 
+    /*
     public void setMenuInitial(String menuInitial) {
         this.menuInitial = menuInitial;
     }
+    */
 
 
     @Override
@@ -45,7 +49,7 @@ public class MenuModel implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.menuId);
         dest.writeString(this.menuTitle);
-        dest.writeString(this.menuInitial);
+        //dest.writeString(this.menuInitial);
     }
 
     public MenuModel() {
@@ -54,7 +58,7 @@ public class MenuModel implements Parcelable {
     protected MenuModel(Parcel in) {
         this.menuId = in.readString();
         this.menuTitle = in.readString();
-        this.menuInitial = in.readString();
+        //this.menuInitial = in.readString();
     }
 
     public static final Parcelable.Creator<MenuModel> CREATOR = new Parcelable.Creator<MenuModel>() {

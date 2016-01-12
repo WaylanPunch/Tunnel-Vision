@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cv_menu_item"
     android:layout_width="match_parent"
-    android:layout_height="50dip"
-    android:layout_margin="2dip"
-    app:cardElevation="2dp"
-    app:cardPreventCornerOverlap="false"
-    app:contentPadding="0dp">
+    android:layout_height="58dip">
 
-    <ImageView
-        android:id="@+id/iv_menu_item_icon"
-        android:layout_width="40dip"
-        android:layout_height="40dip"
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_menu_item"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="4dip"
-        android:layout_gravity="start|center_vertical" />
+        android:clickable="true"
+        app:cardElevation="2dp"
+        app:cardPreventCornerOverlap="false"
+        app:contentPadding="0dp">
 
-    <TextView
-        android:id="@+id/tv_menu_item_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="48dip"
-        android:textColor="@color/colorSecondaryText"
-        android:text="New Text" />
-</android.support.v7.widget.CardView>
+        <ImageView
+            android:id="@+id/iv_menu_item_icon"
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:layout_gravity="start|center_vertical"
+            android:layout_margin="2dip" />
+
+        <TextView
+            android:id="@+id/tv_menu_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="48dip"
+            android:text="New Text"
+            android:textColor="@color/colorSecondaryText" />
+    </android.support.v7.widget.CardView>
+</FrameLayout>

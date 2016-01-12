@@ -73,20 +73,15 @@
 
     </RelativeLayout>
 
-    <View
-        android:layout_width="100dip"
-        android:layout_height="2dip"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="2dip"
-        android:background="@color/colorPrimaryDark">
-
-    </View>
-
     <ListView
         android:id="@+id/rv_menu_list"
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:divider="@drawable/ic_divider_background_gray"
+        android:dividerHeight="1px"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -119,7 +114,7 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="4dip"
             android:layout_marginTop="4dip"
-            android:background="@color/grayLight">
+            android:background="@drawable/ic_divider_vertical_bg">
 
         </View>
 
@@ -127,7 +122,6 @@
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/selector_btn"
             android:clickable="true">
 
             <TextView
