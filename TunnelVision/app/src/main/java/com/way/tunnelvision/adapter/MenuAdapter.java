@@ -73,7 +73,7 @@ public class MenuAdapter extends BaseAdapter {
         }
         /*设置TextView显示的内容，即我们存放在动态数组中的数据*/
 
-        int getcolor = mContext.getResources().getColor(R.color.colorAccent);
+        int getcolor = mContext.getResources().getColor(R.color.colorPrimary);
         TextDrawable drawable = TextDrawable.builder()
                 .beginConfig()
                 .width(40)  // width in px

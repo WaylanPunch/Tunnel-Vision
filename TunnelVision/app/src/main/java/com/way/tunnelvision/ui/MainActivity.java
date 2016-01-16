@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.github.siyamed.shapeimageview.CircularImageView;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.MenuAdapter;
 import com.way.tunnelvision.model.MenuModel;
@@ -84,12 +85,15 @@ public class MainActivity extends BaseActivity {
             public Fragment getItem(int position) {
                 switch (position % 3) {
                     case 0:
+                        Log.d(TAG, "onCreate debug, New NewsFragment Instance");
                         newsFragment = NewsFragment.newInstance();
                         return newsFragment;
                     case 1:
+                        Log.d(TAG, "onCreate debug, New TopicFragment Instance");
                         topicFragment = TopicFragment.newInstance();
                         return topicFragment;
                     default:
+                        Log.d(TAG, "onCreate debug, New RecommendFragment Instance");
                         recommendFragment = RecommendFragment.newInstance();
                         return recommendFragment;
                 }
@@ -250,6 +254,7 @@ public class MainActivity extends BaseActivity {
 //            ToastUtil.show(MainActivity.this, "Settings");
 //            Intent intent = new Intent(MainActivity.this, PulldownViewActivity.class);
 //            startActivity(intent);
+            CrashReport.testJavaCrash();
             return true;
         } else if (id == R.id.action_shortcut) {
             // 设置关联程序

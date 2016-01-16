@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:background="@color/white">
+    android:background="@color/grayLight">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_drawer_menu_list"

@@ -60,4 +60,27 @@ public class TimeUtil {
         }
         return prettyStr;
     }
+
+    public static String standardDateTimeString(Date date){
+        String dateStr = "0001-01-01 00:00:00";
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            dateStr = format.format(date);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return dateStr;
+    }
+
+    public static Date standardDateTime(String dateStr){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = null;
+        try {
+            date = format.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
 }

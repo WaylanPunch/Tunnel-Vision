@@ -10,6 +10,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+
     }
     buildTypes {
         release {
@@ -39,4 +41,5 @@ dependencies {
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
     compile files('libs/prettytime-4.0.1.Final.jar')
+    compile files('libs/bugly_1.2.8_release.jar')
 }
