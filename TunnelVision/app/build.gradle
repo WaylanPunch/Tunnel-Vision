@@ -42,4 +42,11 @@ dependencies {
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
     compile files('libs/prettytime-4.0.1.Final.jar')
     compile files('libs/bugly_1.2.8_release.jar')
+    compile 'com.github.dmytrodanylyk.shadow-layout:library:1.0.3'
+    compile 'com.github.desmond1121:ripplecompat:0.4.1'
+    compile 'com.squareup.okhttp3:okhttp:3.0.1'
+    compile 'com.squareup.okhttp3:okhttp-android-support:3.0.1'
+    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.0.1'
+    compile 'com.alibaba:fastjson:1.2.7'
+
 }

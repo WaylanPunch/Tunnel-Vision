@@ -11,7 +11,7 @@
         android:layout_height="match_parent" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_find_button"
+        android:id="@+id/fab_news_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
