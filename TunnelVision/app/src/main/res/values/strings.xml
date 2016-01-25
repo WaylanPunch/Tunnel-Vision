@@ -11,4 +11,8 @@
     <string name="fragment_news_title">新闻</string>
     <string name="fragment_topic_title">话题</string>
     <string name="fragment_recommend_title">推荐</string>
+    <string name="text_dialog_title">消息</string>
+    <string name="text_dialog_exit_warning">确定退出程序吗？</string>
+    <string name="text_dialog_ok">确定</string>
+    <string name="text_dialog_cancel">取消</string>
 </resources>

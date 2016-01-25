@@ -11,8 +11,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.model.FeedEntity.Feed36kr;
+import com.way.tunnelvision.model.FeedEntity.Feed36krItem;
+import com.way.tunnelvision.util.ActivityCollector;
+import com.way.tunnelvision.util.http.Http36krService;
+import com.way.tunnelvision.util.http.HttpCallbackListener;
+import com.way.tunnelvision.util.http.Parser36krXMLUtil;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -37,16 +44,21 @@ public class TestActivity extends Activity {
             public void onClick(View v) {
                 Log.d(TAG, "button click debug");
                 Toast.makeText(TestActivity.this, "button click debug", Toast.LENGTH_SHORT).show();
-                /*
-                Http36krService.sendHttpRequest("https://36kr.com/feed", new HttpCallbackListener() {
+                ///*
+                Http36krService.sendHttpRequest("http://www.huxiu.com/rss/0.xml", new HttpCallbackListener() {
                     @Override
                     public void onFinish(String response) {
-                        Message msg = new Message();
-                        msg.what = 0;
-                        Bundle b = new Bundle();// 存放数据
-                        b.putString("36kr", response);
-                        msg.setData(b);
-                        handler.sendMessage(msg);
+                        Feed36kr feed36kr = Parser36krXMLUtil.parseXMLWithSAX(response);
+                        if(null != feed36kr) {
+                            List<Feed36krItem> feed36krItems = feed36kr.getFeed36krItems();
+                            Message msg = new Message();
+                            msg.what = 0;
+                            Bundle b = new Bundle();// 存放数据
+                            b.putParcelable("Param_FeedXML",feed36kr);
+                            //b.putString("Param_FeedXML", response);
+                            msg.setData(b);
+                            handler.sendMessage(msg);
+                        }
                     }
 
                     @Override
@@ -54,8 +66,8 @@ public class TestActivity extends Activity {
                         Log.e(TAG, "feed_show.setOnClickListener error", e);
                     }
                 });
-                */
-                gethttpExcute();
+                //*/
+                //gethttpExcute();
             }
         });
     }
@@ -69,8 +81,8 @@ public class TestActivity extends Activity {
                     Log.d(TAG, "handler debug");
                     // 此处可以更新UI
                     Bundle b = msg.getData();
-                    String feed36krxml = b.getString("36kr");
-                    feed_show.setText(feed36krxml);
+                    Feed36kr feed36kr = b.getParcelable("Param_FeedXML");
+                    feed_show.setText(feed36kr.getTitle()  + "," + feed36kr.getDescription()  + "," + feed36kr.getLink()  + "," + feed36kr.getGenerator()  + "," + feed36kr.getFeed36krItems().size());
                     break;
                 default:
                     break;
@@ -99,5 +111,12 @@ public class TestActivity extends Activity {
                 }
             }
         }).start();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        ActivityCollector.removeActivity(TestActivity.this);
+        //super.onBackPressed();
     }
 }

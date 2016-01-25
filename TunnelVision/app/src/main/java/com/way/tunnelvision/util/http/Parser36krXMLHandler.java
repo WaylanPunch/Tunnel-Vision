@@ -86,4 +86,8 @@ public class Parser36krXMLHandler extends DefaultHandler {
         super.endDocument();
         feed36kr.setFeed36krItems(feed36krItems);
     }
+
+    public Feed36kr getFeed36kr() {
+        return feed36kr;
+    }
 }

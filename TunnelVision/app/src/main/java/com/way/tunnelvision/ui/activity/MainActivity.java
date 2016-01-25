@@ -218,16 +218,16 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(MainActivity.this, "To Exit App.", Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 //AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
-                builder.setTitle("消息");
-                builder.setMessage("确定退出程序吗？");
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                builder.setTitle(getString(R.string.text_dialog_title));
+                builder.setMessage(getString(R.string.text_dialog_exit_warning));
+                builder.setPositiveButton(getString(R.string.text_dialog_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         ActivityCollector.finishAll();
                     }
                 });
-                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getString(R.string.text_dialog_cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -291,9 +291,34 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    public void onBackPressed() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        //AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+        builder.setTitle(getString(R.string.text_dialog_title));
+        builder.setMessage(getString(R.string.text_dialog_exit_warning));
+        builder.setPositiveButton(getString(R.string.text_dialog_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                ActivityCollector.finishAll();
+            }
+        });
+        builder.setNegativeButton(getString(R.string.text_dialog_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+        //super.onBackPressed();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         //listData = null;
         ActivityCollector.finishAll();
     }
+
 }
