@@ -15,4 +15,5 @@
     <string name="text_dialog_exit_warning">确定退出程序吗？</string>
     <string name="text_dialog_ok">确定</string>
     <string name="text_dialog_cancel">取消</string>
+    <string name="title_activity_feeds_library">FeedsLibraryActivity</string>
 </resources>

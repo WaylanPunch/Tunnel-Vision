@@ -1,6 +1,5 @@
 package com.way.tunnelvision.ui.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,24 +7,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.model.FeedEntity.Feed36kr;
-import com.way.tunnelvision.model.FeedEntity.Feed36krItem;
-import com.way.tunnelvision.util.ActivityCollector;
+import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.http.Http36krService;
 import com.way.tunnelvision.util.http.HttpCallbackListener;
 import com.way.tunnelvision.util.http.Parser36krXMLUtil;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class TestActivity extends Activity {
+public class TestActivity extends BaseActivity {
     private static final String TAG = TestActivity.class.getName();
 
     Button feed_click;
@@ -42,15 +38,16 @@ public class TestActivity extends Activity {
         feed_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "button click debug");
-                Toast.makeText(TestActivity.this, "button click debug", Toast.LENGTH_SHORT).show();
+//                Log.d(TAG, "button click debug");
+//                Toast.makeText(TestActivity.this, "button click debug", Toast.LENGTH_SHORT).show();
                 ///*
                 Http36krService.sendHttpRequest("http://www.huxiu.com/rss/0.xml", new HttpCallbackListener() {
                     @Override
                     public void onFinish(String response) {
-                        Feed36kr feed36kr = Parser36krXMLUtil.parseXMLWithSAX(response);
+                        //Feed36kr feed36kr = Parser36krXMLUtil.parseXMLWithSAX(response);
+                        Feed36kr feed36kr = Parser36krXMLUtil.parseXMLWithRSSLibJ(response);
                         if(null != feed36kr) {
-                            List<Feed36krItem> feed36krItems = feed36kr.getFeed36krItems();
+                            //List<Feed36krItem> feed36krItems = feed36kr.getFeed36krItems();
                             Message msg = new Message();
                             msg.what = 0;
                             Bundle b = new Bundle();// 存放数据
@@ -115,8 +112,6 @@ public class TestActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-
-        ActivityCollector.removeActivity(TestActivity.this);
-        //super.onBackPressed();
+        finish();
     }
 }

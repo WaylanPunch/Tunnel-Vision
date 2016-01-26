@@ -1,7 +1,6 @@
 package com.way.tunnelvision.ui.activity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -212,6 +211,7 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(MainActivity.this, "To My Home.", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.tv_drawer_header_add_feeds_click) {
                 Toast.makeText(MainActivity.this, "To Add feeds.", Toast.LENGTH_SHORT).show();
+                openActivity(FeedsLibraryActivity.class);
             } else if (id == R.id.tv_drawer_bottom_settings_click) {
                 Toast.makeText(MainActivity.this, "To App Settings.", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.tv_drawer_bottom_exit_click) {
@@ -258,9 +258,10 @@ public class MainActivity extends BaseActivity {
         int id = item.getItemId();
         if (id == R.id.action_messages) {
 //            ToastUtil.show(MainActivity.this, "Settings");
-            Intent intent = new Intent(MainActivity.this, TestActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(MainActivity.this, TestActivity.class);
+//            startActivity(intent);
 //            CrashReport.testJavaCrash();
+            openActivity(TestActivity.class);
             return true;
         } else if (id == R.id.action_shortcut) {
             // 设置关联程序

@@ -23,7 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.TestActivity"></activity>
+        <activity android:name=".ui.activity.TestActivity" />
+        <activity
+            android:name=".ui.activity.FeedsLibraryActivity"
+            android:label="@string/title_activity_feeds_library"></activity>
     </application>
 
 </manifest>

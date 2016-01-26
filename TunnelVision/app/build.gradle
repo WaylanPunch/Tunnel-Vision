@@ -50,4 +50,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp-android-support:3.0.1'
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.0.1'
     compile 'com.alibaba:fastjson:1.2.7'
+    compile 'rsslibj:rsslibj:1.0RC2'
+    compile 'exml:exml:7.0'
 }
