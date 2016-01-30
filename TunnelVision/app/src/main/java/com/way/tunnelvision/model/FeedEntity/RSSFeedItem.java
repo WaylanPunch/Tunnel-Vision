@@ -3,7 +3,7 @@ package com.way.tunnelvision.model.FeedEntity;
 /**
  * Created by pc on 2016/1/18.
  */
-public class Feed36krItem {
+public class RSSFeedItem {
     private String title;
     private String category;
     private String description;

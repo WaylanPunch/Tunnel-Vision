@@ -1,5 +1,6 @@
 package com.way.tunnelvision.ui.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,11 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.way.tunnelvision.R;
-import com.way.tunnelvision.model.FeedEntity.Feed36kr;
+import com.way.tunnelvision.model.FeedEntity.RSSFeed;
 import com.way.tunnelvision.ui.base.BaseActivity;
-import com.way.tunnelvision.util.http.Http36krService;
+import com.way.tunnelvision.util.http.RSSFeedService;
 import com.way.tunnelvision.util.http.HttpCallbackListener;
-import com.way.tunnelvision.util.http.Parser36krXMLUtil;
+import com.way.tunnelvision.util.http.RSSFeedXMLParser;
 
 import java.io.IOException;
 
@@ -24,8 +25,10 @@ import okhttp3.Response;
 public class TestActivity extends BaseActivity {
     private static final String TAG = TestActivity.class.getName();
 
-    Button feed_click;
-    TextView feed_show;
+    private ProgressDialog progressDialog = null;
+
+    private Button feed_click;
+    private TextView feed_show;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,23 +38,27 @@ public class TestActivity extends BaseActivity {
         feed_click = (Button)findViewById(R.id.btn_test_getfeed);
         feed_show = (TextView)findViewById(R.id.tv_test_showfeed);
 
+
+
         feed_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog = ProgressDialog.show(TestActivity.this, "下载", "正在下载,请稍候！");
 //                Log.d(TAG, "button click debug");
 //                Toast.makeText(TestActivity.this, "button click debug", Toast.LENGTH_SHORT).show();
                 ///*
-                Http36krService.sendHttpRequest("http://www.huxiu.com/rss/0.xml", new HttpCallbackListener() {
+                RSSFeedService.sendHttpRequest("http://www.huxiu.com/rss/0.xml", new HttpCallbackListener() {
                     @Override
                     public void onFinish(String response) {
-                        //Feed36kr feed36kr = Parser36krXMLUtil.parseXMLWithSAX(response);
-                        Feed36kr feed36kr = Parser36krXMLUtil.parseXMLWithRSSLibJ(response);
-                        if(null != feed36kr) {
-                            //List<Feed36krItem> feed36krItems = feed36kr.getFeed36krItems();
+                        //RSSFeed RSSFeed = RSSFeedXMLParser.parseXMLWithSAX(response);
+                        //RSSFeed RSSFeed = RSSFeedXMLParser.parseXMLWithRSSLibJ(response);
+                        RSSFeed RSSFeed = RSSFeedXMLParser.parseXMLWithJSoup(response);
+                        if(null != RSSFeed) {
+                            //List<RSSFeedItem> feed36krItems = RSSFeed.getRSSFeedItems();
                             Message msg = new Message();
-                            msg.what = 0;
+                            msg.what = 1;
                             Bundle b = new Bundle();// 存放数据
-                            b.putParcelable("Param_FeedXML",feed36kr);
+                            b.putParcelable("Param_FeedXML", RSSFeed);
                             //b.putString("Param_FeedXML", response);
                             msg.setData(b);
                             handler.sendMessage(msg);
@@ -78,12 +85,15 @@ public class TestActivity extends BaseActivity {
                     Log.d(TAG, "handler debug");
                     // 此处可以更新UI
                     Bundle b = msg.getData();
-                    Feed36kr feed36kr = b.getParcelable("Param_FeedXML");
-                    feed_show.setText(feed36kr.getTitle()  + "," + feed36kr.getDescription()  + "," + feed36kr.getLink()  + "," + feed36kr.getGenerator()  + "," + feed36kr.getFeed36krItems().size());
+                    RSSFeed RSSFeed = b.getParcelable("Param_FeedXML");
+                    feed_show.setText(RSSFeed.getTitle()  + "," + RSSFeed.getDescription()  + "," + RSSFeed.getLink()  + "," + RSSFeed.getGenerator()  + "," + RSSFeed.getRSSFeedItems().size());
+
                     break;
                 default:
                     break;
             }
+            //刷新UI，显示数据，并关闭进度条
+            progressDialog.dismiss(); //关闭进度条
         }
     };
 

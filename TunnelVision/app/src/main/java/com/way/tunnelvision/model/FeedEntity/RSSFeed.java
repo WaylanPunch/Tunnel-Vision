@@ -9,14 +9,14 @@ import java.util.List;
 /**
  * Created by pc on 2016/1/18.
  */
-public class Feed36kr implements Parcelable {
+public class RSSFeed implements Parcelable {
     private String title;
     private String language;
     private String pubDate;
     private String generator;
     private String description;
     private String link;
-    private List<Feed36krItem> feed36krItems = new ArrayList<Feed36krItem>();
+    private List<RSSFeedItem> RSSFeedItems = new ArrayList<RSSFeedItem>();
 
     public String getTitle() {
         return title;
@@ -66,12 +66,12 @@ public class Feed36kr implements Parcelable {
         this.link = link;
     }
 
-    public List<Feed36krItem> getFeed36krItems() {
-        return feed36krItems;
+    public List<RSSFeedItem> getRSSFeedItems() {
+        return RSSFeedItems;
     }
 
-    public void setFeed36krItems(List<Feed36krItem> feed36krItems) {
-        this.feed36krItems = feed36krItems;
+    public void setRSSFeedItems(List<RSSFeedItem> RSSFeedItems) {
+        this.RSSFeedItems = RSSFeedItems;
     }
 
     @Override
@@ -87,30 +87,30 @@ public class Feed36kr implements Parcelable {
         dest.writeString(this.generator);
         dest.writeString(this.description);
         dest.writeString(this.link);
-        dest.writeList(this.feed36krItems);
+        dest.writeList(this.RSSFeedItems);
     }
 
-    public Feed36kr() {
+    public RSSFeed() {
     }
 
-    protected Feed36kr(Parcel in) {
+    protected RSSFeed(Parcel in) {
         this.title = in.readString();
         this.language = in.readString();
         this.pubDate = in.readString();
         this.generator = in.readString();
         this.description = in.readString();
         this.link = in.readString();
-        this.feed36krItems = new ArrayList<Feed36krItem>();
-        in.readList(this.feed36krItems, List.class.getClassLoader());
+        this.RSSFeedItems = new ArrayList<RSSFeedItem>();
+        in.readList(this.RSSFeedItems, List.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<Feed36kr> CREATOR = new Parcelable.Creator<Feed36kr>() {
-        public Feed36kr createFromParcel(Parcel source) {
-            return new Feed36kr(source);
+    public static final Parcelable.Creator<RSSFeed> CREATOR = new Parcelable.Creator<RSSFeed>() {
+        public RSSFeed createFromParcel(Parcel source) {
+            return new RSSFeed(source);
         }
 
-        public Feed36kr[] newArray(int size) {
-            return new Feed36kr[size];
+        public RSSFeed[] newArray(int size) {
+            return new RSSFeed[size];
         }
     };
 }

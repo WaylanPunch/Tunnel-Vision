@@ -9,7 +9,7 @@ import okhttp3.Response;
 /**
  * Created by pc on 2016/1/18.
  */
-public class Http36krService {
+public class RSSFeedService {
 
 
     public static void sendHttpRequest(final String url, final HttpCallbackListener listener) {
