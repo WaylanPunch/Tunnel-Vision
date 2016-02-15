@@ -11,6 +11,9 @@ import okhttp3.Response;
  */
 public class RSSFeedService {
 
+    private RSSFeedService() {
+        throw new AssertionError();
+    }
 
     public static void sendHttpRequest(final String url, final HttpCallbackListener listener) {
         new Thread(new Runnable() {

@@ -1,4 +1,4 @@
-package com.way.tunnelvision.model.FeedEntity;
+package com.way.tunnelvision.model.feedentity;
 
 /**
  * Created by pc on 2016/1/18.

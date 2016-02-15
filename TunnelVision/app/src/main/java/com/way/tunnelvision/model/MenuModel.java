@@ -3,22 +3,37 @@ package com.way.tunnelvision.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.way.tunnelvision.util.TextCustomUtil;
+import com.way.tunnelvision.util.StringUtil;
 
 /**
+ * Entity mapped to table "MenuModel".
+ *
  * Created by pc on 2016/1/10.
  */
 public class MenuModel implements Parcelable {
-    private String menuId;
-    private String menuTitle;
-    //private String menuInitial;
+    private Long id;
 
-    public String getMenuId() {
-        return menuId;
+    /**
+     * Not-null value.
+     */
+    private String menuGUID;
+    private String menuTitle;
+    private String menuLink;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setMenuId(String menuId) {
-        this.menuId = menuId;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getMenuGUID() {
+        return menuGUID;
+    }
+
+    public void setMenuGUID(String menuGUID) {
+        this.menuGUID = menuGUID;
     }
 
     public String getMenuTitle() {
@@ -30,7 +45,7 @@ public class MenuModel implements Parcelable {
     }
 
     public String getMenuInitial() {
-        return TextCustomUtil.getInitialOfString(this.menuTitle);
+        return StringUtil.getInitialOfString(this.menuTitle);
     }
 
     /*
@@ -39,6 +54,27 @@ public class MenuModel implements Parcelable {
     }
     */
 
+    public String getMenuLink() {
+        return menuLink;
+    }
+
+    public void setMenuLink(String menuLink) {
+        this.menuLink = menuLink;
+    }
+
+    public MenuModel() {
+    }
+
+    public MenuModel(Long id) {
+        this.id = id;
+    }
+
+    public MenuModel(Long id, String menuGUID, String menuTitle, String menuLink) {
+        this.id = id;
+        this.menuGUID = menuGUID;
+        this.menuTitle = menuTitle;
+        this.menuLink = menuLink;
+    }
 
     @Override
     public int describeContents() {
@@ -47,21 +83,20 @@ public class MenuModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.menuId);
+        dest.writeValue(this.id);
+        dest.writeString(this.menuGUID);
         dest.writeString(this.menuTitle);
-        //dest.writeString(this.menuInitial);
-    }
-
-    public MenuModel() {
+        dest.writeString(this.menuLink);
     }
 
     protected MenuModel(Parcel in) {
-        this.menuId = in.readString();
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
+        this.menuGUID = in.readString();
         this.menuTitle = in.readString();
-        //this.menuInitial = in.readString();
+        this.menuLink = in.readString();
     }
 
-    public static final Parcelable.Creator<MenuModel> CREATOR = new Parcelable.Creator<MenuModel>() {
+    public static final Creator<MenuModel> CREATOR = new Creator<MenuModel>() {
         public MenuModel createFromParcel(Parcel source) {
             return new MenuModel(source);
         }

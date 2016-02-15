@@ -3,8 +3,8 @@ package com.way.tunnelvision.util.http;
 import android.util.Log;
 
 import com.way.tunnelvision.base.Constants;
-import com.way.tunnelvision.model.FeedEntity.RSSFeed;
-import com.way.tunnelvision.model.FeedEntity.RSSFeedItem;
+import com.way.tunnelvision.model.feedentity.RSSFeed;
+import com.way.tunnelvision.model.feedentity.RSSFeedItem;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,6 +20,10 @@ import java.util.List;
  */
 public class RSSFeedXMLParser {
     private final static String TAG = RSSFeedXMLParser.class.getName();
+
+    private RSSFeedXMLParser() {
+        throw new AssertionError();
+    }
 
 //    private static String RSS_TITLE = "rss channel title";
 //    private static String RSS_DESCRIPTION = "rss channel description";

@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.way.tunnelvision.R;
-import com.way.tunnelvision.model.FeedEntity.RSSFeed;
+import com.way.tunnelvision.model.feedentity.RSSFeed;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.http.RSSFeedService;
 import com.way.tunnelvision.util.http.HttpCallbackListener;

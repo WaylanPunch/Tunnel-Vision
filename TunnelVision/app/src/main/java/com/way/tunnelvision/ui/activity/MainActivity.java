@@ -1,6 +1,8 @@
 package com.way.tunnelvision.ui.activity;
 
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -26,7 +28,11 @@ import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.MenuAdapter;
+import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.model.MenuModel;
+import com.way.tunnelvision.model.dao.DaoMaster;
+import com.way.tunnelvision.model.dao.DaoSession;
+import com.way.tunnelvision.model.dao.MenuDao;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.ui.fragment.NewsFragment;
 import com.way.tunnelvision.ui.fragment.RecommendFragment;
@@ -39,13 +45,20 @@ import java.util.List;
 public class MainActivity extends BaseActivity {
     private final String TAG = MainActivity.class.getName();
 
+    //About the Database
+    private SQLiteDatabase db;
+    private DaoMaster daoMaster;
+    private DaoSession daoSession;
+    private MenuDao noteDao;
+    private Cursor cursor;
+
     private MaterialViewPager mViewPager;
 
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
     private View leftDrawerMenu;
-    private List<MenuModel> mMenuItems = new ArrayList<>();
+    //private List<MenuModel> mMenuItems = new ArrayList<>();
     private MenuAdapter mAdapter;
 
     NewsFragment newsFragment;
@@ -186,7 +199,7 @@ public class MainActivity extends BaseActivity {
         drawer_menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Click Position = " + position + ", MenuId = " + mMenuItems.get(position).getMenuId(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Click Position = " + position + ", MenuId = " + mMenuItems.get(position).getMenuGUID(), Toast.LENGTH_SHORT).show();
             }
         });
         //mAdapter.notifyDataSetChanged();
@@ -194,9 +207,15 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initDrawerMenuData() {
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Constants.DATABASE_NAME, null);
+        d-b = helper.getWritableDatabase();
+        daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+        noteDao = daoSession.getMenuDao();
+
         for (int i = 0; i < 12; ++i) {
             MenuModel menuModel1 = new MenuModel();
-            menuModel1.setMenuId("0000" + i);
+            menuModel1.setMenuGUID("0000" + i);
             menuModel1.setMenuTitle("36Ke " + i);
             //menuModel1.setMenuInitial("" + i);
             mMenuItems.add(menuModel1);

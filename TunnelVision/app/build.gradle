@@ -51,4 +51,5 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.0.1'
     compile 'com.alibaba:fastjson:1.2.7'
     compile 'org.jsoup:jsoup:1.8.3'
+    compile 'de.greenrobot:greendao:2.1.0'
 }

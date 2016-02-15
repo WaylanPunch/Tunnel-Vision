@@ -12,6 +12,11 @@ import java.util.List;
 public class ActivityCollector {
     private final static String TAG = ActivityCollector.class.getName();
 
+    private ActivityCollector() {
+        throw new AssertionError();
+    }
+
+
     public static List<Activity> activities = new ArrayList<Activity>();
 
     public static void addActivity(Activity activity) {

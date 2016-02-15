@@ -1,4 +1,4 @@
-package com.way.tunnelvision.model.FeedEntity;
+package com.way.tunnelvision.model.feedentity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
