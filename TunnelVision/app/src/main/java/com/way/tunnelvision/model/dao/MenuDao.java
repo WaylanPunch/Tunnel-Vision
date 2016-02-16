@@ -17,12 +17,16 @@ import de.greenrobot.dao.internal.DaoConfig;
  */
 public class MenuDao extends AbstractDao<MenuModel, Long> {
     public static final String TABLENAME = "MENUMODEL";
+    public static final String COLUMNNAME_ID = "_id";
+    public static final String COLUMNNAME_GUID = "MENUGUID";
+    public static final String COLUMNNAME_TITLE = "MENUTITLE";
+    public static final String COLUMNNAME_LINK = "MENULINK";
 
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property MenuGUID = new Property(1, String.class, "text", false, "MENUGUID");
-        public final static Property MenuTitle = new Property(1, String.class, "text", false, "MENUTITLE");
-        public final static Property MenuLink = new Property(1, String.class, "text", false, "MENULINK");
+        public final static Property Id = new Property(0, Long.class, "id", true, COLUMNNAME_ID);
+        public final static Property MenuGUID = new Property(1, String.class, "text", false, COLUMNNAME_GUID);
+        public final static Property MenuTitle = new Property(2, String.class, "text", false, COLUMNNAME_TITLE);
+        public final static Property MenuLink = new Property(3, String.class, "text", false, COLUMNNAME_LINK);
 
         //public final static Property Text = new Property(1, String.class, "text", false, "TEXT");
         //public final static Property Comment = new Property(2, String.class, "comment", false, "COMMENT");
@@ -42,18 +46,18 @@ public class MenuDao extends AbstractDao<MenuModel, Long> {
      */
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists ? "IF NOT EXISTS " : "";
-        db.execSQL("CREATE TABLE " + constraint + "\"MENUMODEL\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
-                "\"MENUGUID\" TEXT NOT NULL ," + // 1: guid
-                "\"MENUTITLE\" TEXT NOT NULL," + // 2: title
-                "\"MENULINK\" TEXT NOT NULL);"); // 3: link
+        db.execSQL("CREATE TABLE " + constraint + "\"" + TABLENAME + "\" (" + //
+                "\"" + COLUMNNAME_ID + "\" INTEGER PRIMARY KEY ," + // 0: id
+                "\"" + COLUMNNAME_GUID + "\" TEXT NOT NULL ," + // 1: guid
+                "\"" + COLUMNNAME_TITLE + "\" TEXT NOT NULL," + // 2: title
+                "\"" + COLUMNNAME_LINK + "\" TEXT NOT NULL);"); // 3: link
     }
 
     /**
      * Drops the underlying database table.
      */
     public static void dropTable(SQLiteDatabase db, boolean ifExists) {
-        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"MENUMODEL\"";
+        String sql = "DROP TABLE " + (ifExists ? "IF EXISTS " : "") + "\"" + TABLENAME + "\"";
         db.execSQL(sql);
     }
 

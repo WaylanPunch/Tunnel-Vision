@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity {
     private SQLiteDatabase db;
     private DaoMaster daoMaster;
     private DaoSession daoSession;
-    private MenuDao noteDao;
+    private MenuDao menuDao;
     private Cursor cursor;
 
     private MaterialViewPager mViewPager;
@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
     private View leftDrawerMenu;
-    //private List<MenuModel> mMenuItems = new ArrayList<>();
+    private List<MenuModel> mMenuItems = new ArrayList<>();
     private MenuAdapter mAdapter;
 
     NewsFragment newsFragment;
@@ -207,19 +207,35 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initDrawerMenuData() {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Constants.DATABASE_NAME, null);
-        d-b = helper.getWritableDatabase();
-        daoMaster = new DaoMaster(db);
-        daoSession = daoMaster.newSession();
-        noteDao = daoSession.getMenuDao();
+        Log.d(TAG, "initDrawerMenuData debug, start");
+        try {
+            DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Constants.DATABASE_NAME, null);
+            db = helper.getWritableDatabase();
+            daoMaster = new DaoMaster(db);
+            daoSession = daoMaster.newSession();
+            menuDao = daoSession.getMenuDao();
 
-        for (int i = 0; i < 12; ++i) {
-            MenuModel menuModel1 = new MenuModel();
-            menuModel1.setMenuGUID("0000" + i);
-            menuModel1.setMenuTitle("36Ke " + i);
-            //menuModel1.setMenuInitial("" + i);
-            mMenuItems.add(menuModel1);
+            String orderColumn = MenuDao.Properties.MenuTitle.columnName;
+            String orderBy = orderColumn + " COLLATE LOCALIZED ASC";
+            cursor = db.query(menuDao.getTablename(), menuDao.getAllColumns(), null, null, null, null, orderBy);
+            if (null != cursor) {
+                while (cursor.moveToNext()) {
+                    int columnIndex_id = cursor.getColumnIndex(MenuDao.COLUMNNAME_ID);
+                    Long id = cursor.getLong(columnIndex_id);
+                    int columnIndex_guid = cursor.getColumnIndex(MenuDao.COLUMNNAME_GUID);
+                    String guid = cursor.getString(columnIndex_guid);
+                    int columnIndex_title = cursor.getColumnIndex(MenuDao.COLUMNNAME_TITLE);
+                    String title = cursor.getString(columnIndex_title);
+                    int columnIndex_link = cursor.getColumnIndex(MenuDao.COLUMNNAME_LINK);
+                    String link = cursor.getString(columnIndex_link);
+                    MenuModel menuModel = new MenuModel(id, guid, title, link);
+                    mMenuItems.add(menuModel);
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "initDrawerMenuData error", e);
         }
+        Log.d(TAG, "initDrawerMenuData debug, end");
     }
 
     private View.OnClickListener viewOnClickListener = new View.OnClickListener() {
@@ -339,6 +355,8 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
         //listData = null;
         ActivityCollector.finishAll();
+        db.close();
+        daoSession.clear();
     }
 
 }
