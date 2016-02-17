@@ -40,6 +40,17 @@ public class BaseActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
+
+    protected void openActivityForResult(Class<?> cls, int requestCode) {
+        openActivityForResult(this, cls, requestCode);
+        overridePendingTransition(R.anim.create_zoomin, R.anim.create_zoomout);
+    }
+
+    public void openActivityForResult(Context context, Class<?> cls, int requestCode) {
+        Intent intent = new Intent(context, cls);
+        startActivityForResult(intent, requestCode);
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {

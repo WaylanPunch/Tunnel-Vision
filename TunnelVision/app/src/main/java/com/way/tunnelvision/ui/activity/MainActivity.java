@@ -1,6 +1,7 @@
 package com.way.tunnelvision.ui.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
@@ -44,6 +45,8 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity {
     private final String TAG = MainActivity.class.getName();
+
+    private int requestCode;
 
     //About the Database
     private SQLiteDatabase db;
@@ -210,7 +213,7 @@ public class MainActivity extends BaseActivity {
         Log.d(TAG, "initDrawerMenuData debug, start");
         try {
             DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Constants.DATABASE_NAME, null);
-            db = helper.getWritableDatabase();
+            db = helper.getReadableDatabase();
             daoMaster = new DaoMaster(db);
             daoSession = daoMaster.newSession();
             menuDao = daoSession.getMenuDao();
@@ -218,24 +221,35 @@ public class MainActivity extends BaseActivity {
             String orderColumn = MenuDao.Properties.MenuTitle.columnName;
             String orderBy = orderColumn + " COLLATE LOCALIZED ASC";
             cursor = db.query(menuDao.getTablename(), menuDao.getAllColumns(), null, null, null, null, orderBy);
-            if (null != cursor) {
-                while (cursor.moveToNext()) {
-                    int columnIndex_id = cursor.getColumnIndex(MenuDao.COLUMNNAME_ID);
-                    Long id = cursor.getLong(columnIndex_id);
-                    int columnIndex_guid = cursor.getColumnIndex(MenuDao.COLUMNNAME_GUID);
-                    String guid = cursor.getString(columnIndex_guid);
-                    int columnIndex_title = cursor.getColumnIndex(MenuDao.COLUMNNAME_TITLE);
-                    String title = cursor.getString(columnIndex_title);
-                    int columnIndex_link = cursor.getColumnIndex(MenuDao.COLUMNNAME_LINK);
-                    String link = cursor.getString(columnIndex_link);
-                    MenuModel menuModel = new MenuModel(id, guid, title, link);
-                    mMenuItems.add(menuModel);
-                }
-            }
+            getDataFromCursor(cursor);
         } catch (Exception e) {
             Log.e(TAG, "initDrawerMenuData error", e);
         }
         Log.d(TAG, "initDrawerMenuData debug, end");
+    }
+
+    public void getDataFromCursor(Cursor cursor1){
+        if (null != cursor1) {
+            mMenuItems.clear();
+            while (cursor1.moveToNext()) {
+                int columnIndex_id = cursor1.getColumnIndex(MenuDao.COLUMNNAME_ID);
+                Long id = cursor1.getLong(columnIndex_id);
+                int columnIndex_guid = cursor1.getColumnIndex(MenuDao.COLUMNNAME_GUID);
+                String guid = cursor1.getString(columnIndex_guid);
+                int columnIndex_title = cursor1.getColumnIndex(MenuDao.COLUMNNAME_TITLE);
+                String title = cursor1.getString(columnIndex_title);
+                int columnIndex_link = cursor1.getColumnIndex(MenuDao.COLUMNNAME_LINK);
+                String link = cursor1.getString(columnIndex_link);
+                MenuModel menuModel = new MenuModel(id, guid, title, link);
+                mMenuItems.add(menuModel);
+            }
+        }
+    }
+
+    public void refreshMenu() {
+        cursor.requery();
+        getDataFromCursor(cursor);
+        mAdapter.notifyDataSetChanged();
     }
 
     private View.OnClickListener viewOnClickListener = new View.OnClickListener() {
@@ -246,7 +260,11 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(MainActivity.this, "To My Home.", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.tv_drawer_header_add_feeds_click) {
                 Toast.makeText(MainActivity.this, "To Add feeds.", Toast.LENGTH_SHORT).show();
-                openActivity(FeedsLibraryActivity.class);
+                //openActivity(FeedsLibraryActivity.class);
+                // 请求码的值随便设置，但必须>=0
+                requestCode = 0;
+                openActivityForResult(FeedsLibraryActivity.class, requestCode);
+                //startActivityForResult(mIntent, requestCode);
             } else if (id == R.id.tv_drawer_bottom_settings_click) {
                 Toast.makeText(MainActivity.this, "To App Settings.", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.tv_drawer_bottom_exit_click) {
@@ -325,6 +343,26 @@ public class MainActivity extends BaseActivity {
         }
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
+
+    // 回调方法，从第二个页面回来的时候会执行这个方法
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        String change01 = data.getStringExtra("change01");
+//        String change02 = data.getStringExtra("change02");
+        // 根据上面发送过去的请求吗来区别
+        switch (requestCode) {
+            case 0:
+                refreshMenu();
+                break;
+            case 2:
+                //mText02.setText(change02);
+                break;
+            default:
+                break;
+        }
+    }
+
+
 
     @Override
     public void onBackPressed() {
