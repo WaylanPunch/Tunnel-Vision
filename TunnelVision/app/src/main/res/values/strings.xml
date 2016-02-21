@@ -16,4 +16,10 @@
     <string name="text_dialog_ok">确定</string>
     <string name="text_dialog_cancel">取消</string>
     <string name="title_activity_feeds_library">FeedsLibraryActivity</string>
+    <string name="menu_title_news">新闻</string>
+    <string name="menu_title_collection">收藏</string>
+    <string name="menu_title_photo">图片</string>
+    <string name="menu_title_weather">天气</string>
+    <string name="menu_title_settings">设置</string>
+    <string name="menu_title_exit">退出</string>
 </resources>

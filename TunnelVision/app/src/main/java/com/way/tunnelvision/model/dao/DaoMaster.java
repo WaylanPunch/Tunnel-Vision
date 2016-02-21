@@ -20,21 +20,21 @@ public class DaoMaster  extends AbstractDaoMaster {
     public DaoMaster(SQLiteDatabase db) {
         super(db, SCHEMA_VERSION);
         registerDaoClass(MenuDao.class);
-        //registerDaoClass(CustomerDao.class);
+        registerDaoClass(ChannelDao.class);
         //registerDaoClass(OrderDao.class);
     }
 
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(SQLiteDatabase db, boolean ifNotExists) {
         MenuDao.createTable(db, ifNotExists);
-//        CustomerDao.createTable(db, ifNotExists);
+        ChannelDao.createTable(db, ifNotExists);
 //        OrderDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(SQLiteDatabase db, boolean ifExists) {
         MenuDao.dropTable(db, ifExists);
-//        CustomerDao.dropTable(db, ifExists);
+        ChannelDao.dropTable(db, ifExists);
 //        OrderDao.dropTable(db, ifExists);
     }
 

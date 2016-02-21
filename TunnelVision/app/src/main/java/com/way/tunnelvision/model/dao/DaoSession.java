@@ -3,6 +3,7 @@ package com.way.tunnelvision.model.dao;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import com.way.tunnelvision.model.ChannelModel;
 import com.way.tunnelvision.model.MenuModel;
 
 import java.util.Map;
@@ -21,11 +22,11 @@ import de.greenrobot.dao.internal.DaoConfig;
  */
 public class DaoSession extends AbstractDaoSession {
     private final DaoConfig menuDaoConfig;
-    //private final DaoConfig customerDaoConfig;
+    private final DaoConfig channelDaoConfig;
     //private final DaoConfig orderDaoConfig;
 
     private final MenuDao menuDao;
-    //private final CustomerDao customerDao;
+    private final ChannelDao channelDao;
     //private final OrderDao orderDao;
 
     public DaoSession(SQLiteDatabase db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
@@ -35,24 +36,24 @@ public class DaoSession extends AbstractDaoSession {
         menuDaoConfig = daoConfigMap.get(MenuDao.class).clone();
         menuDaoConfig.initIdentityScope(type);
 
-        //customerDaoConfig = daoConfigMap.get(CustomerDao.class).clone();
-        //customerDaoConfig.initIdentityScope(type);
+        channelDaoConfig = daoConfigMap.get(ChannelDao.class).clone();
+        channelDaoConfig.initIdentityScope(type);
 
         //orderDaoConfig = daoConfigMap.get(OrderDao.class).clone();
         //orderDaoConfig.initIdentityScope(type);
 
         menuDao = new MenuDao(menuDaoConfig, this);
-        //customerDao = new CustomerDao(customerDaoConfig, this);
+        channelDao = new ChannelDao(channelDaoConfig, this);
         //orderDao = new OrderDao(orderDaoConfig, this);
 
         registerDao(MenuModel.class, menuDao);
-        //registerDao(Customer.class, customerDao);
+        registerDao(ChannelModel.class, channelDao);
         //registerDao(Order.class, orderDao);
     }
 
     public void clear() {
         menuDaoConfig.getIdentityScope().clear();
-        //customerDaoConfig.getIdentityScope().clear();
+        channelDaoConfig.getIdentityScope().clear();
         //orderDaoConfig.getIdentityScope().clear();
     }
 
@@ -60,9 +61,9 @@ public class DaoSession extends AbstractDaoSession {
         return menuDao;
     }
 
-//    public CustomerDao getCustomerDao() {
-//        return customerDao;
-//    }
+    public ChannelDao getChannelDao() {
+        return channelDao;
+    }
 //
 //    public OrderDao getOrderDao() {
 //        return orderDao;

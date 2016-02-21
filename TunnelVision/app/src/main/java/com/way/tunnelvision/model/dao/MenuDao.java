@@ -24,9 +24,9 @@ public class MenuDao extends AbstractDao<MenuModel, Long> {
 
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, COLUMNNAME_ID);
-        public final static Property MenuGUID = new Property(1, String.class, "text", false, COLUMNNAME_GUID);
-        public final static Property MenuTitle = new Property(2, String.class, "text", false, COLUMNNAME_TITLE);
-        public final static Property MenuLink = new Property(3, String.class, "text", false, COLUMNNAME_LINK);
+        public final static Property MenuGUID = new Property(1, String.class, "guid", false, COLUMNNAME_GUID);
+        public final static Property MenuTitle = new Property(2, String.class, "title", false, COLUMNNAME_TITLE);
+        public final static Property MenuLink = new Property(3, String.class, "link", false, COLUMNNAME_LINK);
 
         //public final static Property Text = new Property(1, String.class, "text", false, "TEXT");
         //public final static Property Comment = new Property(2, String.class, "comment", false, "COMMENT");

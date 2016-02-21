@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,8 +16,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,9 +24,8 @@ import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.way.tunnelvision.R;
-import com.way.tunnelvision.adapter.MenuAdapter;
-import com.way.tunnelvision.base.Constants;
-import com.way.tunnelvision.model.MenuModel;
+import com.way.tunnelvision.adapter.ChannelViewPagerAdapter;
+import com.way.tunnelvision.model.ChannelModel;
 import com.way.tunnelvision.model.dao.DaoMaster;
 import com.way.tunnelvision.model.dao.DaoSession;
 import com.way.tunnelvision.model.dao.MenuDao;
@@ -61,8 +56,11 @@ public class MainActivity extends BaseActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
     private View leftDrawerMenu;
-    private List<MenuModel> mMenuItems = new ArrayList<>();
-    private MenuAdapter mAdapter;
+    //private List<MenuModel> mMenuItems = new ArrayList<>();
+    //private MenuAdapter mAdapter;
+
+    private List<ChannelModel> channelModels;
+    private ChannelViewPagerAdapter channelViewPagerAdapter;
 
     NewsFragment newsFragment;
     TopicFragment topicFragment;
@@ -100,6 +98,8 @@ public class MainActivity extends BaseActivity {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
         mDrawer.setDrawerListener(mDrawerToggle);
 
+        initChannelData();
+        /*
         mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
 
             @Override
@@ -162,6 +162,36 @@ public class MainActivity extends BaseActivity {
                 //return null;
             }
         });
+        */
+
+        mViewPager.getViewPager().setAdapter(channelViewPagerAdapter);
+        mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
+            @Override
+            public HeaderDesign getHeaderDesign(int position) {
+                ChannelModel channelModel = channelModels.get(position);
+                return HeaderDesign.fromColorResAndUrl(
+                        R.color.colorPrimary,
+                        "http://i4.tietuku.com/3590bb53f5752fe9.jpg");
+//                switch (position) {
+//                    case 0:
+//                        return HeaderDesign.fromColorResAndUrl(
+//                                R.color.colorPrimary,
+//                                "http://i4.tietuku.com/3590bb53f5752fe9.jpg");
+//                    case 1:
+//                        return HeaderDesign.fromColorResAndUrl(
+//                                R.color.colorPrimary,
+//                                "http://i11.tietuku.com/e2718fdc58c721f2.jpg");
+//                    default:
+//                        return HeaderDesign.fromColorResAndUrl(
+//                                R.color.colorPrimary,
+//                                "http://i11.tietuku.com/d308b9a56f1c91b8.jpg");
+//                }
+
+                //execute others actions if needed (ex : modify your header logo)
+
+                //return null;
+            }
+        });
 
         mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
         mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
@@ -180,6 +210,16 @@ public class MainActivity extends BaseActivity {
         initDrawerMenu();
     }
 
+    private void initChannelData() {
+        channelModels = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            ChannelModel channelModel = new ChannelModel(1L,"aaaaaa","AAAAAA","a_a_a_a_a_a","www.baidu.com",1);
+            channelModels.add(channelModel);
+        }
+
+        channelViewPagerAdapter = new ChannelViewPagerAdapter(getSupportFragmentManager(), channelModels);
+    }
+
     private void initDrawerMenu() {
         Log.d(TAG, "initDrawerMenu debug, start");
         leftDrawerMenu = findViewById(R.id.left_drawer);
@@ -190,13 +230,14 @@ public class MainActivity extends BaseActivity {
         TextView drawer_user_email = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_header_user_email);
         TextView drawer_settings_click = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_bottom_settings_click);
         TextView drawer_exit_click = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_bottom_exit_click);
-        ListView drawer_menu_list = (ListView) leftDrawerMenu.findViewById(R.id.rv_menu_list);
+        //ListView drawer_menu_list = (ListView) leftDrawerMenu.findViewById(R.id.rv_menu_list);
         drawer_user_avatar.setOnClickListener(viewOnClickListener);
         drawer_add_feeds_click.setOnClickListener(viewOnClickListener);
         drawer_settings_click.setOnClickListener(viewOnClickListener);
         drawer_exit_click.setOnClickListener(viewOnClickListener);
 
-        initDrawerMenuData();
+        //initDrawerMenuData();
+        /*
         mAdapter = new MenuAdapter(MainActivity.this, mMenuItems);
         drawer_menu_list.setAdapter(mAdapter);
         drawer_menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -205,10 +246,12 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(MainActivity.this, "Click Position = " + position + ", MenuId = " + mMenuItems.get(position).getMenuGUID(), Toast.LENGTH_SHORT).show();
             }
         });
+        */
         //mAdapter.notifyDataSetChanged();
         Log.d(TAG, "initDrawerMenu debug, end");
     }
 
+    /*
     private void initDrawerMenuData() {
         Log.d(TAG, "initDrawerMenuData debug, start");
         try {
@@ -245,11 +288,12 @@ public class MainActivity extends BaseActivity {
             }
         }
     }
+    */
 
     public void refreshMenu() {
-        cursor.requery();
-        getDataFromCursor(cursor);
-        mAdapter.notifyDataSetChanged();
+        //cursor.requery();
+        //getDataFromCursor(cursor);
+        //mAdapter.notifyDataSetChanged();
     }
 
     private View.OnClickListener viewOnClickListener = new View.OnClickListener() {
@@ -361,7 +405,6 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
-
 
 
     @Override
