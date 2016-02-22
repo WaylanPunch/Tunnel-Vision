@@ -2,18 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_messages"
+        android:id="@+id/action_subscribe"
         android:orderInCategory="100"
-        android:title="@string/action_messages"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_shortcut"
-        android:orderInCategory="101"
-        android:title="@string/action_shortcut"
+        android:title="@string/action_subscribe"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_share"
-        android:orderInCategory="102"
+        android:orderInCategory="101"
         android:title="@string/action_share"
         app:showAsAction="never" />
 </menu>

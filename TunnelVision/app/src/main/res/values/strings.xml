@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Tunnel Vision</string>
-    <string name="action_messages">消息</string>
+    <string name="action_subscribe">订阅</string>
     <string name="action_shortcut">快捷方式</string>
-    <string name="action_share">共享</string>
+    <string name="action_share">分享</string>
     <string name="large_text">什么鬼</string>
     <string name="action_settings">设置</string>
     <string name="action_temperature">温度</string>
@@ -22,4 +22,5 @@
     <string name="menu_title_weather">天气</string>
     <string name="menu_title_settings">设置</string>
     <string name="menu_title_exit">退出</string>
+    <string name="title_activity_scrolling">ScrollingActivity</string>
 </resources>

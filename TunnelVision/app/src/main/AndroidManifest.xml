@@ -25,8 +25,8 @@
         </activity>
         <activity android:name=".ui.activity.TestActivity" />
         <activity
-            android:name=".ui.activity.FeedsLibraryActivity"
-            android:label="@string/title_activity_feeds_library"></activity>
+            android:name=".ui.activity.ChannelLibraryActivity"
+            android:label="@string/title_activity_feeds_library" />
     </application>
 
 </manifest>

@@ -26,13 +26,10 @@ import com.github.siyamed.shapeimageview.CircularImageView;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.ChannelViewPagerAdapter;
 import com.way.tunnelvision.model.ChannelModel;
+import com.way.tunnelvision.model.dao.ChannelDao;
 import com.way.tunnelvision.model.dao.DaoMaster;
 import com.way.tunnelvision.model.dao.DaoSession;
-import com.way.tunnelvision.model.dao.MenuDao;
 import com.way.tunnelvision.ui.base.BaseActivity;
-import com.way.tunnelvision.ui.fragment.NewsFragment;
-import com.way.tunnelvision.ui.fragment.RecommendFragment;
-import com.way.tunnelvision.ui.fragment.TopicFragment;
 import com.way.tunnelvision.util.ActivityCollector;
 
 import java.util.ArrayList;
@@ -47,7 +44,7 @@ public class MainActivity extends BaseActivity {
     private SQLiteDatabase db;
     private DaoMaster daoMaster;
     private DaoSession daoSession;
-    private MenuDao menuDao;
+    private ChannelDao channelDao;
     private Cursor cursor;
 
     private MaterialViewPager mViewPager;
@@ -62,9 +59,9 @@ public class MainActivity extends BaseActivity {
     private List<ChannelModel> channelModels;
     private ChannelViewPagerAdapter channelViewPagerAdapter;
 
-    NewsFragment newsFragment;
-    TopicFragment topicFragment;
-    RecommendFragment recommendFragment;
+//    NewsFragment newsFragment;
+//    TopicFragment topicFragment;
+//    RecommendFragment recommendFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,13 +208,30 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initChannelData() {
+        Log.d(TAG, "initChannelData debug, start");
         channelModels = new ArrayList<>();
+        /*
+        try {
+            DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Constants.DATABASE_NAME, null);
+            db = helper.getReadableDatabase();
+            daoMaster = new DaoMaster(db);
+            daoSession = daoMaster.newSession();
+            channelDao = daoSession.getChannelDao();
+
+            String orderColumn = ChannelDao.Properties.ChannelChosen.columnName;
+            String orderBy = orderColumn + " COLLATE LOCALIZED ASC";
+            cursor = db.query(channelDao.getTablename(), channelDao.getAllColumns(), null, null, null, null, orderBy);
+            getChannelDataFromCursor(cursor);
+        } catch (Exception e) {
+            Log.e(TAG, "initChannelData error", e);
+        }
+        */
         for (int i = 0; i < 3; i++) {
             ChannelModel channelModel = new ChannelModel(1L,"aaaaaa","AAAAAA","a_a_a_a_a_a","www.baidu.com",1);
             channelModels.add(channelModel);
         }
-
         channelViewPagerAdapter = new ChannelViewPagerAdapter(getSupportFragmentManager(), channelModels);
+        Log.d(TAG, "initChannelData debug, end");
     }
 
     private void initDrawerMenu() {
@@ -251,44 +265,34 @@ public class MainActivity extends BaseActivity {
         Log.d(TAG, "initDrawerMenu debug, end");
     }
 
-    /*
-    private void initDrawerMenuData() {
-        Log.d(TAG, "initDrawerMenuData debug, start");
+
+    public void getChannelDataFromCursor(Cursor cursor1) {
+        Log.d(TAG, "getChannelDataFromCursor debug, start");
         try {
-            DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Constants.DATABASE_NAME, null);
-            db = helper.getReadableDatabase();
-            daoMaster = new DaoMaster(db);
-            daoSession = daoMaster.newSession();
-            menuDao = daoSession.getMenuDao();
-
-            String orderColumn = MenuDao.Properties.MenuTitle.columnName;
-            String orderBy = orderColumn + " COLLATE LOCALIZED ASC";
-            cursor = db.query(menuDao.getTablename(), menuDao.getAllColumns(), null, null, null, null, orderBy);
-            getDataFromCursor(cursor);
-        } catch (Exception e) {
-            Log.e(TAG, "initDrawerMenuData error", e);
-        }
-        Log.d(TAG, "initDrawerMenuData debug, end");
-    }
-
-    public void getDataFromCursor(Cursor cursor1){
-        if (null != cursor1) {
-            mMenuItems.clear();
-            while (cursor1.moveToNext()) {
-                int columnIndex_id = cursor1.getColumnIndex(MenuDao.COLUMNNAME_ID);
-                Long id = cursor1.getLong(columnIndex_id);
-                int columnIndex_guid = cursor1.getColumnIndex(MenuDao.COLUMNNAME_GUID);
-                String guid = cursor1.getString(columnIndex_guid);
-                int columnIndex_title = cursor1.getColumnIndex(MenuDao.COLUMNNAME_TITLE);
-                String title = cursor1.getString(columnIndex_title);
-                int columnIndex_link = cursor1.getColumnIndex(MenuDao.COLUMNNAME_LINK);
-                String link = cursor1.getString(columnIndex_link);
-                MenuModel menuModel = new MenuModel(id, guid, title, link);
-                mMenuItems.add(menuModel);
+            if (null != cursor1 && cursor1.getCount() > 0) {
+                channelModels.clear();
+                while (cursor1.moveToNext()) {
+                    int columnIndex_id = cursor1.getColumnIndex(ChannelDao.COLUMNNAME_ID);
+                    Long id = cursor1.getLong(columnIndex_id);
+                    int columnIndex_guid = cursor1.getColumnIndex(ChannelDao.COLUMNNAME_GUID);
+                    String guid = cursor1.getString(columnIndex_guid);
+                    int columnIndex_title = cursor1.getColumnIndex(ChannelDao.COLUMNNAME_TITLE);
+                    String title = cursor1.getString(columnIndex_title);
+                    int columnIndex_name = cursor1.getColumnIndex(ChannelDao.COLUMNNAME_NAME);
+                    String name = cursor1.getString(columnIndex_name);
+                    int columnIndex_link = cursor1.getColumnIndex(ChannelDao.COLUMNNAME_LINK);
+                    String link = cursor1.getString(columnIndex_link);
+                    int columnIndex_chosen = cursor1.getColumnIndex(ChannelDao.COLUMNNAME_CHOSEN);
+                    int chosen = cursor1.getInt(columnIndex_chosen);
+                    ChannelModel channelModel = new ChannelModel(id, guid, title, name, link, chosen);
+                    channelModels.add(channelModel);
+                }
             }
+        } catch (Exception e) {
+            Log.e(TAG, "getChannelDataFromCursor error", e);
         }
+        Log.d(TAG, "getChannelDataFromCursor debug, end");
     }
-    */
 
     public void refreshMenu() {
         //cursor.requery();
@@ -304,10 +308,10 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(MainActivity.this, "To My Home.", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.tv_drawer_header_add_feeds_click) {
                 Toast.makeText(MainActivity.this, "To Add feeds.", Toast.LENGTH_SHORT).show();
-                //openActivity(FeedsLibraryActivity.class);
-                // 请求码的值随便设置，但必须>=0
-                requestCode = 0;
-                openActivityForResult(FeedsLibraryActivity.class, requestCode);
+                //openActivity(ChannelLibraryActivity.class);
+//                // 请求码的值随便设置，但必须>=0
+//                requestCode = 0;
+//                openActivityForResult(ChannelLibraryActivity.class, requestCode);
                 //startActivityForResult(mIntent, requestCode);
             } else if (id == R.id.tv_drawer_bottom_settings_click) {
                 Toast.makeText(MainActivity.this, "To App Settings.", Toast.LENGTH_SHORT).show();
@@ -353,24 +357,15 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_messages) {
+        if (id == R.id.action_subscribe) {
 //            ToastUtil.show(MainActivity.this, "Settings");
 //            Intent intent = new Intent(MainActivity.this, TestActivity.class);
 //            startActivity(intent);
 //            CrashReport.testJavaCrash();
-            openActivity(TestActivity.class);
-            return true;
-        } else if (id == R.id.action_shortcut) {
-            // 设置关联程序
-//            Intent launcherIntent = new Intent(Intent.ACTION_MAIN);
-//            launcherIntent.setClass(MainActivity.this, MainActivity.class);
-//            launcherIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-//            boolean shortcutAdded = Utils.addShortcut(MainActivity.this, launcherIntent, false);
-//            if (shortcutAdded){
-//                ToastUtil.show(MainActivity.this, "Succeed to Add Shortcut!");
-//            }else {
-//                ToastUtil.show(MainActivity.this, "Failed to Add Shortcut!");
-//            }
+            // 请求码的值随便设置，但必须>=0
+            requestCode = 0;
+            openActivityForResult(ChannelLibraryActivity.class, requestCode);
+            //openActivity(TestActivity.class);
             return true;
         } else if (id == R.id.action_share) {
 //            ToastUtil.show(MainActivity.this, "Messages");

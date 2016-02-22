@@ -17,7 +17,7 @@ public class ChannelModel implements Parcelable {
     private String channelTitle;
     private String channelName;
     private String channelLink;
-    private int channelChosen;//Sqlite没有单独的布尔存储类型，它使用INTEGER作为存储类型，0为false，1为true
+    private int channelChosen;//0默认, 1选择, 2未选择
 
     public Long getId() {
         return id;
