@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".base.MainApp"
@@ -16,7 +17,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.MainActivity">
+        <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,6 +28,39 @@
         <activity
             android:name=".ui.activity.ChannelLibraryActivity"
             android:label="@string/title_activity_feeds_library" />
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:label="@string/app_name" />
+        <activity android:name=".ui.activity.AdDisplayActivity"></activity>
+
+        <!-- YouMi广告视频组件-->
+        <activity
+            android:name="kll.dod.rtk.video.VideoActivity"
+            android:configChanges="keyboard|keyboardHidden|screenSize|orientation"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity >
+
+        <!-- YouMi广告其他组件 -->
+        <activity
+            android:name="kll.dod.rtk.OO"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity >
+        <!-- YouMi广告服务 -->
+        <service
+            android:name="kll.dod.rtk.BB"
+            android:exported="false" >
+        </service >
+        <!-- YouMi广告接收组件 -->
+        <receiver android:name="kll.dod.rtk.GG" >
+            <intent-filter >
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_INSTALL" />
+
+                <data android:scheme="package" />
+            </intent-filter >
+        </receiver >
     </application>
 
 </manifest>

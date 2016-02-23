@@ -23,4 +23,6 @@
     <string name="menu_title_settings">设置</string>
     <string name="menu_title_exit">退出</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>

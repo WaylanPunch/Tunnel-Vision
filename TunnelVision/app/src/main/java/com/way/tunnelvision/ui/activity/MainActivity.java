@@ -308,7 +308,7 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(MainActivity.this, "To My Home.", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.tv_drawer_header_add_feeds_click) {
                 Toast.makeText(MainActivity.this, "To Add feeds.", Toast.LENGTH_SHORT).show();
-                //openActivity(ChannelLibraryActivity.class);
+                openActivity(ChannelLibraryActivity.class);
 //                // 请求码的值随便设置，但必须>=0
 //                requestCode = 0;
 //                openActivityForResult(ChannelLibraryActivity.class, requestCode);

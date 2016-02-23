@@ -10,6 +10,9 @@ public class Constants {
     public static final String  BUGLY_APPID = "900018056";
     public static final String  BUGLY_APPKEY = "Pb08l8XkjzZMtX5c";
 
+    public static final String YouMi_ID = "2b60c18b7e10fab4";
+    public static final String YouMi_KEY = "46f38e0e7ac8754e";
+
     public  class RSS {
         public static final String RSS_CHANNEL = "channel";
         public static final String RSS_CHANNEL_TITLE = "rss channel title";

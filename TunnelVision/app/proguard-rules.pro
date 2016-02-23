@@ -16,3 +16,7 @@
 #   public *;
 #}
 -keep public class com.tencent.bugly.**{*;}
+-dontwarn kll.dod.rtk.**
+-keepclassmembers class kll.dod.rtk.libs.adsbase.js.base.JsInterface_Impl {
+    *;
+}
