@@ -25,6 +25,7 @@ import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.ChannelViewPagerAdapter;
+import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.model.ChannelModel;
 import com.way.tunnelvision.model.dao.ChannelDao;
 import com.way.tunnelvision.model.dao.DaoMaster;
@@ -210,7 +211,7 @@ public class MainActivity extends BaseActivity {
     private void initChannelData() {
         Log.d(TAG, "initChannelData debug, start");
         channelModels = new ArrayList<>();
-        /*
+        ///*
         try {
             DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Constants.DATABASE_NAME, null);
             db = helper.getReadableDatabase();
@@ -225,11 +226,13 @@ public class MainActivity extends BaseActivity {
         } catch (Exception e) {
             Log.e(TAG, "initChannelData error", e);
         }
-        */
+        //*/
+        /*
         for (int i = 0; i < 3; i++) {
             ChannelModel channelModel = new ChannelModel(1L,"aaaaaa","AAAAAA","a_a_a_a_a_a","www.baidu.com",1);
             channelModels.add(channelModel);
         }
+        */
         channelViewPagerAdapter = new ChannelViewPagerAdapter(getSupportFragmentManager(), channelModels);
         Log.d(TAG, "initChannelData debug, end");
     }

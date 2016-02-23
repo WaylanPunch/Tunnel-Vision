@@ -16,7 +16,6 @@ import com.way.tunnelvision.model.dao.ChannelDao;
 import com.way.tunnelvision.model.dao.DaoMaster;
 import com.way.tunnelvision.model.dao.DaoSession;
 import com.way.tunnelvision.ui.base.BaseActivity;
-import com.way.tunnelvision.util.ActivityCollector;
 
 public class ChannelLibraryActivity extends BaseActivity {
     private final static String TAG = ChannelLibraryActivity.class.getName();
@@ -126,8 +125,14 @@ public class ChannelLibraryActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ActivityCollector.removeActivity(ChannelLibraryActivity.this);
-        db.close();
-        daoSession.clear();
+        if (null != cursor) {
+            cursor.close();
+        }
+        if (null != daoSession) {
+            daoSession.clear();
+        }
+        if (null != db) {
+            db.close();
+        }
     }
 }
