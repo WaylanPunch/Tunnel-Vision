@@ -51,7 +51,7 @@ public class SplashActivity extends BaseActivity {
         mSectionsPagerAdapter = new SplashViewPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.vp_splash_viewpagercontainer);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         initDataBase();
