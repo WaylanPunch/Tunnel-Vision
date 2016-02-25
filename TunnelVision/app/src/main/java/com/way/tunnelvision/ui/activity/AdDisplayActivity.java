@@ -2,6 +2,8 @@ package com.way.tunnelvision.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,8 +12,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.model.dao.ChannelDao;
+import com.way.tunnelvision.model.dao.DaoMaster;
+import com.way.tunnelvision.model.dao.DaoSession;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
+import com.way.tunnelvision.util.DatabaseUtil;
 
 import kll.dod.rtk.st.SplashView;
 import kll.dod.rtk.st.SpotDialogListener;
@@ -20,12 +26,20 @@ import kll.dod.rtk.st.SpotManager;
 public class AdDisplayActivity extends BaseActivity {
     private final static String TAG = AdDisplayActivity.class.getName();
 
+    private SQLiteDatabase db;
+    private DaoMaster daoMaster;
+    private DaoSession daoSession;
+    private ChannelDao channelDao;
+    private Cursor cursor;
+
     private Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ad_display);
         mContext = this;
+
+        DatabaseUtil.initDataBase(this);
 
         //设置开屏广告
         setupSplashAd();
@@ -96,5 +110,10 @@ public class AdDisplayActivity extends BaseActivity {
     public void onBackPressed() {
         super.onBackPressed();
         ActivityCollector.finishAll();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
     }
 }

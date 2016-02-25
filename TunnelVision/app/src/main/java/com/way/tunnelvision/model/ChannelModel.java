@@ -3,6 +3,8 @@ package com.way.tunnelvision.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.way.tunnelvision.util.StringUtil;
+
 /**
  * Created by pc on 2016/2/20.
  */
@@ -65,6 +67,10 @@ public class ChannelModel implements Parcelable {
 
     public void setChannelChosen(int channelChosen) {
         this.channelChosen = channelChosen;
+    }
+
+    public String getChannelTitleInitial() {
+        return StringUtil.getInitialOfString(this.channelTitle);
     }
 
     public ChannelModel() {

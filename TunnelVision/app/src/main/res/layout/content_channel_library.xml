@@ -9,10 +9,26 @@
     tools:showIn="@layout/activity_channel_library">
 
     <LinearLayout
+        android:id="@+id/ll_channel_library_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <ListView
+            android:id="@+id/lv_channel_library_chosen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+        </ListView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="6dip"
+            android:background="@drawable/ic_list_divider_bg"></View>
+        <ListView
+            android:id="@+id/lv_channel_library_unchosen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ListView>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

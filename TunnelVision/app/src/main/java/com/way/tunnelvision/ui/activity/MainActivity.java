@@ -432,10 +432,16 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //listData = null;
+        if (null != cursor) {
+            cursor.close();
+        }
+        if (null != daoSession) {
+            daoSession.clear();
+        }
+        if (null != db) {
+            db.close();
+        }
         ActivityCollector.finishAll();
-        db.close();
-        daoSession.clear();
     }
 
 }

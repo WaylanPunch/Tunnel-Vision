@@ -8,8 +8,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.adapter.ChannelChosenAdapter;
 import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.model.ChannelModel;
 import com.way.tunnelvision.model.dao.ChannelDao;
@@ -17,8 +19,12 @@ import com.way.tunnelvision.model.dao.DaoMaster;
 import com.way.tunnelvision.model.dao.DaoSession;
 import com.way.tunnelvision.ui.base.BaseActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChannelLibraryActivity extends BaseActivity {
     private final static String TAG = ChannelLibraryActivity.class.getName();
+
     private int resultCode = 0;
 
     private SQLiteDatabase db;
@@ -26,8 +32,12 @@ public class ChannelLibraryActivity extends BaseActivity {
     private DaoSession daoSession;
     private ChannelDao channelDao;
     private Cursor cursor;
+    private List<ChannelModel> channelModelsChosen = new ArrayList<>();
+    private List<ChannelModel> channelModelsUnchosen = new ArrayList<>();
+    private ChannelChosenAdapter channelChosenAdapter, channelUnchosenAdapter;
 
     private FloatingActionButton fab;
+    ListView lv_chosenList, lv_unchosenList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +72,49 @@ public class ChannelLibraryActivity extends BaseActivity {
 
 
         });
+
+        lv_chosenList = (ListView) findViewById(R.id.lv_channel_library_chosen);
+        lv_unchosenList = (ListView) findViewById(R.id.lv_channel_library_unchosen);
+        initListData();
+        channelChosenAdapter = new ChannelChosenAdapter(ChannelLibraryActivity.this, channelModelsChosen);
+        channelUnchosenAdapter = new ChannelChosenAdapter(ChannelLibraryActivity.this, channelModelsUnchosen);
+        lv_chosenList.setAdapter(channelChosenAdapter);
+        lv_unchosenList.setAdapter(channelUnchosenAdapter);
+    }
+
+    private void initListData() {
+        Log.d(TAG, "initListData debug, start");
+        try {
+            String orderColumn = ChannelDao.Properties.ChannelChosen.columnName;
+            String orderBy = orderColumn + " COLLATE LOCALIZED ASC";
+            cursor = db.query(channelDao.getTablename(), channelDao.getAllColumns(), null, null, null, null, orderBy);
+            if (null != cursor && cursor.getCount() > 0) {
+                Log.d(TAG, "initListData debug, Cursor Row Count = " + cursor.getCount());
+                while (cursor.moveToNext()) {
+                    int columnIndex_id = cursor.getColumnIndex(ChannelDao.COLUMNNAME_ID);
+                    Long id = cursor.getLong(columnIndex_id);
+                    int columnIndex_guid = cursor.getColumnIndex(ChannelDao.COLUMNNAME_GUID);
+                    String guid = cursor.getString(columnIndex_guid);
+                    int columnIndex_title = cursor.getColumnIndex(ChannelDao.COLUMNNAME_TITLE);
+                    String title = cursor.getString(columnIndex_title);
+                    int columnIndex_name = cursor.getColumnIndex(ChannelDao.COLUMNNAME_NAME);
+                    String name = cursor.getString(columnIndex_name);
+                    int columnIndex_link = cursor.getColumnIndex(ChannelDao.COLUMNNAME_LINK);
+                    String link = cursor.getString(columnIndex_link);
+                    int columnIndex_chosen = cursor.getColumnIndex(ChannelDao.COLUMNNAME_CHOSEN);
+                    int chosen = cursor.getInt(columnIndex_chosen);
+                    ChannelModel channelModel = new ChannelModel(id, guid, title, name, link, chosen);
+                    if (0 == chosen || 1 == chosen) {
+                        channelModelsChosen.add(channelModel);
+                    } else {
+                        channelModelsUnchosen.add(channelModel);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "initListData error", e);
+        }
+        Log.d(TAG, "initListData debug, end");
     }
 
     private void initDataTableChannel() {

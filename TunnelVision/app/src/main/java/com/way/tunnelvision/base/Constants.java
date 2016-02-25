@@ -4,12 +4,18 @@ package com.way.tunnelvision.base;
  * Created by pc on 2016/1/16.
  */
 public class Constants {
-    public static final String  PREFERENCE_NAME = "TunnelVisionPrefs";
+    //SharedPreferences
+    public static final String PREFERENCE_NAME = "TunnelVisionPrefs";
+    public static final String PREFERENCE_KEY_FIRST_ENTER = "First_Enter";
+
+    //SQLite Database
     public static final String  DATABASE_NAME = "TunnelVisionDB";
 
+    //Bugly监控追踪
     public static final String  BUGLY_APPID = "900018056";
     public static final String  BUGLY_APPKEY = "Pb08l8XkjzZMtX5c";
 
+    //YouMi广告
     public static final String YouMi_ID = "2b60c18b7e10fab4";
     public static final String YouMi_KEY = "46f38e0e7ac8754e";
 
