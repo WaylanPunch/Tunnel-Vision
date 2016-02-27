@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.ChannelUnchosenAdapter;
@@ -62,13 +61,13 @@ public class ChannelLibraryActivity extends BaseActivity {
 
     private void initDataBase() {
         Log.d(TAG, "initDataBase debug, start");
-        try{
+        try {
             DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Constants.DATABASE_NAME, null);
             db = helper.getWritableDatabase();
             daoMaster = new DaoMaster(db);
             daoSession = daoMaster.newSession();
             channelDao = daoSession.getChannelDao();
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e(TAG, "initDataBase error", e);
         }
         Log.d(TAG, "initDataBase debug, end");
@@ -76,7 +75,7 @@ public class ChannelLibraryActivity extends BaseActivity {
 
     private void initView() {
         Log.d(TAG, "initView debug, start");
-        try{
+        try {
             fab = (FloatingActionButton) findViewById(R.id.fab_channel_liabrary_initialize);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -97,7 +96,7 @@ public class ChannelLibraryActivity extends BaseActivity {
 
 
             initListData();
-            Log.d(TAG,"initView debug, Channel Items Count = " + channelModelsUnchosen.size());
+            Log.d(TAG, "initView debug, Channel Items Count = " + channelModelsUnchosen.size());
             channelUnchosenAdapter = new ChannelUnchosenAdapter(ChannelLibraryActivity.this, channelModelsUnchosen);
             //channelUnchosenAdapter = new ChannelChosenAdapter(ChannelLibraryActivity.this, channelModelsUnchosen);
             //lv_chosenList.setAdapter(channelUnchosenAdapter);
@@ -115,11 +114,25 @@ public class ChannelLibraryActivity extends BaseActivity {
 
                         @Override
                         public void onDismiss(View view) {
-                            int id = rv_unchosenList.getChildPosition(view);
-                            channelUnchosenAdapter.getContents().remove(id);
-                            channelUnchosenAdapter.notifyDataSetChanged();
+                            int position = rv_unchosenList.getChildPosition(view);
+                            ChannelModel channelItem = channelModelsUnchosen.get(position);
+                            if (1 == channelItem.getChannelChosen()) {
+                                channelItem.setChannelChosen(2);
+                                channelModelsUnchosen.set(position, channelItem);
+                                channelUnchosenAdapter.notifyDataSetChanged();
+                                Snackbar.make(view, "Cancel Channel", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                            } else if (2 == channelItem.getChannelChosen()) {
+                                channelItem.setChannelChosen(1);
+                                channelModelsUnchosen.set(position, channelItem);
+                                channelUnchosenAdapter.notifyDataSetChanged();
+                                Snackbar.make(view, "Add Channel", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                            } else {
 
-                            Toast.makeText(getBaseContext(), String.format("Delete item %d", id), Toast.LENGTH_LONG).show();
+                            }
+                            //channelUnchosenAdapter.getContents().remove(position);
+
+
+                            //Toast.makeText(getBaseContext(), String.format("Delete item %d", position), Toast.LENGTH_LONG).show();
                         }
                     })
                     .setIsVertical(false)
@@ -133,7 +146,7 @@ public class ChannelLibraryActivity extends BaseActivity {
                     .create();
 
             rv_unchosenList.setOnTouchListener(listener);
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e(TAG, "initView error", e);
         }
         Log.d(TAG, "initView debug, end");
