@@ -54,5 +54,6 @@ dependencies {
     compile 'org.jsoup:jsoup:1.8.3'
     compile 'de.greenrobot:greendao:2.1.0'
     compile 'com.android.support:support-v13:23.1.1'
+    compile 'com.github.CodeFalling:RecyclerViewSwipeDismiss:v1.1.1'
     compile files('libs/YoumiSdk_v5.3.1_2016-01-05.jar')
 }

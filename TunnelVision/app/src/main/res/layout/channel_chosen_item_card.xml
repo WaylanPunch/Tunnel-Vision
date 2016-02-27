@@ -28,6 +28,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="48dip"
             android:text="New Text"
+            android:typeface="serif"
             android:textColor="@color/colorSecondaryText" />
 
         <ImageView

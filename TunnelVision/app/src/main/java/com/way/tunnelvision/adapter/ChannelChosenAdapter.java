@@ -73,20 +73,27 @@ public class ChannelChosenAdapter extends BaseAdapter {
             holder = (ViewHolderChannel) convertView.getTag();//取出ViewHolder对象
         }
         /*设置TextView显示的内容，即我们存放在动态数组中的数据*/
-
-        int getcolor = mContext.getResources().getColor(R.color.colorPrimary);
-        TextDrawable drawable = TextDrawable.builder()
-                .beginConfig()
-                .width(40)  // width in px
-                .height(40) // height in px
-                .endConfig()
-                .buildRound(channelModel.getChannelTitleInitial(), getcolor);
-        holder.iv_icon.setImageDrawable(drawable);
         holder.tv_title.setText(channelModel.getChannelTitle());
         int chosen = channelModel.getChannelChosen();
         if (0 == chosen || 1 == chosen) {
+            int getChosencolor = mContext.getResources().getColor(R.color.colorPrimary);
+            TextDrawable drawable = TextDrawable.builder()
+                    .beginConfig()
+                    .width(40)  // width in px
+                    .height(40) // height in px
+                    .endConfig()
+                    .buildRound(channelModel.getChannelTitleInitial(), getChosencolor);
+            holder.iv_icon.setImageDrawable(drawable);
             holder.iv_press.setBackgroundResource(R.drawable.ic_bookmark_primary);
         } else {
+            int getUnchosencolor = mContext.getResources().getColor(R.color.gray);
+            TextDrawable drawable = TextDrawable.builder()
+                    .beginConfig()
+                    .width(40)  // width in px
+                    .height(40) // height in px
+                    .endConfig()
+                    .buildRound(channelModel.getChannelTitleInitial(), getUnchosencolor);
+            holder.iv_icon.setImageDrawable(drawable);
             holder.iv_press.setBackgroundResource(R.drawable.ic_bookmark_plus_gray);
         }
         return convertView;

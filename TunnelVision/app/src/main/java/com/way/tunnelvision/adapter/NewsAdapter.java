@@ -53,16 +53,16 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = null;
+        //View view = null;
 
         switch (viewType) {
             case TYPE_HEADER: {
-                view = LayoutInflater.from(parent.getContext())
+                View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.news_item_card_big, parent, false);
                 return new ViewHolderBig(view);
             }
             case TYPE_CELL: {
-                view = LayoutInflater.from(parent.getContext())
+                View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.news_item_card_small, parent, false);
                 return new ViewHolderSmall(view);
             }

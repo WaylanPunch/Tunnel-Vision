@@ -5,13 +5,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.way.tunnelvision.R;
-import com.way.tunnelvision.adapter.ChannelChosenAdapter;
+import com.way.tunnelvision.adapter.ChannelUnchosenAdapter;
 import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.model.ChannelModel;
 import com.way.tunnelvision.model.dao.ChannelDao;
@@ -21,6 +26,8 @@ import com.way.tunnelvision.ui.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.github.codefalling.recyclerviewswipedismiss.SwipeDismissRecyclerViewTouchListener;
 
 public class ChannelLibraryActivity extends BaseActivity {
     private final static String TAG = ChannelLibraryActivity.class.getName();
@@ -32,12 +39,14 @@ public class ChannelLibraryActivity extends BaseActivity {
     private DaoSession daoSession;
     private ChannelDao channelDao;
     private Cursor cursor;
-    private List<ChannelModel> channelModelsChosen = new ArrayList<>();
+    //private List<ChannelModel> channelModelsChosen = new ArrayList<>();
     private List<ChannelModel> channelModelsUnchosen = new ArrayList<>();
-    private ChannelChosenAdapter channelChosenAdapter, channelUnchosenAdapter;
+    //private ChannelChosenAdapter channelChosenAdapter;
+    private ChannelUnchosenAdapter channelUnchosenAdapter;
 
     private FloatingActionButton fab;
-    ListView lv_chosenList, lv_unchosenList;
+    //private ListView lv_chosenList;
+    private RecyclerView rv_unchosenList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,34 +61,82 @@ public class ChannelLibraryActivity extends BaseActivity {
     }
 
     private void initDataBase() {
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Constants.DATABASE_NAME, null);
-        db = helper.getWritableDatabase();
-        daoMaster = new DaoMaster(db);
-        daoSession = daoMaster.newSession();
-        channelDao = daoSession.getChannelDao();
+        Log.d(TAG, "initDataBase debug, start");
+        try{
+            DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Constants.DATABASE_NAME, null);
+            db = helper.getWritableDatabase();
+            daoMaster = new DaoMaster(db);
+            daoSession = daoMaster.newSession();
+            channelDao = daoSession.getChannelDao();
+        }catch (Exception e){
+            Log.e(TAG, "initDataBase error", e);
+        }
+        Log.d(TAG, "initDataBase debug, end");
     }
 
     private void initView() {
-        fab = (FloatingActionButton) findViewById(R.id.fab_channel_liabrary_initialize);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+        Log.d(TAG, "initView debug, start");
+        try{
+            fab = (FloatingActionButton) findViewById(R.id.fab_channel_liabrary_initialize);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
 
-                initDataTableChannel();
-            }
+                    initDataTableChannel();
+                }
 
 
-        });
+            });
 
-        lv_chosenList = (ListView) findViewById(R.id.lv_channel_library_chosen);
-        lv_unchosenList = (ListView) findViewById(R.id.lv_channel_library_unchosen);
-        initListData();
-        channelChosenAdapter = new ChannelChosenAdapter(ChannelLibraryActivity.this, channelModelsChosen);
-        channelUnchosenAdapter = new ChannelChosenAdapter(ChannelLibraryActivity.this, channelModelsUnchosen);
-        lv_chosenList.setAdapter(channelChosenAdapter);
-        lv_unchosenList.setAdapter(channelUnchosenAdapter);
+            //lv_chosenList = (ListView) findViewById(R.id.lv_channel_library_chosen);
+            rv_unchosenList = (RecyclerView) findViewById(R.id.rv_channel_library_unchosen);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            rv_unchosenList.setLayoutManager(layoutManager);
+
+
+            initListData();
+            Log.d(TAG,"initView debug, Channel Items Count = " + channelModelsUnchosen.size());
+            channelUnchosenAdapter = new ChannelUnchosenAdapter(ChannelLibraryActivity.this, channelModelsUnchosen);
+            //channelUnchosenAdapter = new ChannelChosenAdapter(ChannelLibraryActivity.this, channelModelsUnchosen);
+            //lv_chosenList.setAdapter(channelUnchosenAdapter);
+            rv_unchosenList.setAdapter(channelUnchosenAdapter);
+            //setListViewHeightBasedOnChildren(lv_chosenList);
+            //setListViewHeightBasedOnChildren(lv_unchosenList);
+
+            SwipeDismissRecyclerViewTouchListener listener = new SwipeDismissRecyclerViewTouchListener.Builder(
+                    rv_unchosenList,
+                    new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
+                        @Override
+                        public boolean canDismiss(int position) {
+                            return true;
+                        }
+
+                        @Override
+                        public void onDismiss(View view) {
+                            int id = rv_unchosenList.getChildPosition(view);
+                            channelUnchosenAdapter.getContents().remove(id);
+                            channelUnchosenAdapter.notifyDataSetChanged();
+
+                            Toast.makeText(getBaseContext(), String.format("Delete item %d", id), Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .setIsVertical(false)
+                    .setItemTouchCallback(
+                            new SwipeDismissRecyclerViewTouchListener.OnItemTouchCallBack() {
+                                @Override
+                                public void onTouch(int index) {
+                                    //showDialog(String.format("Click item %d", index));
+                                }
+                            })
+                    .create();
+
+            rv_unchosenList.setOnTouchListener(listener);
+        }catch (Exception e){
+            Log.e(TAG, "initView error", e);
+        }
+        Log.d(TAG, "initView debug, end");
     }
 
     private void initListData() {
@@ -104,11 +161,11 @@ public class ChannelLibraryActivity extends BaseActivity {
                     int columnIndex_chosen = cursor.getColumnIndex(ChannelDao.COLUMNNAME_CHOSEN);
                     int chosen = cursor.getInt(columnIndex_chosen);
                     ChannelModel channelModel = new ChannelModel(id, guid, title, name, link, chosen);
-                    if (0 == chosen || 1 == chosen) {
-                        channelModelsChosen.add(channelModel);
-                    } else {
-                        channelModelsUnchosen.add(channelModel);
-                    }
+                    //if (0 == chosen || 1 == chosen) {
+                    //channelModelsChosen.add(channelModel);
+                    //} else {
+                    channelModelsUnchosen.add(channelModel);
+                    //}
                 }
             }
         } catch (Exception e) {
@@ -167,6 +224,36 @@ public class ChannelLibraryActivity extends BaseActivity {
             Log.e(TAG, "initDataTableChannel error", e);
         }
         Log.d(TAG, "initDataTableChannel debug, end");
+    }
+
+    /***
+     * 动态设置listview的高度
+     *
+     * @param listView
+     */
+    private void setListViewHeightBasedOnChildren(ListView listView) {
+        Log.d(TAG, "setListViewHeightBasedOnChildren debug, start");
+        try {
+            ListAdapter listAdapter = listView.getAdapter();
+            if (listAdapter == null) {
+                return;
+            }
+            int totalHeight = 0;
+            for (int i = 0; i < listAdapter.getCount(); i++) {
+                View listItem = listAdapter.getView(i, null, listView);
+                listItem.measure(0, 0);  //在还没有构建View 之前无法取得View的度宽,在此之前我们必须选 measure 一下
+                totalHeight += listItem.getMeasuredHeight();
+            }
+            ViewGroup.LayoutParams params = listView.getLayoutParams();
+            params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+            // params.height += 5;// if without this statement,the listview will be a little short
+            // listView.getDividerHeight()获取子项间分隔符占用的高度
+            // params.height最后得到整个ListView完整显示需要的高度
+            listView.setLayoutParams(params);
+        } catch (Exception e) {
+            Log.e(TAG, "setListViewHeightBasedOnChildren error", e);
+        }
+        Log.d(TAG, "setListViewHeightBasedOnChildren debug, end");
     }
 
     @Override
