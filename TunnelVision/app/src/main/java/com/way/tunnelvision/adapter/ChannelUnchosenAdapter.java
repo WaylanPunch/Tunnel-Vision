@@ -1,6 +1,7 @@
 package com.way.tunnelvision.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +60,7 @@ public class ChannelUnchosenAdapter extends RecyclerView.Adapter<ChannelUnchosen
         viewHolder.tv_title.setText(channelItem.getChannelTitle());
         switch (getItemViewType(position)) {
             case TYPE_DEFAULT:
+                viewHolder.cv_container.setBackgroundColor(mContext.getResources().getColor(R.color.grayLight));
                 int defaultcolor = mContext.getResources().getColor(R.color.colorPrimary);
                 TextDrawable defaultDrawable = TextDrawable.builder()
                         .beginConfig()
@@ -116,9 +118,10 @@ public class ChannelUnchosenAdapter extends RecyclerView.Adapter<ChannelUnchosen
         public ImageView iv_icon;
         public TextView tv_title;
         public ImageView iv_press;
-
+        public CardView cv_container;
         public ViewHolderChannelUnchosen(View itemView) {
             super(itemView);
+            cv_container = (CardView) itemView.findViewById(R.id.cv_channel_chosen_item);
             iv_icon = (ImageView) itemView.findViewById(R.id.iv_channel_chosen_item_icon);
             tv_title = (TextView) itemView.findViewById(R.id.tv_channel_chosen_item_title);
             iv_press = (ImageView) itemView.findViewById(R.id.iv_channel_chosen_item_press);

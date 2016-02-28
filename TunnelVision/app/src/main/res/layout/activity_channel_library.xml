@@ -21,7 +21,14 @@
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
+            <ImageView
+                android:id="@+id/iv_channel_library_toolbarbackground"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_drawer_header_background"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7"  />
             <android.support.v7.widget.Toolbar
                 android:id="@+id/tb_channel_library_toolbar"
                 android:layout_width="match_parent"

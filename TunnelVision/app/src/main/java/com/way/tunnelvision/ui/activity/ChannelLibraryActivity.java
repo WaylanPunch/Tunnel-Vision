@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.ChannelUnchosenAdapter;
@@ -109,6 +110,10 @@ public class ChannelLibraryActivity extends BaseActivity {
                     new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
                         @Override
                         public boolean canDismiss(int position) {
+                            ChannelModel channelItem = channelModelsUnchosen.get(position);
+                            if (0 == channelItem.getChannelChosen()){
+                                return false;
+                            }
                             return true;
                         }
 
@@ -120,14 +125,18 @@ public class ChannelLibraryActivity extends BaseActivity {
                                 channelItem.setChannelChosen(2);
                                 channelModelsUnchosen.set(position, channelItem);
                                 channelUnchosenAdapter.notifyDataSetChanged();
-                                Snackbar.make(view, "Cancel Channel", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                                channelDao.update(channelItem);
+                                setResult(resultCode);
+                                Snackbar.make(view, "Cancel Channel", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                             } else if (2 == channelItem.getChannelChosen()) {
                                 channelItem.setChannelChosen(1);
                                 channelModelsUnchosen.set(position, channelItem);
                                 channelUnchosenAdapter.notifyDataSetChanged();
-                                Snackbar.make(view, "Add Channel", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                                channelDao.update(channelItem);
+                                setResult(resultCode);
+                                Snackbar.make(view, "Subscribe Channel", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                             } else {
-
+                                Snackbar.make(view, "Default Channel", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                             }
                             //channelUnchosenAdapter.getContents().remove(position);
 
@@ -141,6 +150,7 @@ public class ChannelLibraryActivity extends BaseActivity {
                                 @Override
                                 public void onTouch(int index) {
                                     //showDialog(String.format("Click item %d", index));
+                                    Toast.makeText(ChannelLibraryActivity.this,"Swipe to Subscribe Channel!",Toast.LENGTH_SHORT).show();
                                 }
                             })
                     .create();

@@ -221,7 +221,8 @@ public class MainActivity extends BaseActivity {
 
             String orderColumn = ChannelDao.Properties.ChannelChosen.columnName;
             String orderBy = orderColumn + " COLLATE LOCALIZED ASC";
-            cursor = db.query(channelDao.getTablename(), channelDao.getAllColumns(), null, null, null, null, orderBy);
+            String selection = orderColumn + " != 2";
+            cursor = db.query(channelDao.getTablename(), channelDao.getAllColumns(), selection, null, null, null, orderBy);
             getChannelDataFromCursor(cursor);
         } catch (Exception e) {
             Log.e(TAG, "initChannelData error", e);
@@ -298,9 +299,9 @@ public class MainActivity extends BaseActivity {
     }
 
     public void refreshMenu() {
-        //cursor.requery();
-        //getDataFromCursor(cursor);
-        //mAdapter.notifyDataSetChanged();
+        cursor.requery();
+        getChannelDataFromCursor(cursor);
+        channelViewPagerAdapter.notifyDataSetChanged();
     }
 
     private View.OnClickListener viewOnClickListener = new View.OnClickListener() {
