@@ -8,8 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.way.tunnelvision.R;
-import com.way.tunnelvision.model.NewsModel;
-import com.way.tunnelvision.util.TimeUtil;
+import com.way.tunnelvision.entity.model.NewsModel;
 
 import java.util.List;
 
@@ -37,13 +36,13 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemViewType(int position) {
-        NewsModel newsItem = contents.get(position);
-        switch (newsItem.getNewsType()) {
-            case 0:
-                return TYPE_HEADER;
-            default:
+        //NewsModel newsItem = contents.get(position);
+//        switch (newsItem.getNewsType()) {
+//            case 0:
+//                return TYPE_HEADER;
+//            default:
                 return TYPE_CELL;
-        }
+        //}
     }
 
     @Override
@@ -77,15 +76,15 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         switch (getItemViewType(position)) {
             case TYPE_HEADER:
                 ViewHolderBig viewHolderBig = (ViewHolderBig) holder;
-                viewHolderBig.iv_icon.setBackgroundResource(Integer.parseInt(newsItem.getNewsIcon()));
-                String dateStrBig = TimeUtil.prettyTimeForDate(newsItem.getNewsTime());
-                viewHolderBig.tv_time.setText(dateStrBig);
+//                viewHolderBig.iv_icon.setBackgroundResource(Integer.parseInt(newsItem.getNewsIcon()));
+//                String dateStrBig = TimeUtil.prettyTimeForDate(newsItem.getNewsTime());
+//                viewHolderBig.tv_time.setText(dateStrBig);
                 break;
             case TYPE_CELL:
                 ViewHolderSmall viewHolderSmall = (ViewHolderSmall) holder;
-                viewHolderSmall.tv_name.setText(newsItem.getNewsTitle());
-                String dateStrSmall = TimeUtil.prettyTimeForDate(newsItem.getNewsTime());
-                viewHolderSmall.tv_time.setText(dateStrSmall);
+//                viewHolderSmall.tv_name.setText(newsItem.getNewsTitle());
+//                String dateStrSmall = TimeUtil.prettyTimeForDate(newsItem.getNewsTime());
+//                viewHolderSmall.tv_time.setText(dateStrSmall);
                 break;
         }
     }

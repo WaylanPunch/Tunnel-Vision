@@ -1,14 +1,15 @@
 package com.way.tunnelvision.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
@@ -16,28 +17,55 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.NewsAdapter;
-import com.way.tunnelvision.model.NewsModel;
-import com.way.tunnelvision.util.TimeUtil;
+import com.way.tunnelvision.base.Constants;
+import com.way.tunnelvision.entity.impl.NewsModelImpl;
+import com.way.tunnelvision.entity.model.ChannelModel;
+import com.way.tunnelvision.entity.model.NewsModel;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * Created by pc on 2016/1/6.
  */
 public class NewsFragment extends Fragment {
+    private final static String TAG = NewsFragment.class.getName();
 
     private XRecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
 
-    private static final int ITEM_COUNT = 10;
+    //private static final int ITEM_COUNT = 10;
     private int loadingTimes = 0;
 
+    private ChannelModel channelModel;
     private List<NewsModel> mContentItems = new ArrayList<>();
+
+    private int mType = Constants.NEWS.NEWS_TYPE_TOP;
+    NewsModelImpl newsModelImpl;
+    private int pageIndex = 0;
 
     public static NewsFragment newInstance() {
         return new NewsFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate debug, start");
+        try {
+            newsModelImpl = new NewsModelImpl();
+            Bundle bundle = getArguments();
+            if (bundle != null) {
+                channelModel = (ChannelModel) bundle.getParcelable(Constants.NEWSFRAGMENT_PARAMETER);
+                Log.d(TAG, "onCreate debug, Channel GUID = " + channelModel.getChannelGUID());
+                Log.d(TAG, "onCreate debug, Channel Title = " + channelModel.getChannelTitle());
+                Log.d(TAG, "onCreate debug, Channel Name = " + channelModel.getChannelName());
+                Log.d(TAG, "onCreate debug, Channel Link = " + channelModel.getChannelLink());
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "onCreate error", e);
+        }
+        Log.d(TAG, "onCreate debug, end");
     }
 
     @Override
@@ -56,7 +84,8 @@ public class NewsFragment extends Fragment {
         mRecyclerView.setLaodingMoreProgressStyle(ProgressStyle.BallRotate);
         mRecyclerView.setArrowImageView(R.drawable.ic_arrow_down_gray);
 
-        initNewsListData();
+
+        //initNewsListData();
 
         mAdapter = new RecyclerViewMaterialAdapter(new NewsAdapter(mContentItems));
         mRecyclerView.setAdapter(mAdapter);
@@ -64,94 +93,63 @@ public class NewsFragment extends Fragment {
 
             @Override
             public void onRefresh() {
-                loadingTimes = 0;
-                new Handler().postDelayed(new Runnable() {
+//                loadingTimes = 0;
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                    }
+//                }, 1000);
+                pageIndex = 0;
+                mContentItems.clear();
+                Log.d(TAG, "onViewCreated onLoadMore debug, Refresh, Begin");
+
+                newsModelImpl.loadNews(mType, pageIndex, new NewsModelImpl.OnLoadNewsListListener() {
                     @Override
-                    public void run() {
-                        mContentItems.clear();
-
-                        NewsModel newsHeader = new NewsModel();
-                        newsHeader.setNewsId("1111111111111");
-                        newsHeader.setNewsType(0);
-                        newsHeader.setNewsIcon(R.drawable.ic_drawer_header_background + "");
-                        newsHeader.setNewsTitle("aaaaaaaaaaaaaaaaaa");
-                        newsHeader.setNewsDescription("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-                        newsHeader.setNewsTime(new Date());
-                        mContentItems.add(newsHeader);
-
-                        for (int i=0;i<5;i++) {
-                            NewsModel newsCell = new NewsModel();
-                            newsCell.setNewsId("2222222222222");
-                            newsCell.setNewsType(1);
-                            newsCell.setNewsIcon(R.drawable.ic_drawer_header_background + "");
-                            newsCell.setNewsTitle("fffffffffffffffff");
-                            newsCell.setNewsDescription("ggggggggggggggggggggggggggggggggggg");
-                            Date date = TimeUtil.standardDateTime("2016-01-08 12:12:12");
-                            newsCell.setNewsTime(date);
-                            mContentItems.add(newsCell);
-                        }
-                        mAdapter.notifyDataSetChanged();
-                        mRecyclerView.refreshComplete();
+                    public void onSuccess(List<NewsModel> list) {
+                        mContentItems.addAll(list);
+                        Log.d(TAG, "onViewCreated onRefresh debug, Refresh, News Count = " + list.size());
                     }
-                }, 1000);
+
+                    @Override
+                    public void onFailure(String msg, Exception e) {
+                        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                mAdapter.notifyDataSetChanged();
+                mRecyclerView.refreshComplete();
             }
 
             @Override
             public void onLoadMore() {
-                if(loadingTimes < 5) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            mRecyclerView.loadMoreComplete();
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                    }
+//                }, 1000);
+                mRecyclerView.loadMoreComplete();
+                Log.d(TAG, "onViewCreated onLoadMore debug, Load More, Begin");
+                newsModelImpl.loadNews(mType, pageIndex + Constants.NEWS.PAGE_SIZE, new NewsModelImpl.OnLoadNewsListListener() {
+                    @Override
+                    public void onSuccess(List<NewsModel> list) {
+                        mContentItems.addAll(list);
+                        Log.d(TAG, "onViewCreated onLoadMore debug, Load More, News Count = " + list.size());
+                        pageIndex += Constants.NEWS.PAGE_SIZE;
+                    }
 
-                            NewsModel newsCell = new NewsModel();
-                            newsCell.setNewsId("2222222222222");
-                            newsCell.setNewsType(1);
-                            newsCell.setNewsIcon(R.drawable.ic_drawer_header_background + "");
-                            newsCell.setNewsTitle("fffffffffffffffff");
-                            newsCell.setNewsDescription("ggggggggggggggggggggggggggggggggggg");
-                            Date date = TimeUtil.standardDateTime("2016-01-08 12:12:12");
-                            newsCell.setNewsTime(date);
-                            mContentItems.add(newsCell);
-
-                            mAdapter.notifyDataSetChanged();
-                            mRecyclerView.refreshComplete();
-                        }
-                    }, 1000);
-                }else {
-                    new Handler().postDelayed(new Runnable() {
-                        public void run() {
-                            mAdapter.notifyDataSetChanged();
-                            mRecyclerView.loadMoreComplete();
-                        }
-                    }, 1000);
-                }
-                loadingTimes++;
+                    @Override
+                    public void onFailure(String msg, Exception e) {
+                        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                mAdapter.notifyDataSetChanged();
+                mRecyclerView.refreshComplete();
             }
         });
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
-    }
 
-    private void initNewsListData() {
-        NewsModel newsHeader = new NewsModel();
-        newsHeader.setNewsId("1111111111111");
-        newsHeader.setNewsType(0);
-        newsHeader.setNewsIcon(R.drawable.ic_drawer_header_background + "");
-        newsHeader.setNewsTitle("aaaaaaaaaaaaaaaaaa");
-        newsHeader.setNewsDescription("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-        newsHeader.setNewsTime(new Date());
-        mContentItems.add(newsHeader);
-        for (int i = 0; i < ITEM_COUNT; ++i) {
-            NewsModel newsCell = new NewsModel();
-            newsCell.setNewsId("2222222222222");
-            newsCell.setNewsType(1);
-            newsCell.setNewsIcon(R.drawable.ic_drawer_header_background + "");
-            newsCell.setNewsTitle("fffffffffffffffff");
-            newsCell.setNewsDescription("ggggggggggggggggggggggggggggggggggg");
-            Date date = TimeUtil.standardDateTime("2016-01-08 12:12:12");
-            newsCell.setNewsTime(date);
-            mContentItems.add(newsCell);
-        }
+
     }
 }
 

@@ -12,9 +12,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
 import com.way.tunnelvision.R;
-import com.way.tunnelvision.model.dao.ChannelDao;
-import com.way.tunnelvision.model.dao.DaoMaster;
-import com.way.tunnelvision.model.dao.DaoSession;
+import com.way.tunnelvision.entity.dao.ChannelDao;
+import com.way.tunnelvision.entity.dao.DaoMaster;
+import com.way.tunnelvision.entity.dao.DaoSession;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
 import com.way.tunnelvision.util.DatabaseUtil;

@@ -5,7 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.way.tunnelvision.model.ChannelModel;
+import com.way.tunnelvision.base.Constants;
+import com.way.tunnelvision.entity.model.ChannelModel;
 import com.way.tunnelvision.ui.fragment.NewsFragment;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class ChannelViewPagerAdapter extends FragmentStatePagerAdapter {
         NewsFragment newsFragment = NewsFragment.newInstance();
         ChannelModel channelModel = channelModels.get(position);
         Bundle args = new Bundle();
-        args.putParcelable("ChannelModel", channelModel);
+        args.putParcelable(Constants.NEWSFRAGMENT_PARAMETER, channelModel);
         newsFragment.setArguments(args);
         return newsFragment;
     }

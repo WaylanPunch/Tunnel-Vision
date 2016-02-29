@@ -26,10 +26,10 @@ import com.github.siyamed.shapeimageview.CircularImageView;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.ChannelViewPagerAdapter;
 import com.way.tunnelvision.base.Constants;
-import com.way.tunnelvision.model.ChannelModel;
-import com.way.tunnelvision.model.dao.ChannelDao;
-import com.way.tunnelvision.model.dao.DaoMaster;
-import com.way.tunnelvision.model.dao.DaoSession;
+import com.way.tunnelvision.entity.model.ChannelModel;
+import com.way.tunnelvision.entity.dao.ChannelDao;
+import com.way.tunnelvision.entity.dao.DaoMaster;
+import com.way.tunnelvision.entity.dao.DaoSession;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
 
@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity {
 
         toolbar = mViewPager.getToolbar();
         mDrawer = (DrawerLayout) findViewById(R.id.dl_main_drawer_layout);
-
+        //mDrawer.
         if (toolbar != null) {
             setSupportActionBar(toolbar);
 
@@ -95,72 +95,9 @@ public class MainActivity extends BaseActivity {
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
         mDrawer.setDrawerListener(mDrawerToggle);
-
+        //mDrawerToggle.onDrawerClosed(mDrawer);
         initChannelData();
-        /*
-        mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
 
-            @Override
-            public Fragment getItem(int position) {
-                switch (position % 3) {
-                    case 0:
-                        Log.d(TAG, "onCreate debug, New NewsFragment Instance");
-                        newsFragment = NewsFragment.newInstance();
-                        return newsFragment;
-                    case 1:
-                        Log.d(TAG, "onCreate debug, New TopicFragment Instance");
-                        topicFragment = TopicFragment.newInstance();
-                        return topicFragment;
-                    default:
-                        Log.d(TAG, "onCreate debug, New RecommendFragment Instance");
-                        recommendFragment = RecommendFragment.newInstance();
-                        return recommendFragment;
-                }
-            }
-
-            @Override
-            public int getCount() {
-                return 3;
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                switch (position % 3) {
-                    case 0:
-                        //getResources().getString()
-                        return getString(R.string.fragment_news_title);
-                    case 1:
-                        return getString(R.string.fragment_topic_title);
-                    default:
-                        return getString(R.string.fragment_recommend_title);
-                }
-            }
-        });
-
-        mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
-            @Override
-            public HeaderDesign getHeaderDesign(int page) {
-                switch (page) {
-                    case 0:
-                        return HeaderDesign.fromColorResAndUrl(
-                                R.color.colorPrimary,
-                                "http://i4.tietuku.com/3590bb53f5752fe9.jpg");
-                    case 1:
-                        return HeaderDesign.fromColorResAndUrl(
-                                R.color.colorPrimary,
-                                "http://i11.tietuku.com/e2718fdc58c721f2.jpg");
-                    default:
-                        return HeaderDesign.fromColorResAndUrl(
-                                R.color.colorPrimary,
-                                "http://i11.tietuku.com/d308b9a56f1c91b8.jpg");
-                }
-
-                //execute others actions if needed (ex : modify your header logo)
-
-                //return null;
-            }
-        });
-        */
 
         mViewPager.getViewPager().setAdapter(channelViewPagerAdapter);
         mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
@@ -214,7 +151,7 @@ public class MainActivity extends BaseActivity {
         ///*
         try {
             DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Constants.DATABASE_NAME, null);
-            db = helper.getReadableDatabase();
+            db = helper.getReadableDatabase();//db.up
             daoMaster = new DaoMaster(db);
             daoSession = daoMaster.newSession();
             channelDao = daoSession.getChannelDao();
@@ -243,14 +180,14 @@ public class MainActivity extends BaseActivity {
         leftDrawerMenu = findViewById(R.id.left_drawer);
         CircularImageView drawer_user_avatar = (CircularImageView) leftDrawerMenu.findViewById(R.id.civ_drawer_header_user_avatar);
         TextView drawer_user_signature = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_header_user_signature);
-        TextView drawer_add_feeds_click = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_header_add_feeds_click);
+        //TextView drawer_add_feeds_click = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_header_add_feeds_click);
         TextView drawer_user_display_name = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_header_user_display_name);
         TextView drawer_user_email = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_header_user_email);
         TextView drawer_settings_click = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_bottom_settings_click);
         TextView drawer_exit_click = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_bottom_exit_click);
         //ListView drawer_menu_list = (ListView) leftDrawerMenu.findViewById(R.id.rv_menu_list);
         drawer_user_avatar.setOnClickListener(viewOnClickListener);
-        drawer_add_feeds_click.setOnClickListener(viewOnClickListener);
+        //drawer_add_feeds_click.setOnClickListener(viewOnClickListener);
         drawer_settings_click.setOnClickListener(viewOnClickListener);
         drawer_exit_click.setOnClickListener(viewOnClickListener);
 
@@ -286,9 +223,11 @@ public class MainActivity extends BaseActivity {
                     String name = cursor1.getString(columnIndex_name);
                     int columnIndex_link = cursor1.getColumnIndex(ChannelDao.COLUMNNAME_LINK);
                     String link = cursor1.getString(columnIndex_link);
+                    int columnIndex_type = cursor.getColumnIndex(ChannelDao.COLUMNNAME_TYPE);
+                    int type = cursor.getInt(columnIndex_type);
                     int columnIndex_chosen = cursor1.getColumnIndex(ChannelDao.COLUMNNAME_CHOSEN);
                     int chosen = cursor1.getInt(columnIndex_chosen);
-                    ChannelModel channelModel = new ChannelModel(id, guid, title, name, link, chosen);
+                    ChannelModel channelModel = new ChannelModel(id, guid, title, name, link, type, chosen);
                     channelModels.add(channelModel);
                 }
             }
@@ -310,13 +249,7 @@ public class MainActivity extends BaseActivity {
             int id = v.getId();
             if (id == R.id.civ_drawer_header_user_avatar) {
                 Toast.makeText(MainActivity.this, "To My Home.", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.tv_drawer_header_add_feeds_click) {
-                Toast.makeText(MainActivity.this, "To Add feeds.", Toast.LENGTH_SHORT).show();
-                openActivity(ChannelLibraryActivity.class);
-//                // 请求码的值随便设置，但必须>=0
-//                requestCode = 0;
-//                openActivityForResult(ChannelLibraryActivity.class, requestCode);
-                //startActivityForResult(mIntent, requestCode);
+                mDrawer.closeDrawers();
             } else if (id == R.id.tv_drawer_bottom_settings_click) {
                 Toast.makeText(MainActivity.this, "To App Settings.", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.tv_drawer_bottom_exit_click) {
@@ -339,8 +272,6 @@ public class MainActivity extends BaseActivity {
                     }
                 });
                 builder.show();
-            } else {
-
             }
         }
     };

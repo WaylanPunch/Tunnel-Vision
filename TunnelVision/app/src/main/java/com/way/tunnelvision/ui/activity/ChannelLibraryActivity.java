@@ -18,10 +18,10 @@ import android.widget.Toast;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.ChannelUnchosenAdapter;
 import com.way.tunnelvision.base.Constants;
-import com.way.tunnelvision.model.ChannelModel;
-import com.way.tunnelvision.model.dao.ChannelDao;
-import com.way.tunnelvision.model.dao.DaoMaster;
-import com.way.tunnelvision.model.dao.DaoSession;
+import com.way.tunnelvision.entity.model.ChannelModel;
+import com.way.tunnelvision.entity.dao.ChannelDao;
+import com.way.tunnelvision.entity.dao.DaoMaster;
+import com.way.tunnelvision.entity.dao.DaoSession;
 import com.way.tunnelvision.ui.base.BaseActivity;
 
 import java.util.ArrayList;
@@ -181,9 +181,11 @@ public class ChannelLibraryActivity extends BaseActivity {
                     String name = cursor.getString(columnIndex_name);
                     int columnIndex_link = cursor.getColumnIndex(ChannelDao.COLUMNNAME_LINK);
                     String link = cursor.getString(columnIndex_link);
+                    int columnIndex_type = cursor.getColumnIndex(ChannelDao.COLUMNNAME_TYPE);
+                    int type = cursor.getInt(columnIndex_type);
                     int columnIndex_chosen = cursor.getColumnIndex(ChannelDao.COLUMNNAME_CHOSEN);
                     int chosen = cursor.getInt(columnIndex_chosen);
-                    ChannelModel channelModel = new ChannelModel(id, guid, title, name, link, chosen);
+                    ChannelModel channelModel = new ChannelModel(id, guid, title, name, link, type, chosen);
                     //if (0 == chosen || 1 == chosen) {
                     //channelModelsChosen.add(channelModel);
                     //} else {
@@ -208,32 +210,36 @@ public class ChannelLibraryActivity extends BaseActivity {
             String headline_title = Constants.NEWS.TOP_TITLE;
             String headline_name = Constants.NEWS.TOP_NAME;
             String headline_link = Constants.NEWS.TOP_URL;
+            int headline_type = Constants.NEWS.NEWS_TYPE_TOP;
             int headline_chosen = 0;
-            ChannelModel headline_channel = new ChannelModel(null, headline_guid, headline_title, headline_name, headline_link, headline_chosen);
+            ChannelModel headline_channel = new ChannelModel(null, headline_guid, headline_title, headline_name, headline_link, headline_type, headline_chosen);
             channelDao.insert(headline_channel);
 
             String nba_guid = Constants.NEWS.NBA_ID;
             String nba_title = Constants.NEWS.NBA_TITLE;
             String nba_name = Constants.NEWS.NBA_NAME;
             String nba_link = Constants.NEWS.NBA_ID;
+            int nba_type = Constants.NEWS.NEWS_TYPE_NBA;
             int nba_chosen = 1;
-            ChannelModel nba_channel = new ChannelModel(null, nba_guid, nba_title, nba_name, nba_link, nba_chosen);
+            ChannelModel nba_channel = new ChannelModel(null, nba_guid, nba_title, nba_name, nba_link, nba_type, nba_chosen);
             channelDao.insert(nba_channel);
 
             String car_guid = Constants.NEWS.CAR_ID;
             String car_title = Constants.NEWS.CAR_TITLE;
             String car_name = Constants.NEWS.CAR_NAME;
             String car_link = Constants.NEWS.CAR_ID;
+            int car_type = Constants.NEWS.NEWS_TYPE_CARS;
             int car_chosen = 1;
-            ChannelModel car_channel = new ChannelModel(null, car_guid, car_title, car_name, car_link, car_chosen);
+            ChannelModel car_channel = new ChannelModel(null, car_guid, car_title, car_name, car_link, car_type, car_chosen);
             channelDao.insert(car_channel);
 
             String joke_guid = Constants.NEWS.JOKE_ID;
             String joke_title = Constants.NEWS.JOKE_TITLE;
             String joke_name = Constants.NEWS.JOKE_NAME;
             String joke_link = Constants.NEWS.JOKE_ID;
+            int joke_type = Constants.NEWS.NEWS_TYPE_JOKES;
             int joke_chosen = 1;
-            ChannelModel joke_channel = new ChannelModel(null, joke_guid, joke_title, joke_name, joke_link, joke_chosen);
+            ChannelModel joke_channel = new ChannelModel(null, joke_guid, joke_title, joke_name, joke_link, joke_type, joke_chosen);
             channelDao.insert(joke_channel);
             //MainActivity.refreshMenu();
 

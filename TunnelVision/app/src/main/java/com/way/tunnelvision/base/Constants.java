@@ -7,6 +7,7 @@ public class Constants {
     //SharedPreferences
     public static final String PREFERENCE_NAME = "TunnelVisionPrefs";
     public static final String PREFERENCE_KEY_FIRST_ENTER = "First_Enter";
+    public static final String NEWSFRAGMENT_PARAMETER = "ChannelModel";
 
     //SQLite Database
     public static final String  DATABASE_NAME = "TunnelVisionDB";
@@ -47,7 +48,10 @@ public class Constants {
      * Date   : 15/12/13
      */
     public class NEWS {
-
+        public static final int NEWS_TYPE_TOP = 0;
+        public static final int NEWS_TYPE_NBA = 1;
+        public static final int NEWS_TYPE_CARS = 2;
+        public static final int NEWS_TYPE_JOKES = 3;
         //http://c.m.163.com/nc/article/headline/T1348647909107/0-5.html  头条
 
         public static final int PAGE_SIZE = 20;

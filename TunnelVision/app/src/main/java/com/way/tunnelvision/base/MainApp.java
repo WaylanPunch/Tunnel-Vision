@@ -15,7 +15,7 @@ import kll.dod.rtk.AdManager;
 public class MainApp extends Application {
     private final static String TAG = MainApp.class.getName();
 
-    private Context mContext;
+    private static Context mContext;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -33,5 +33,9 @@ public class MainApp extends Application {
             Log.e(TAG, "onCreate error", e);
         }
         Log.d(TAG, "onCreate debug, end");
+    }
+
+    public static Context getContext(){
+        return mContext;
     }
 }

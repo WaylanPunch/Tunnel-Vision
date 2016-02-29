@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.way.tunnelvision.R;
-import com.way.tunnelvision.model.ChannelModel;
+import com.way.tunnelvision.entity.model.ChannelModel;
 
 import java.util.List;
 
