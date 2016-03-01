@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:checkable="true"
+            android:title="Import" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:checkable="true"
+            android:title="Gallery" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:checkable="true"
+            android:title="Slideshow" />
+        <item
+            android:id="@+id/nav_manage"
+            android:checkable="true"
+            android:title="Tools" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>

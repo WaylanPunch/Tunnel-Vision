@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,27 +18,25 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.desmond.ripple.RippleCompat;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
-import com.github.siyamed.shapeimageview.CircularImageView;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.ChannelViewPagerAdapter;
 import com.way.tunnelvision.base.Constants;
-import com.way.tunnelvision.entity.model.ChannelModel;
 import com.way.tunnelvision.entity.dao.ChannelDao;
 import com.way.tunnelvision.entity.dao.DaoMaster;
 import com.way.tunnelvision.entity.dao.DaoSession;
+import com.way.tunnelvision.entity.model.ChannelModel;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
     private final String TAG = MainActivity.class.getName();
 
     private int requestCode;
@@ -95,7 +95,8 @@ public class MainActivity extends BaseActivity {
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
         mDrawer.setDrawerListener(mDrawerToggle);
-        //mDrawerToggle.onDrawerClosed(mDrawer);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_main_menu);
+        navigationView.setNavigationItemSelectedListener(this);
         initChannelData();
 
 
@@ -137,12 +138,10 @@ public class MainActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     mViewPager.notifyHeaderChanged();
-                    Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
                 }
             });
         }
-
-        initDrawerMenu();
     }
 
     private void initChannelData() {
@@ -175,36 +174,6 @@ public class MainActivity extends BaseActivity {
         Log.d(TAG, "initChannelData debug, end");
     }
 
-    private void initDrawerMenu() {
-        Log.d(TAG, "initDrawerMenu debug, start");
-        leftDrawerMenu = findViewById(R.id.left_drawer);
-        CircularImageView drawer_user_avatar = (CircularImageView) leftDrawerMenu.findViewById(R.id.civ_drawer_header_user_avatar);
-        TextView drawer_user_signature = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_header_user_signature);
-        //TextView drawer_add_feeds_click = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_header_add_feeds_click);
-        TextView drawer_user_display_name = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_header_user_display_name);
-        TextView drawer_user_email = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_header_user_email);
-        TextView drawer_settings_click = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_bottom_settings_click);
-        TextView drawer_exit_click = (TextView) leftDrawerMenu.findViewById(R.id.tv_drawer_bottom_exit_click);
-        //ListView drawer_menu_list = (ListView) leftDrawerMenu.findViewById(R.id.rv_menu_list);
-        drawer_user_avatar.setOnClickListener(viewOnClickListener);
-        //drawer_add_feeds_click.setOnClickListener(viewOnClickListener);
-        drawer_settings_click.setOnClickListener(viewOnClickListener);
-        drawer_exit_click.setOnClickListener(viewOnClickListener);
-
-        //initDrawerMenuData();
-        /*
-        mAdapter = new MenuAdapter(MainActivity.this, mMenuItems);
-        drawer_menu_list.setAdapter(mAdapter);
-        drawer_menu_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Click Position = " + position + ", MenuId = " + mMenuItems.get(position).getMenuGUID(), Toast.LENGTH_SHORT).show();
-            }
-        });
-        */
-        //mAdapter.notifyDataSetChanged();
-        Log.d(TAG, "initDrawerMenu debug, end");
-    }
 
 
     public void getChannelDataFromCursor(Cursor cursor1) {
@@ -247,32 +216,7 @@ public class MainActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             int id = v.getId();
-            if (id == R.id.civ_drawer_header_user_avatar) {
-                Toast.makeText(MainActivity.this, "To My Home.", Toast.LENGTH_SHORT).show();
-                mDrawer.closeDrawers();
-            } else if (id == R.id.tv_drawer_bottom_settings_click) {
-                Toast.makeText(MainActivity.this, "To App Settings.", Toast.LENGTH_SHORT).show();
-            } else if (id == R.id.tv_drawer_bottom_exit_click) {
-                Toast.makeText(MainActivity.this, "To Exit App.", Toast.LENGTH_SHORT).show();
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                //AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
-                builder.setTitle(getString(R.string.text_dialog_title));
-                builder.setMessage(getString(R.string.text_dialog_exit_warning));
-                builder.setPositiveButton(getString(R.string.text_dialog_ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        ActivityCollector.finishAll();
-                    }
-                });
-                builder.setNegativeButton(getString(R.string.text_dialog_cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.show();
-            }
+
         }
     };
 
@@ -293,26 +237,10 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_subscribe) {
-//            ToastUtil.show(MainActivity.this, "Settings");
-//            Intent intent = new Intent(MainActivity.this, TestActivity.class);
-//            startActivity(intent);
-//            CrashReport.testJavaCrash();
-            // 请求码的值随便设置，但必须>=0
             requestCode = 0;
             openActivityForResult(ChannelLibraryActivity.class, requestCode);
-            //openActivity(TestActivity.class);
             return true;
         } else if (id == R.id.action_share) {
-//            ToastUtil.show(MainActivity.this, "Messages");
-//            Intent intent = new Intent(MainActivity.this, SplashActivity.class);
-//            startActivity(intent);
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            //AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
-            builder.setTitle("AppCompatDialog");
-            builder.setMessage("Lorem ipsum dolor...");
-            builder.setPositiveButton("OK", null);
-            builder.setNegativeButton("Cancel", null);
-            builder.show();
             return true;
         }
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
@@ -321,8 +249,6 @@ public class MainActivity extends BaseActivity {
     // 回调方法，从第二个页面回来的时候会执行这个方法
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        String change01 = data.getStringExtra("change01");
-//        String change02 = data.getStringExtra("change02");
         // 根据上面发送过去的请求吗来区别
         switch (requestCode) {
             case 0:
@@ -336,29 +262,54 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        Log.d(TAG,"onNavigationItemSelected debug");
+        if (id == R.id.nav_camera) {
+            Toast.makeText(MainActivity.this, "nav_camera", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_gallery) {
+            Toast.makeText(MainActivity.this, "nav_gallery", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_slideshow) {
+            Toast.makeText(MainActivity.this, "nav_slideshow", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_manage) {
+            Toast.makeText(MainActivity.this, "nav_manage", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_share) {
+            Toast.makeText(MainActivity.this, "nav_share", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_send) {
+            Toast.makeText(MainActivity.this, "nav_send", Toast.LENGTH_SHORT).show();
+        }
+        mDrawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 
     @Override
     public void onBackPressed() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        //AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
-        builder.setTitle(getString(R.string.text_dialog_title));
-        builder.setMessage(getString(R.string.text_dialog_exit_warning));
-        builder.setPositiveButton(getString(R.string.text_dialog_ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                ActivityCollector.finishAll();
-            }
-        });
-        builder.setNegativeButton(getString(R.string.text_dialog_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.show();
-        //super.onBackPressed();
+        if (mDrawer.isDrawerOpen(GravityCompat.START)) {
+            mDrawer.closeDrawer(GravityCompat.START);
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            //AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+            builder.setTitle(getString(R.string.text_dialog_title));
+            builder.setMessage(getString(R.string.text_dialog_exit_warning));
+            builder.setPositiveButton(getString(R.string.text_dialog_ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    ActivityCollector.finishAll();
+                }
+            });
+            builder.setNegativeButton(getString(R.string.text_dialog_cancel), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
+            //super.onBackPressed();
+        }
     }
 
     @Override
