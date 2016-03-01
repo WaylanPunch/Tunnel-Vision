@@ -139,12 +139,12 @@ public class ChannelDao extends AbstractDao<ChannelModel, Long> {
 
         int type = entity.getChannelType();
         if (type >= 0) {
-            stmt.bindLong(5, type);
+            stmt.bindLong(6, type);
         }
 
         int chosen = entity.getChannelChosen();
         if (chosen >= 0) {
-            stmt.bindLong(6, chosen);
+            stmt.bindLong(7, chosen);
         }
     }
 

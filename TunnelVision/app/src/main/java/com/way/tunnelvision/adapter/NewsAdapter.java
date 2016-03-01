@@ -1,5 +1,6 @@
 package com.way.tunnelvision.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.entity.model.NewsModel;
+import com.way.tunnelvision.util.ImageLoaderUtil;
+import com.way.tunnelvision.util.TimeUtil;
 
 import java.util.List;
 
@@ -17,12 +20,16 @@ import java.util.List;
  */
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    List<NewsModel> contents;
+    private List<NewsModel> contents;
+    private Context mContext;
 
-    static final int TYPE_HEADER = 0;
-    static final int TYPE_CELL = 1;
+    static final int TYPE_TOP = 0;
+    static final int TYPE_NORMAL = 1;
+    private OnItemClickListener mOnItemClickListener;
+    private OnItemLongClickListener mOnItemLongClickListener;
 
-    public NewsAdapter(List<NewsModel> contents) {
+    public NewsAdapter(Context context, List<NewsModel> contents) {
+        this.mContext = context;
         this.contents = contents;
     }
 
@@ -34,15 +41,27 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.contents = contents;
     }
 
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.mOnItemClickListener = onItemClickListener;
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        this.mOnItemLongClickListener = onItemLongClickListener;
+    }
+
     @Override
     public int getItemViewType(int position) {
-        //NewsModel newsItem = contents.get(position);
-//        switch (newsItem.getNewsType()) {
+//        NewsModel newsItem = contents.get(position);
+//        switch (newsItem.getType()) {
 //            case 0:
-//                return TYPE_HEADER;
+//                return TYPE_TOP;
 //            default:
-                return TYPE_CELL;
-        //}
+//                return TYPE_NORMAL;
+//        }
+        if (0 == position) {
+            return TYPE_TOP;
+        }
+        return TYPE_NORMAL;
     }
 
     @Override
@@ -55,15 +74,15 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         //View view = null;
 
         switch (viewType) {
-            case TYPE_HEADER: {
+            case TYPE_TOP: {
                 View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.news_item_card_big, parent, false);
-                return new ViewHolderBig(view);
+                        .inflate(R.layout.news_item_card_top, parent, false);
+                return new ViewHolderTop(view);
             }
-            case TYPE_CELL: {
+            case TYPE_NORMAL: {
                 View view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.news_item_card_small, parent, false);
-                return new ViewHolderSmall(view);
+                        .inflate(R.layout.news_item_card_normal, parent, false);
+                return new ViewHolderNormal(view);
             }
         }
         return null;
@@ -73,39 +92,83 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         NewsModel newsItem = contents.get(position);
+        if (newsItem == null) {
+            return;
+        }
         switch (getItemViewType(position)) {
-            case TYPE_HEADER:
-                ViewHolderBig viewHolderBig = (ViewHolderBig) holder;
-//                viewHolderBig.iv_icon.setBackgroundResource(Integer.parseInt(newsItem.getNewsIcon()));
-//                String dateStrBig = TimeUtil.prettyTimeForDate(newsItem.getNewsTime());
-//                viewHolderBig.tv_time.setText(dateStrBig);
+            case TYPE_TOP:
+                ViewHolderTop viewHolderTop = (ViewHolderTop) holder;
+                viewHolderTop.tv_title.setText(newsItem.getTitle());
+                viewHolderTop.tv_source.setText(newsItem.getSource());
+                String dateStrTop = TimeUtil.prettyTimeForDate(newsItem.getPtime());
+                viewHolderTop.tv_ptime.setText(dateStrTop);
+                ImageLoaderUtil.display(mContext, viewHolderTop.iv_img, newsItem.getImgsrc());
                 break;
-            case TYPE_CELL:
-                ViewHolderSmall viewHolderSmall = (ViewHolderSmall) holder;
-//                viewHolderSmall.tv_name.setText(newsItem.getNewsTitle());
-//                String dateStrSmall = TimeUtil.prettyTimeForDate(newsItem.getNewsTime());
-//                viewHolderSmall.tv_time.setText(dateStrSmall);
+            case TYPE_NORMAL:
+                ViewHolderNormal viewHolderNormal = (ViewHolderNormal) holder;
+                viewHolderNormal.tv_title.setText(newsItem.getTitle());
+                viewHolderNormal.tv_source.setText(newsItem.getSource());
+                viewHolderNormal.tv_digest.setText(newsItem.getDigest());
+                String dateStrNormal = TimeUtil.prettyTimeForDate(newsItem.getPtime());
+                viewHolderNormal.tv_ptime.setText(dateStrNormal);
+                ImageLoaderUtil.display(mContext, viewHolderNormal.iv_img, newsItem.getImgsrc());
                 break;
         }
     }
 
-    class ViewHolderBig extends RecyclerView.ViewHolder {
-        ImageView iv_icon;
-        TextView tv_time;
-        public ViewHolderBig(View itemView) {
+    class ViewHolderTop extends RecyclerView.ViewHolder {
+        ImageView iv_img;
+        TextView tv_title;
+        TextView tv_source;
+        TextView tv_ptime;
+
+        public ViewHolderTop(View itemView) {
             super(itemView);
-            iv_icon = (ImageView) itemView.findViewById(R.id.iv_news_item_big_icon);
-            tv_time = (TextView) itemView.findViewById(R.id.tv_news_item_big_time);
+            iv_img = (ImageView) itemView.findViewById(R.id.iv_news_item_top_img);
+            tv_title = (TextView) itemView.findViewById(R.id.tv_news_item_top_title);
+            tv_source = (TextView) itemView.findViewById(R.id.tv_news_item_top_source);
+            tv_ptime = (TextView) itemView.findViewById(R.id.tv_news_item_top_ptime);
         }
     }
 
-    class ViewHolderSmall extends RecyclerView.ViewHolder {
-        TextView tv_name;
-        TextView tv_time;
-        public ViewHolderSmall(View itemView) {
+    class ViewHolderNormal extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+        ImageView iv_img;
+        TextView tv_title;
+        TextView tv_digest;
+        TextView tv_source;
+        TextView tv_ptime;
+
+        public ViewHolderNormal(View itemView) {
             super(itemView);
-            tv_name = (TextView) itemView.findViewById(R.id.tv_news_item_small_name);
-            tv_time = (TextView) itemView.findViewById(R.id.tv_news_item_small_time);
+            iv_img = (ImageView) itemView.findViewById(R.id.iv_news_item_normal_img);
+            tv_title = (TextView) itemView.findViewById(R.id.tv_news_item_normal_title);
+            tv_digest = (TextView) itemView.findViewById(R.id.tv_news_item_normal_digest);
+            tv_source = (TextView) itemView.findViewById(R.id.tv_news_item_normal_source);
+            tv_ptime = (TextView) itemView.findViewById(R.id.tv_news_item_normal_ptime);
         }
+
+        @Override
+        public void onClick(View v) {
+            if (mOnItemClickListener != null) {
+                mOnItemClickListener.onItemClick(v, this.getPosition());
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            if (mOnItemLongClickListener != null) {
+                mOnItemLongClickListener.onItemLongClick(v, this.getPosition());
+                return true;
+            }
+            return false;
+        }
+    }
+
+    interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    interface OnItemLongClickListener {
+        void onItemLongClick(View view, int position);
     }
 }

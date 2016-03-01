@@ -38,10 +38,11 @@ public class NewsFragment extends Fragment {
     private int loadingTimes = 0;
 
     private ChannelModel channelModel;
+    private NewsAdapter mNewsAdapter;
     private List<NewsModel> mContentItems = new ArrayList<>();
 
     private int mType = Constants.NEWS.NEWS_TYPE_TOP;
-    NewsModelImpl newsModelImpl;
+    private NewsModelImpl newsModelImpl;
     private int pageIndex = 0;
 
     public static NewsFragment newInstance() {
@@ -60,7 +61,9 @@ public class NewsFragment extends Fragment {
                 Log.d(TAG, "onCreate debug, Channel GUID = " + channelModel.getChannelGUID());
                 Log.d(TAG, "onCreate debug, Channel Title = " + channelModel.getChannelTitle());
                 Log.d(TAG, "onCreate debug, Channel Name = " + channelModel.getChannelName());
+                Log.d(TAG, "onCreate debug, Channel Type = " + channelModel.getChannelType());
                 Log.d(TAG, "onCreate debug, Channel Link = " + channelModel.getChannelLink());
+                mType = channelModel.getChannelType();
             }
         } catch (Exception e) {
             Log.e(TAG, "onCreate error", e);
@@ -84,22 +87,16 @@ public class NewsFragment extends Fragment {
         mRecyclerView.setLaodingMoreProgressStyle(ProgressStyle.BallRotate);
         mRecyclerView.setArrowImageView(R.drawable.ic_arrow_down_gray);
 
+        initNewsListData();
+        mNewsAdapter = new NewsAdapter(getActivity(), mContentItems);
 
-        //initNewsListData();
 
-        mAdapter = new RecyclerViewMaterialAdapter(new NewsAdapter(mContentItems));
+        mAdapter = new RecyclerViewMaterialAdapter(mNewsAdapter);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
 
             @Override
             public void onRefresh() {
-//                loadingTimes = 0;
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                    }
-//                }, 1000);
                 pageIndex = 0;
                 mContentItems.clear();
                 Log.d(TAG, "onViewCreated onLoadMore debug, Refresh, Begin");
@@ -122,12 +119,6 @@ public class NewsFragment extends Fragment {
 
             @Override
             public void onLoadMore() {
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                    }
-//                }, 1000);
                 mRecyclerView.loadMoreComplete();
                 Log.d(TAG, "onViewCreated onLoadMore debug, Load More, Begin");
                 newsModelImpl.loadNews(mType, pageIndex + Constants.NEWS.PAGE_SIZE, new NewsModelImpl.OnLoadNewsListListener() {
@@ -150,6 +141,29 @@ public class NewsFragment extends Fragment {
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
 
 
+    }
+
+    private void initNewsListData() {
+        //mRecyclerView.noMoreLoading();
+        //mRecyclerView.re
+        pageIndex = 0;
+        mContentItems.clear();
+        Log.d(TAG, "initNewsListData debug, start");
+
+        newsModelImpl.loadNews(mType, pageIndex, new NewsModelImpl.OnLoadNewsListListener() {
+            @Override
+            public void onSuccess(List<NewsModel> list) {
+                mContentItems.addAll(list);
+                Log.d(TAG, "initNewsListData debug, News Count = " + list.size());
+            }
+
+            @Override
+            public void onFailure(String msg, Exception e) {
+                Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "initNewsListData error, Message = " + msg, e);
+            }
+        });
+        Log.d(TAG, "initNewsListData debug, end");
     }
 }
 

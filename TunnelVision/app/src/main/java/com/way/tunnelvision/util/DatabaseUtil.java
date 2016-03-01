@@ -26,6 +26,7 @@ public class DatabaseUtil {
         Log.d(TAG, "initDataBase debug, start");
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, Constants.DATABASE_NAME, null);
         SQLiteDatabase db = helper.getWritableDatabase();
+        //helper.onUpgrade(db, DaoMaster.SCHEMA_VERSION, DaoMaster.SCHEMA_VERSION + 1);
         DaoMaster daoMaster = new DaoMaster(db);
         DaoSession daoSession = daoMaster.newSession();
         ChannelDao channelDao = daoSession.getChannelDao();
