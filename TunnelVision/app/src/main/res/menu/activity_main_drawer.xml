@@ -3,31 +3,28 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:checkable="true"
-            android:title="Import" />
+            android:id="@+id/nav_menu_item_news"
+            android:checked="true"
+            android:title="@string/menu_title_news" />
         <item
-            android:id="@+id/nav_gallery"
-            android:checkable="true"
-            android:title="Gallery" />
+            android:id="@+id/nav_menu_item_collection"
+            android:title="@string/menu_title_collection" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:checkable="true"
-            android:title="Slideshow" />
+            android:id="@+id/nav_menu_item_photo"
+            android:title="@string/menu_title_photo" />
         <item
-            android:id="@+id/nav_manage"
-            android:checkable="true"
-            android:title="Tools" />
+            android:id="@+id/nav_menu_item_weather"
+            android:title="@string/menu_title_weather" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/menu_category_more">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:title="Share" />
+                android:id="@+id/nav_menu_item_settings"
+                android:title="@string/menu_title_settings" />
             <item
-                android:id="@+id/nav_send"
-                android:title="Send" />
+                android:id="@+id/nav_menu_item_exit"
+                android:title="@string/menu_title_exit" />
         </menu>
     </item>
 

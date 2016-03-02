@@ -45,8 +45,12 @@ public class NewsFragment extends Fragment {
     private NewsModelImpl newsModelImpl;
     private int pageIndex = 0;
 
-    public static NewsFragment newInstance() {
-        return new NewsFragment();
+    public static NewsFragment newInstance(ChannelModel channelItem) {
+        NewsFragment fragment = new NewsFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(Constants.NEWSFRAGMENT_PARAMETER, channelItem);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override

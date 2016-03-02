@@ -241,7 +241,7 @@ public class ChannelLibraryActivity extends BaseActivity {
             int joke_chosen = 1;
             ChannelModel joke_channel = new ChannelModel(null, joke_guid, joke_title, joke_name, joke_link, joke_type, joke_chosen);
             channelDao.insert(joke_channel);
-            //MainActivity.refreshMenu();
+            //MainActivity.refreshNewsViewPager();
 
 //                    Intent mIntent = new Intent();
 //                    mIntent.putExtra("change01", "1000");

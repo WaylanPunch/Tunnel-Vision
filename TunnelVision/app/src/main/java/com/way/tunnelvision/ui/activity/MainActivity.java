@@ -6,8 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -24,19 +28,21 @@ import com.desmond.ripple.RippleCompat;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.way.tunnelvision.R;
-import com.way.tunnelvision.adapter.ChannelViewPagerAdapter;
+import com.way.tunnelvision.adapter.CollectionViewPagerAdapter;
+import com.way.tunnelvision.adapter.NewsViewPagerAdapter;
 import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.entity.dao.ChannelDao;
 import com.way.tunnelvision.entity.dao.DaoMaster;
 import com.way.tunnelvision.entity.dao.DaoSession;
 import com.way.tunnelvision.entity.model.ChannelModel;
 import com.way.tunnelvision.ui.base.BaseActivity;
+import com.way.tunnelvision.ui.fragment.CollectionFragment;
 import com.way.tunnelvision.util.ActivityCollector;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, CollectionFragment.OnFragmentInteractionListener {
     private final String TAG = MainActivity.class.getName();
 
     private int requestCode;
@@ -48,21 +54,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private ChannelDao channelDao;
     private Cursor cursor;
 
-    private MaterialViewPager mViewPager;
+    private MaterialViewPager mMaterialViewPager;
 
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
-    private View leftDrawerMenu;
+    //private View leftDrawerMenu;
     //private List<MenuModel> mMenuItems = new ArrayList<>();
     //private MenuAdapter mAdapter;
 
     private List<ChannelModel> channelModels;
-    private ChannelViewPagerAdapter channelViewPagerAdapter;
+    private NewsViewPagerAdapter newsViewPagerAdapter;
+    private CollectionViewPagerAdapter collectionViewPagerAdapter;
+    private int FIRST_TIME_NEWS = 0;
+    private int FIRST_TIME_COLLECTION = 0;
+    private int FIRST_TIME_PHOTO = 0;
+    private int FIRST_TIME_WEATHER = 0;
+    private int FIRST_TIME_SETTINGS = 0;
+    private int MENU_ITEM_CHOSEN_INDEX = 0;
 
-//    NewsFragment newsFragment;
-//    TopicFragment topicFragment;
-//    RecommendFragment recommendFragment;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +84,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //view
         setTitle("");
 
-        mViewPager = (MaterialViewPager) findViewById(R.id.mvp_main_view_pager);
+        mMaterialViewPager = (MaterialViewPager) findViewById(R.id.mvp_main_view_pager);
 
-        toolbar = mViewPager.getToolbar();
+        toolbar = mMaterialViewPager.getToolbar();
         mDrawer = (DrawerLayout) findViewById(R.id.dl_main_drawer_layout);
         //mDrawer.
         if (toolbar != null) {
@@ -97,11 +108,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mDrawer.setDrawerListener(mDrawerToggle);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_main_menu);
         navigationView.setNavigationItemSelectedListener(this);
+
+        FIRST_TIME_NEWS = 1;
         initChannelData();
 
-
-        mViewPager.getViewPager().setAdapter(channelViewPagerAdapter);
-        mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
+        fragmentManager = getSupportFragmentManager();
+        newsViewPagerAdapter = new NewsViewPagerAdapter(fragmentManager, channelModels);
+        mMaterialViewPager.getViewPager().setAdapter(newsViewPagerAdapter);
+        mMaterialViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
             @Override
             public HeaderDesign getHeaderDesign(int position) {
                 ChannelModel channelModel = channelModels.get(position);
@@ -129,15 +143,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
 
-        mViewPager.getViewPager().setOffscreenPageLimit(mViewPager.getViewPager().getAdapter().getCount());
-        mViewPager.getPagerTitleStrip().setViewPager(mViewPager.getViewPager());
+        mMaterialViewPager.getViewPager().setOffscreenPageLimit(mMaterialViewPager.getViewPager().getAdapter().getCount());
+        mMaterialViewPager.getPagerTitleStrip().setViewPager(mMaterialViewPager.getViewPager());
 
         View logo = findViewById(R.id.iv_fragment_header_logo);
         if (logo != null) {
             logo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mViewPager.notifyHeaderChanged();
+                    mMaterialViewPager.notifyHeaderChanged();
                     //Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -170,11 +184,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             channelModels.add(channelModel);
         }
         */
-        channelViewPagerAdapter = new ChannelViewPagerAdapter(getSupportFragmentManager(), channelModels);
         Log.d(TAG, "initChannelData debug, end");
     }
-
-
 
     public void getChannelDataFromCursor(Cursor cursor1) {
         Log.d(TAG, "getChannelDataFromCursor debug, start");
@@ -206,12 +217,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         Log.d(TAG, "getChannelDataFromCursor debug, end");
     }
 
-    public void refreshMenu() {
-        cursor.requery();
-        getChannelDataFromCursor(cursor);
-        channelViewPagerAdapter.notifyDataSetChanged();
-    }
-
     private View.OnClickListener viewOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -220,6 +225,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     };
 
+    /**
+     * Activity彻底运行起来之后的回调
+     */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -252,7 +260,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         // 根据上面发送过去的请求吗来区别
         switch (requestCode) {
             case 0:
-                refreshMenu();
+                refreshNewsViewPager();
                 break;
             case 2:
                 //mText02.setText(change02);
@@ -262,24 +270,102 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
+    public void refreshNewsViewPager() {
+        if (0 == MENU_ITEM_CHOSEN_INDEX) {
+            cursor.requery();
+            getChannelDataFromCursor(cursor);
+            newsViewPagerAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public void switchViewPagerAdapter(FragmentStatePagerAdapter pagerAdapter) {
+        Log.d(TAG, "switchViewPagerAdapter debug, start");
+        try {
+            if (mMaterialViewPager.getViewPager().getAdapter() != null) {
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Bundle bundle = new Bundle();
+                int index = mMaterialViewPager.getViewPager().getAdapter().getCount();
+                String key = "index";
+                while (index >= 0) {
+                    bundle.putInt(key, index);
+                    ft.remove(fm.getFragment(bundle, key));
+                    index--;
+                }
+                ft.commit();
+            }
+            mMaterialViewPager.getViewPager().setAdapter(pagerAdapter);
+            mMaterialViewPager.getViewPager().setOffscreenPageLimit(mMaterialViewPager.getViewPager().getAdapter().getCount());
+            mMaterialViewPager.getPagerTitleStrip().setViewPager(mMaterialViewPager.getViewPager());
+        } catch (Exception e) {
+            Log.e(TAG, "switchViewPagerAdapter error", e);
+        }
+        Log.d(TAG, "switchViewPagerAdapter debug, end");
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Log.d(TAG,"onNavigationItemSelected debug");
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_menu_item_news) {
+            Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_news index = " + 0);
+            MENU_ITEM_CHOSEN_INDEX = 0;
             Toast.makeText(MainActivity.this, "nav_camera", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_gallery) {
-            Toast.makeText(MainActivity.this, "nav_gallery", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_slideshow) {
+            if (0 == FIRST_TIME_NEWS) {
+                FIRST_TIME_NEWS++;
+            }
+            if (0 < FIRST_TIME_NEWS) {
+                if (null != newsViewPagerAdapter && null != channelModels) {
+                    switchViewPagerAdapter(newsViewPagerAdapter);
+                }
+            }
+        } else if (id == R.id.nav_menu_item_collection) {
+            Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_collection index = " + 1);
+            MENU_ITEM_CHOSEN_INDEX = 1;
+            if (0 == FIRST_TIME_COLLECTION) {
+                FIRST_TIME_COLLECTION++;
+                collectionViewPagerAdapter = new CollectionViewPagerAdapter(fragmentManager);
+                switchViewPagerAdapter(collectionViewPagerAdapter);
+            }
+            if (0 < FIRST_TIME_COLLECTION) {
+                if (null != collectionViewPagerAdapter) {
+                    switchViewPagerAdapter(collectionViewPagerAdapter);
+                }
+            }
+        } else if (id == R.id.nav_menu_item_photo) {
+            Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_photo index = " + 2);
+            MENU_ITEM_CHOSEN_INDEX = 2;
             Toast.makeText(MainActivity.this, "nav_slideshow", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_menu_item_weather) {
+            Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_weather index = " + 3);
+            MENU_ITEM_CHOSEN_INDEX = 3;
             Toast.makeText(MainActivity.this, "nav_manage", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_menu_item_settings) {
+            Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_settings index = " + 4);
+            MENU_ITEM_CHOSEN_INDEX = 4;
             Toast.makeText(MainActivity.this, "nav_share", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_send) {
-            Toast.makeText(MainActivity.this, "nav_send", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.nav_menu_item_exit) {
+            Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_exit index = " + 5);
+            MENU_ITEM_CHOSEN_INDEX = 5;
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            //AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+            builder.setTitle(getString(R.string.text_dialog_title));
+            builder.setMessage(getString(R.string.text_dialog_exit_warning));
+            builder.setPositiveButton(getString(R.string.text_dialog_ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    ActivityCollector.finishAll();
+                }
+            });
+            builder.setNegativeButton(getString(R.string.text_dialog_cancel), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
         }
         mDrawer.closeDrawer(GravityCompat.START);
         return true;
@@ -327,4 +413,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ActivityCollector.finishAll();
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
