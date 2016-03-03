@@ -31,36 +31,37 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/app_name" />
-        <activity android:name=".ui.activity.AdDisplayActivity"></activity>
+        <activity android:name=".ui.activity.AdDisplayActivity" />
 
-        <!-- YouMi广告视频组件-->
+        <!-- YouMi广告视频组件 -->
         <activity
             android:name="kll.dod.rtk.video.VideoActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize|orientation"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar" >
-        </activity >
+            android:theme="@android:style/Theme.NoTitleBar"></activity>
 
         <!-- YouMi广告其他组件 -->
         <activity
             android:name="kll.dod.rtk.OO"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.NoTitleBar" >
-        </activity >
+            android:theme="@android:style/Theme.NoTitleBar"></activity>
         <!-- YouMi广告服务 -->
         <service
             android:name="kll.dod.rtk.BB"
-            android:exported="false" >
-        </service >
+            android:exported="false"></service>
         <!-- YouMi广告接收组件 -->
-        <receiver android:name="kll.dod.rtk.GG" >
-            <intent-filter >
+        <receiver android:name="kll.dod.rtk.GG">
+            <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_INSTALL" />
 
                 <data android:scheme="package" />
-            </intent-filter >
-        </receiver >
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".ui.activity.SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>

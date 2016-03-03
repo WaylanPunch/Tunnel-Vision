@@ -6,12 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -22,13 +19,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.desmond.ripple.RippleCompat;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.way.tunnelvision.R;
-import com.way.tunnelvision.adapter.CollectionViewPagerAdapter;
 import com.way.tunnelvision.adapter.NewsViewPagerAdapter;
 import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.entity.dao.ChannelDao;
@@ -36,13 +31,12 @@ import com.way.tunnelvision.entity.dao.DaoMaster;
 import com.way.tunnelvision.entity.dao.DaoSession;
 import com.way.tunnelvision.entity.model.ChannelModel;
 import com.way.tunnelvision.ui.base.BaseActivity;
-import com.way.tunnelvision.ui.fragment.CollectionFragment;
 import com.way.tunnelvision.util.ActivityCollector;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, CollectionFragment.OnFragmentInteractionListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final String TAG = MainActivity.class.getName();
 
     private int requestCode;
@@ -59,19 +53,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
-    //private View leftDrawerMenu;
-    //private List<MenuModel> mMenuItems = new ArrayList<>();
-    //private MenuAdapter mAdapter;
 
     private List<ChannelModel> channelModels;
     private NewsViewPagerAdapter newsViewPagerAdapter;
-    private CollectionViewPagerAdapter collectionViewPagerAdapter;
     private int FIRST_TIME_NEWS = 0;
     private int FIRST_TIME_COLLECTION = 0;
     private int FIRST_TIME_PHOTO = 0;
     private int FIRST_TIME_WEATHER = 0;
     private int FIRST_TIME_SETTINGS = 0;
-    private int MENU_ITEM_CHOSEN_INDEX = 0;
+    private static int MENU_ITEM_CHOSEN_INDEX = 0;
 
     private FragmentManager fragmentManager;
 
@@ -113,7 +103,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         initChannelData();
 
         fragmentManager = getSupportFragmentManager();
-        newsViewPagerAdapter = new NewsViewPagerAdapter(fragmentManager, channelModels);
+        newsViewPagerAdapter = new NewsViewPagerAdapter(fragmentManager);
+        newsViewPagerAdapter.setData(channelModels);
         mMaterialViewPager.getViewPager().setAdapter(newsViewPagerAdapter);
         mMaterialViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
             @Override
@@ -278,31 +269,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    public void switchViewPagerAdapter(FragmentStatePagerAdapter pagerAdapter) {
-        Log.d(TAG, "switchViewPagerAdapter debug, start");
-        try {
-            if (mMaterialViewPager.getViewPager().getAdapter() != null) {
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                Bundle bundle = new Bundle();
-                int index = mMaterialViewPager.getViewPager().getAdapter().getCount();
-                String key = "index";
-                while (index >= 0) {
-                    bundle.putInt(key, index);
-                    ft.remove(fm.getFragment(bundle, key));
-                    index--;
-                }
-                ft.commit();
-            }
-            mMaterialViewPager.getViewPager().setAdapter(pagerAdapter);
-            mMaterialViewPager.getViewPager().setOffscreenPageLimit(mMaterialViewPager.getViewPager().getAdapter().getCount());
-            mMaterialViewPager.getPagerTitleStrip().setViewPager(mMaterialViewPager.getViewPager());
-        } catch (Exception e) {
-            Log.e(TAG, "switchViewPagerAdapter error", e);
-        }
-        Log.d(TAG, "switchViewPagerAdapter debug, end");
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -311,40 +277,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (id == R.id.nav_menu_item_news) {
             Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_news index = " + 0);
             MENU_ITEM_CHOSEN_INDEX = 0;
-            Toast.makeText(MainActivity.this, "nav_camera", Toast.LENGTH_SHORT).show();
-            if (0 == FIRST_TIME_NEWS) {
-                FIRST_TIME_NEWS++;
-            }
-            if (0 < FIRST_TIME_NEWS) {
-                if (null != newsViewPagerAdapter && null != channelModels) {
-                    switchViewPagerAdapter(newsViewPagerAdapter);
-                }
-            }
         } else if (id == R.id.nav_menu_item_collection) {
             Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_collection index = " + 1);
             MENU_ITEM_CHOSEN_INDEX = 1;
-            if (0 == FIRST_TIME_COLLECTION) {
-                FIRST_TIME_COLLECTION++;
-                collectionViewPagerAdapter = new CollectionViewPagerAdapter(fragmentManager);
-                switchViewPagerAdapter(collectionViewPagerAdapter);
-            }
-            if (0 < FIRST_TIME_COLLECTION) {
-                if (null != collectionViewPagerAdapter) {
-                    switchViewPagerAdapter(collectionViewPagerAdapter);
-                }
-            }
+
         } else if (id == R.id.nav_menu_item_photo) {
             Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_photo index = " + 2);
             MENU_ITEM_CHOSEN_INDEX = 2;
-            Toast.makeText(MainActivity.this, "nav_slideshow", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_menu_item_weather) {
             Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_weather index = " + 3);
             MENU_ITEM_CHOSEN_INDEX = 3;
-            Toast.makeText(MainActivity.this, "nav_manage", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_menu_item_settings) {
             Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_settings index = " + 4);
             MENU_ITEM_CHOSEN_INDEX = 4;
-            Toast.makeText(MainActivity.this, "nav_share", Toast.LENGTH_SHORT).show();
+            openActivity(SettingsActivity.class);
         } else if (id == R.id.nav_menu_item_exit) {
             Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_exit index = " + 5);
             MENU_ITEM_CHOSEN_INDEX = 5;
@@ -413,8 +359,4 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ActivityCollector.finishAll();
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
 }

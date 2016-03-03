@@ -25,14 +25,21 @@ public class NewsViewPagerAdapter extends FragmentStatePagerAdapter {
         this.channelModels = channelModels;
     }
 
+    public void setData(List<ChannelModel> channelModels){
+        this.channelModels = channelModels;
+    }
+    public List<ChannelModel> getData(){
+        return this.channelModels ;
+    }
+
+//    public List<Fragment> getContent(){
+//        return this.fragments;
+//    }
+
     @Override
     public Fragment getItem(int position) {
         ChannelModel channelModel = channelModels.get(position);
         NewsFragment newsFragment = NewsFragment.newInstance(channelModel);
-
-//        Bundle args = new Bundle();
-//        args.putParcelable(Constants.NEWSFRAGMENT_PARAMETER, channelModel);
-//        newsFragment.setArguments(args);
         return newsFragment;
     }
 
