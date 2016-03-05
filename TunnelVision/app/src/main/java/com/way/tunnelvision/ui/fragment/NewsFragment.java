@@ -36,11 +36,12 @@ import java.util.List;
  */
 public class NewsFragment extends Fragment {
     private final static String TAG = NewsFragment.class.getName();
+    public static final String NEWS_ITEM_PARAMETER = "NEWS_DETAIL";
 
     private XRecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
 
-    //private static final int ITEM_COUNT = 10;
+
     private int loadingTimes = 0;
 
     private ChannelModel channelModel;
@@ -183,7 +184,7 @@ public class NewsFragment extends Fragment {
             NewsModel newsItem = mNewsAdapter.getItem(position);
             int itemType = mNewsAdapter.getItemViewType(position);
             Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
-            intent.putExtra("news", newsItem);
+            intent.putExtra(NEWS_ITEM_PARAMETER, newsItem);
 
             View transitionView = null;
             if (itemType == NewsAdapter.TYPE_TOP) {
