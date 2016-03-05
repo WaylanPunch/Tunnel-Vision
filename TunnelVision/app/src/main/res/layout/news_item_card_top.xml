@@ -4,7 +4,7 @@
     android:id="@+id/cv_news_item_top_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="2dp"
+    app:cardCornerRadius="0dp"
     app:cardElevation="2dp"
     app:cardPreventCornerOverlap="false"
     app:contentPadding="0dp">
@@ -19,17 +19,34 @@
             android:id="@+id/iv_news_item_top_img"
             android:layout_width="match_parent"
             android:layout_height="200dip"
-            android:scaleType="centerCrop"
-            android:layout_gravity="center_horizontal|top" />
+            android:layout_gravity="center_horizontal|top"
+            android:scaleType="centerCrop" />
 
-        <TextView
-            android:id="@+id/tv_news_item_top_title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:text="test"
-            android:textSize="18sp"
-            android:gravity="start|center_vertical" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_text_headline_border"
+                android:gravity="start|center_vertical"
+                android:padding="0.5dip"
+                android:text="头条"
+                android:textColor="@color/colorDivider"
+                android:textSize="8sp" />
+
+            <TextView
+                android:id="@+id/tv_news_item_top_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start|center_vertical"
+                android:layout_marginLeft="6dip"
+                android:text="test"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"

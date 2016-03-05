@@ -20,6 +20,7 @@ public class LoadingMoreFooter extends LinearLayout {
     public final static int STATE_COMPLETE = 2; // 加载完成
     public final static int STATE_NOMORE = 3; // 没有了
     private TextView mText;
+
     public LoadingMoreFooter(Context context) {
         super(context);
         initView(context);
@@ -33,7 +34,8 @@ public class LoadingMoreFooter extends LinearLayout {
         super(context, attrs);
         initView(context);
     }
-    public void initView(Context context ){
+
+    public void initView(Context context) {
         mContext = context;
         setGravity(Gravity.CENTER);
         setLayoutParams(new ViewGroup.LayoutParams(
@@ -42,7 +44,7 @@ public class LoadingMoreFooter extends LinearLayout {
         progressCon.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
-        AVLoadingIndicatorView progressView = new  AVLoadingIndicatorView(this.getContext());
+        AVLoadingIndicatorView progressView = new AVLoadingIndicatorView(this.getContext());
         progressView.setIndicatorColor(0xffB5B5B5);
         progressView.setIndicatorId(ProgressStyle.BallSpinFadeLoader);
         progressCon.setView(progressView);
@@ -52,25 +54,25 @@ public class LoadingMoreFooter extends LinearLayout {
         mText.setText("正在加载...");
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins( (int)getResources().getDimension(R.dimen.textandiconmargin),0,0,0 );
+        layoutParams.setMargins((int) getResources().getDimension(R.dimen.textandiconmargin), 0, 0, 0);
 
         mText.setLayoutParams(layoutParams);
         addView(mText);
     }
 
     public void setProgressStyle(int style) {
-        if(style == ProgressStyle.SysProgress){
+        if (style == ProgressStyle.SysProgress) {
             progressCon.setView(new ProgressBar(mContext, null, android.R.attr.progressBarStyle));
-        }else{
-            AVLoadingIndicatorView progressView = new  AVLoadingIndicatorView(this.getContext());
+        } else {
+            AVLoadingIndicatorView progressView = new AVLoadingIndicatorView(this.getContext());
             progressView.setIndicatorColor(0xffB5B5B5);
             progressView.setIndicatorId(style);
             progressCon.setView(progressView);
         }
     }
 
-    public void  setState(int state) {
-        switch(state) {
+    public void setState(int state) {
+        switch (state) {
             case STATE_NORMAL:
                 progressCon.setVisibility(View.GONE);
                 mText.setText(mContext.getText(R.string.listview_foot_more));

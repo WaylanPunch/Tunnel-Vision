@@ -19,12 +19,13 @@ import java.util.List;
  * Created by pc on 2016/1/6.
  */
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private final static String TAG = NewsAdapter.class.getName();
 
     private List<NewsModel> contents;
     private Context mContext;
 
-    static final int TYPE_TOP = 0;
-    static final int TYPE_NORMAL = 1;
+    public static final int TYPE_TOP = 0;
+    public static final int TYPE_NORMAL = 1;
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
 
@@ -88,6 +89,9 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return null;
     }
 
+    public NewsModel getItem(int position) {
+        return contents == null ? null : contents.get(position);
+    }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -98,6 +102,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         switch (getItemViewType(position)) {
             case TYPE_TOP:
                 ViewHolderTop viewHolderTop = (ViewHolderTop) holder;
+                viewHolderTop.itemPosition = position;
                 viewHolderTop.tv_title.setText(newsItem.getTitle());
                 viewHolderTop.tv_source.setText(newsItem.getSource());
                 String dateStrTop = TimeUtil.prettyTimeForDate(newsItem.getPtime());
@@ -106,6 +111,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 break;
             case TYPE_NORMAL:
                 ViewHolderNormal viewHolderNormal = (ViewHolderNormal) holder;
+                viewHolderNormal.itemPosition = position;
                 viewHolderNormal.tv_title.setText(newsItem.getTitle());
                 viewHolderNormal.tv_source.setText(newsItem.getSource());
                 viewHolderNormal.tv_digest.setText(newsItem.getDigest());
@@ -116,11 +122,12 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    class ViewHolderTop extends RecyclerView.ViewHolder {
+    class ViewHolderTop extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         ImageView iv_img;
         TextView tv_title;
         TextView tv_source;
         TextView tv_ptime;
+        int itemPosition;
 
         public ViewHolderTop(View itemView) {
             super(itemView);
@@ -128,6 +135,24 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tv_title = (TextView) itemView.findViewById(R.id.tv_news_item_top_title);
             tv_source = (TextView) itemView.findViewById(R.id.tv_news_item_top_source);
             tv_ptime = (TextView) itemView.findViewById(R.id.tv_news_item_top_ptime);
+
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mOnItemClickListener != null) {
+                mOnItemClickListener.onItemClick(v, itemPosition);
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            if (mOnItemLongClickListener != null) {
+                return mOnItemLongClickListener.onItemLongClick(v, itemPosition);
+            }
+            return false;
         }
     }
 
@@ -137,6 +162,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView tv_digest;
         TextView tv_source;
         TextView tv_ptime;
+        int itemPosition;
 
         public ViewHolderNormal(View itemView) {
             super(itemView);
@@ -145,30 +171,32 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             tv_digest = (TextView) itemView.findViewById(R.id.tv_news_item_normal_digest);
             tv_source = (TextView) itemView.findViewById(R.id.tv_news_item_normal_source);
             tv_ptime = (TextView) itemView.findViewById(R.id.tv_news_item_normal_ptime);
+
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             if (mOnItemClickListener != null) {
-                mOnItemClickListener.onItemClick(v, this.getPosition());
+                mOnItemClickListener.onItemClick(v, itemPosition);
             }
         }
 
         @Override
         public boolean onLongClick(View v) {
             if (mOnItemLongClickListener != null) {
-                mOnItemLongClickListener.onItemLongClick(v, this.getPosition());
-                return true;
+                return mOnItemLongClickListener.onItemLongClick(v, itemPosition);
             }
             return false;
         }
     }
 
-    interface OnItemClickListener {
+    public interface OnItemClickListener {
         void onItemClick(View view, int position);
     }
 
-    interface OnItemLongClickListener {
-        void onItemLongClick(View view, int position);
+    public interface OnItemLongClickListener {
+        boolean onItemLongClick(View view, int position);
     }
 }

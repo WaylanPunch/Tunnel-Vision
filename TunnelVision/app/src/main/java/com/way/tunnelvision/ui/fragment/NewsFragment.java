@@ -1,8 +1,13 @@
 package com.way.tunnelvision.ui.fragment;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +26,7 @@ import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.entity.impl.NewsModelImpl;
 import com.way.tunnelvision.entity.model.ChannelModel;
 import com.way.tunnelvision.entity.model.NewsModel;
+import com.way.tunnelvision.ui.activity.NewsDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +99,8 @@ public class NewsFragment extends Fragment {
 
         initNewsListData();
         mNewsAdapter = new NewsAdapter(getActivity(), mContentItems);
-
+        mNewsAdapter.setOnItemClickListener(recyclerOnItemClickListener);
+        mNewsAdapter.setOnItemLongClickListener(recyclerOnLongItemClickListener);
 
         mAdapter = new RecyclerViewMaterialAdapter(mNewsAdapter);
         mRecyclerView.setAdapter(mAdapter);
@@ -169,5 +176,51 @@ public class NewsFragment extends Fragment {
         });
         Log.d(TAG, "initNewsListData debug, end");
     }
+
+    NewsAdapter.OnItemClickListener recyclerOnItemClickListener = new NewsAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(View view, int position) {
+            NewsModel newsItem = mNewsAdapter.getItem(position);
+            int itemType = mNewsAdapter.getItemViewType(position);
+            Intent intent = new Intent(getActivity(), NewsDetailActivity.class);
+            intent.putExtra("news", newsItem);
+
+            View transitionView = null;
+            if (itemType == NewsAdapter.TYPE_TOP) {
+                transitionView = view.findViewById(R.id.iv_news_item_top_img);
+            } else {
+                transitionView = view.findViewById(R.id.iv_news_item_normal_img);
+            }
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
+                    transitionView, getString(R.string.transition_news_img));
+            ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
+        }
+    };
+
+    NewsAdapter.OnItemLongClickListener recyclerOnLongItemClickListener = new NewsAdapter.OnItemLongClickListener() {
+
+        @Override
+        public boolean onItemLongClick(View view, int position) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            //AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+            builder.setTitle(getString(R.string.text_dialog_title));
+            builder.setMessage(getString(R.string.text_dialog_collect_info));
+            builder.setPositiveButton(getString(R.string.text_dialog_ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+
+                }
+            });
+            builder.setNegativeButton(getString(R.string.text_dialog_cancel), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
+            return true;
+        }
+    };
 }
 
