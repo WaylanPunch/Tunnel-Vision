@@ -1,5 +1,7 @@
 package com.way.tunnelvision.ui.activity;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -13,11 +15,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.base.Constants;
+import com.way.tunnelvision.entity.dao.DaoMaster;
+import com.way.tunnelvision.entity.dao.DaoSession;
+import com.way.tunnelvision.entity.dao.NewsDetailDao;
 import com.way.tunnelvision.entity.impl.NewsModelImpl;
 import com.way.tunnelvision.entity.model.NewsDetailModel;
 import com.way.tunnelvision.entity.model.NewsModel;
 import com.way.tunnelvision.ui.base.SwipeBackActivity;
-import com.way.tunnelvision.ui.fragment.NewsFragment;
 import com.way.tunnelvision.ui.widget.SwipeBackLayout;
 import com.way.tunnelvision.util.ImageLoaderUtil;
 
@@ -26,12 +31,18 @@ import org.sufficientlysecure.htmltextview.HtmlTextView;
 public class NewsDetailActivity extends SwipeBackActivity {
     private final static String TAG = NewsDetailActivity.class.getName();
 
-    private NewsModel mNews;
-    private HtmlTextView mNewsDetailContent;
+    private NewsModel mNewsModel;
+    private HtmlTextView mHtmlTextView;
     private NewsModelImpl newsModelImpl;
     private ProgressBar mProgressBar;
     private SwipeBackLayout mSwipeBackLayout;
     private FloatingActionButton fab;
+
+    private SQLiteDatabase db;
+    private DaoMaster daoMaster;
+    private DaoSession daoSession;
+    private NewsDetailDao newsDetailDao;
+    private Cursor cursor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +51,7 @@ public class NewsDetailActivity extends SwipeBackActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tb_news_detail_toolbar);
         mProgressBar = (ProgressBar) findViewById(R.id.pb_news_detail_progressbar);
-        mNewsDetailContent = (HtmlTextView) findViewById(R.id.htv_news_detail_content);
+        mHtmlTextView = (HtmlTextView) findViewById(R.id.htv_news_detail_content);
         fab = (FloatingActionButton) findViewById(R.id.fab_news_detail_refresh);
 
         setSupportActionBar(toolbar);
@@ -55,9 +66,9 @@ public class NewsDetailActivity extends SwipeBackActivity {
         mSwipeBackLayout = getSwipeBackLayout();
         //mSwipeBackLayout.setEdgeSize(ToolsUtil.getWidthInPx(this));
         mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
-        mNews = (NewsModel) getIntent().getParcelableExtra(NewsFragment.NEWS_ITEM_PARAMETER);
+        mNewsModel = (NewsModel) getIntent().getParcelableExtra(Constants.NEWSDETAILACTIVITY_PARAMETER);
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.ctl_news_detail_toolbarlayout);
-        collapsingToolbar.setTitle(mNews.getTitle());
+        collapsingToolbar.setTitle(mNewsModel.getTitle());
 
         newsModelImpl = new NewsModelImpl();
         refreshData();
@@ -71,16 +82,16 @@ public class NewsDetailActivity extends SwipeBackActivity {
     }
 
     private void refreshData() {
-        ImageLoaderUtil.display(getApplicationContext(), (ImageView) findViewById(R.id.iv_news_detail_toolbarbackgroud), mNews.getImgsrc());
+        ImageLoaderUtil.display(getApplicationContext(), (ImageView) findViewById(R.id.iv_news_detail_toolbarbackgroud), mNewsModel.getImgsrc());
         mProgressBar.setVisibility(View.VISIBLE);
-        newsModelImpl.loadNewsDetail(mNews.getDocid(), onLoadNewsDetailListener);
+        newsModelImpl.loadNewsDetail(mNewsModel.getDocid(), onLoadNewsDetailListener);
     }
 
     NewsModelImpl.OnLoadNewsDetailListener onLoadNewsDetailListener = new NewsModelImpl.OnLoadNewsDetailListener() {
         @Override
         public void onSuccess(NewsDetailModel newsDetailModel) {
             String newsDetailContent = newsDetailModel.getBody();
-            mNewsDetailContent.setHtmlFromString(newsDetailContent, new HtmlTextView.LocalImageGetter());
+            mHtmlTextView.setHtmlFromString(newsDetailContent, new HtmlTextView.LocalImageGetter());
             mProgressBar.setVisibility(View.GONE);
             Snackbar.make(fab, "Refresh Finished", Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show();

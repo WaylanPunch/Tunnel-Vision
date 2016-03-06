@@ -20,11 +20,8 @@ import de.greenrobot.dao.identityscope.IdentityScopeType;
 public class DaoMaster extends AbstractDaoMaster {
     private final static String TAG = DaoMaster.class.getName();
 
-    public static final int SCHEMA_VERSION = 1000;
-    public static final int SCHEMA_VERSION_NEW = 1001;
-
     public DaoMaster(SQLiteDatabase db) {
-        super(db, SCHEMA_VERSION);
+        super(db, Constants.SCHEMA_VERSION);
         registerDaoClass(MenuDao.class);
         registerDaoClass(ChannelDao.class);
         registerDaoClass(NewsDetailDao.class);
@@ -51,14 +48,14 @@ public class DaoMaster extends AbstractDaoMaster {
     public static abstract class OpenHelper extends SQLiteOpenHelper {
 
         public OpenHelper(Context context, String name, CursorFactory factory) {
-            super(context, name, factory, SCHEMA_VERSION);
+            super(context, name, factory, Constants.SCHEMA_VERSION);
         }
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            Log.i(TAG, "Creating tables for schema version " + SCHEMA_VERSION);
+            Log.i(TAG, "Creating tables for schema version " + Constants.SCHEMA_VERSION);
             createAllTables(db, false);
-            PreferencesUtil.putInt(MainApp.getContext(), Constants.PREFERENCE_KEY_DATABASE_VERSION_CURRENT, SCHEMA_VERSION);
+            PreferencesUtil.putInt(MainApp.getContext(), Constants.PREFERENCE_KEY_DATABASE_VERSION_CURRENT, Constants.SCHEMA_VERSION);
         }
     }
 

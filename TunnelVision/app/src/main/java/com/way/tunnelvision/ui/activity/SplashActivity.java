@@ -1,8 +1,6 @@
 package com.way.tunnelvision.ui.activity;
 
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -11,22 +9,19 @@ import android.util.Log;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.SplashViewPagerAdapter;
 import com.way.tunnelvision.base.Constants;
-import com.way.tunnelvision.entity.dao.ChannelDao;
-import com.way.tunnelvision.entity.dao.DaoMaster;
-import com.way.tunnelvision.entity.dao.DaoSession;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
-import com.way.tunnelvision.util.DatabaseUtil;
+import com.way.tunnelvision.entity.service.DatabaseUtil;
 import com.way.tunnelvision.util.PreferencesUtil;
 
 public class SplashActivity extends BaseActivity {
     private final static String TAG = SplashActivity.class.getName();
 
-    private SQLiteDatabase db;
-    private DaoMaster daoMaster;
-    private DaoSession daoSession;
-    private ChannelDao channelDao;
-    private Cursor cursor;
+//    private SQLiteDatabase db;
+//    private DaoMaster daoMaster;
+//    private DaoSession daoSession;
+//    private ChannelDao channelDao;
+//    private Cursor cursor;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -107,14 +102,5 @@ public class SplashActivity extends BaseActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (null != cursor) {
-            cursor.close();
-        }
-        if (null != daoSession) {
-            daoSession.clear();
-        }
-        if (null != db) {
-            db.close();
-        }
     }
 }

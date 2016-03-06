@@ -17,7 +17,7 @@ import com.way.tunnelvision.entity.dao.DaoMaster;
 import com.way.tunnelvision.entity.dao.DaoSession;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
-import com.way.tunnelvision.util.DatabaseUtil;
+import com.way.tunnelvision.entity.service.DatabaseUtil;
 
 import kll.dod.rtk.st.SplashView;
 import kll.dod.rtk.st.SpotDialogListener;

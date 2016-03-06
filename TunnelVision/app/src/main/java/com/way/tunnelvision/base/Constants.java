@@ -10,9 +10,12 @@ public class Constants {
     public static final String PREFERENCE_KEY_DATABASE_VERSION_CURRENT = "Database_Version_Current";
 
     public static final String NEWSFRAGMENT_PARAMETER = "ChannelModel";
+    public static final String NEWSDETAILACTIVITY_PARAMETER = "NewsDetailModel";
 
     //SQLite Database
     public static final String  DATABASE_NAME = "TunnelVisionDB";
+    public static final int SCHEMA_VERSION = 1000;
+    public static final int SCHEMA_VERSION_NEW = 1001;
 
     //Bugly监控追踪
     public static final String  BUGLY_APPID = "900018056";
