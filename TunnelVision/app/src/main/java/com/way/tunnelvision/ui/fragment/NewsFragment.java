@@ -98,7 +98,7 @@ public class NewsFragment extends Fragment {
         mRecyclerView.setLaodingMoreProgressStyle(ProgressStyle.BallRotate);
         mRecyclerView.setArrowImageView(R.drawable.ic_arrow_down_gray);
 
-        initNewsListData();
+        //initNewsListData();
         mNewsAdapter = new NewsAdapter(getActivity(), mContentItems);
         mNewsAdapter.setOnItemClickListener(recyclerOnItemClickListener);
         mNewsAdapter.setOnItemLongClickListener(recyclerOnLongItemClickListener);
@@ -111,7 +111,7 @@ public class NewsFragment extends Fragment {
             public void onRefresh() {
                 pageIndex = 0;
                 mContentItems.clear();
-                Log.d(TAG, "onViewCreated onLoadMore debug, Refresh, Begin");
+                Log.d(TAG, "onViewCreated onRefresh debug, Refresh, Begin");
 
                 newsModelImpl.loadNews(mType, pageIndex, new NewsModelImpl.OnLoadNewsListListener() {
                     @Override
@@ -152,9 +152,11 @@ public class NewsFragment extends Fragment {
         });
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
 
-
+        Log.d(TAG, "onViewCreated debug, First Refresh");
+        mRecyclerView.firstRefresh();
     }
 
+    /*
     private void initNewsListData() {
         //mRecyclerView.noMoreLoading();
         //mRecyclerView.re
@@ -177,6 +179,7 @@ public class NewsFragment extends Fragment {
         });
         Log.d(TAG, "initNewsListData debug, end");
     }
+    */
 
     NewsAdapter.OnItemClickListener recyclerOnItemClickListener = new NewsAdapter.OnItemClickListener() {
         @Override

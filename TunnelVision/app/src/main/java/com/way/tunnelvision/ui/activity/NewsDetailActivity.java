@@ -2,6 +2,8 @@ package com.way.tunnelvision.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,6 +28,7 @@ public class NewsDetailActivity extends SwipeBackActivity {
     private NewsModelImpl newsModelImpl;
     private ProgressBar mProgressBar;
     private SwipeBackLayout mSwipeBackLayout;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class NewsDetailActivity extends SwipeBackActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.tb_news_detail_toolbar);
         mProgressBar = (ProgressBar) findViewById(R.id.pb_news_detail_progressbar);
         mNewsDetailContent = (HtmlTextView) findViewById(R.id.htv_news_detail_content);
+        fab = (FloatingActionButton) findViewById(R.id.fab_news_detail_refresh);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -48,28 +52,53 @@ public class NewsDetailActivity extends SwipeBackActivity {
         mSwipeBackLayout = getSwipeBackLayout();
         //mSwipeBackLayout.setEdgeSize(ToolsUtil.getWidthInPx(this));
         mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
-
         mNews = (NewsModel) getIntent().getParcelableExtra(NewsFragment.NEWS_ITEM_PARAMETER);
-
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.ctl_news_detail_toolbarlayout);
         collapsingToolbar.setTitle(mNews.getTitle());
 
-        ImageLoaderUtil.display(getApplicationContext(), (ImageView) findViewById(R.id.iv_news_detail_toolbarbackgroud), mNews.getImgsrc());
-
         newsModelImpl = new NewsModelImpl();
-        mProgressBar.setVisibility(View.VISIBLE);
-        newsModelImpl.loadNewsDetail(mNews.getDocid(), new NewsModelImpl.OnLoadNewsDetailListener() {
-            @Override
-            public void onSuccess(NewsDetailModel newsDetailModel) {
-                String newsDetailContent = newsDetailModel.getBody();
-                mNewsDetailContent.setHtmlFromString(newsDetailContent, new HtmlTextView.LocalImageGetter());
-                mProgressBar.setVisibility(View.GONE);
-            }
+        refreshData();
 
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFailure(String msg, Exception e) {
-                mProgressBar.setVisibility(View.GONE);
+            public void onClick(View view) {
+                refreshData();
             }
         });
+    }
+
+    private void refreshData() {
+        ImageLoaderUtil.display(getApplicationContext(), (ImageView) findViewById(R.id.iv_news_detail_toolbarbackgroud), mNews.getImgsrc());
+        mProgressBar.setVisibility(View.VISIBLE);
+        newsModelImpl.loadNewsDetail(mNews.getDocid(), onLoadNewsDetailListener);
+    }
+
+    NewsModelImpl.OnLoadNewsDetailListener onLoadNewsDetailListener = new NewsModelImpl.OnLoadNewsDetailListener() {
+        @Override
+        public void onSuccess(NewsDetailModel newsDetailModel) {
+            String newsDetailContent = newsDetailModel.getBody();
+            mNewsDetailContent.setHtmlFromString(newsDetailContent, new HtmlTextView.LocalImageGetter());
+            mProgressBar.setVisibility(View.GONE);
+            Snackbar.make(fab, "Refresh Finished", Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null).show();
+        }
+
+        @Override
+        public void onFailure(String msg, Exception e) {
+            mProgressBar.setVisibility(View.GONE);
+            Snackbar.make(fab, "Refresh Failure", Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null).show();
+        }
+    };
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

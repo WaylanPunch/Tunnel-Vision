@@ -45,4 +45,12 @@
 
     <include layout="@layout/content_news_detail"></include>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_news_detail_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_dialog_email"
+        app:layout_anchor="@id/abl_news_detail_appbarlayout"
+        app:layout_anchorGravity="bottom|end" />
 </android.support.design.widget.CoordinatorLayout>

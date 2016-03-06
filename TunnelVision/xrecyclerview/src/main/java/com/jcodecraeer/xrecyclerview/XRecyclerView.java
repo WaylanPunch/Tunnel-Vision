@@ -488,4 +488,9 @@ public class XRecyclerView extends RecyclerView {
 
         void onLoadMore();
     }
+
+    public boolean firstRefresh(){
+        mLoadingListener.onRefresh();
+        return true;
+    }
 }
