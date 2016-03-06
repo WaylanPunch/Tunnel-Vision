@@ -7,6 +7,8 @@ public class Constants {
     //SharedPreferences
     public static final String PREFERENCE_NAME = "TunnelVisionPrefs";
     public static final String PREFERENCE_KEY_FIRST_ENTER = "First_Enter";
+    public static final String PREFERENCE_KEY_DATABASE_VERSION_CURRENT = "Database_Version_Current";
+
     public static final String NEWSFRAGMENT_PARAMETER = "ChannelModel";
 
     //SQLite Database

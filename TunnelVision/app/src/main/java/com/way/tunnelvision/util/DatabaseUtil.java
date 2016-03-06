@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.way.tunnelvision.base.Constants;
+import com.way.tunnelvision.base.MainApp;
 import com.way.tunnelvision.entity.model.ChannelModel;
 import com.way.tunnelvision.entity.dao.ChannelDao;
 import com.way.tunnelvision.entity.dao.DaoMaster;
@@ -26,7 +27,10 @@ public class DatabaseUtil {
         Log.d(TAG, "initDataBase debug, start");
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, Constants.DATABASE_NAME, null);
         SQLiteDatabase db = helper.getWritableDatabase();
-        //helper.onUpgrade(db, DaoMaster.SCHEMA_VERSION, DaoMaster.SCHEMA_VERSION + 1);
+        int currentVersion = PreferencesUtil.getInt(MainApp.getContext(), Constants.PREFERENCE_KEY_DATABASE_VERSION_CURRENT);
+        if(currentVersion < DaoMaster.SCHEMA_VERSION_NEW) {
+            helper.onUpgrade(db, DaoMaster.SCHEMA_VERSION, DaoMaster.SCHEMA_VERSION_NEW);
+        }
         DaoMaster daoMaster = new DaoMaster(db);
         DaoSession daoSession = daoMaster.newSession();
         ChannelDao channelDao = daoSession.getChannelDao();

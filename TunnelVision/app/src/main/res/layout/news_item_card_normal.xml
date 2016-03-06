@@ -4,7 +4,7 @@
     android:id="@+id/cv_news_item_normal_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="2dip"
+    android:layout_marginTop="2dip"
     app:cardCornerRadius="0dp"
     app:cardElevation="2dp"
     app:cardPreventCornerOverlap="false"

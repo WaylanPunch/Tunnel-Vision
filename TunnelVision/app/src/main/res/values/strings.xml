@@ -91,4 +91,5 @@
     <string name="title_activity_news_detail">NewsDetailActivity</string>
     <string name="transition_news_img">transition_news_img</string>
     <string name="text_dialog_collect_info">点击确定即可收藏！</string>
+    <string name="action_addtocollection">添加收藏</string>
 </resources>

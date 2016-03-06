@@ -5,6 +5,9 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -81,6 +84,13 @@ public class NewsDetailActivity extends SwipeBackActivity {
             mProgressBar.setVisibility(View.GONE);
             Snackbar.make(fab, "Refresh Finished", Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show();
+            Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Docid = " + newsDetailModel.getDocid());
+            Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Title = " + newsDetailModel.getTitle());
+            Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Cover = " + newsDetailModel.getCover());
+            Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Source = " + newsDetailModel.getSource());
+            Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Ptime = " + newsDetailModel.getPtime());
+            //Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Body = " + newsDetailModel.getBody());
+            Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel ImgList = " + newsDetailModel.getImgList());
         }
 
         @Override
@@ -90,6 +100,23 @@ public class NewsDetailActivity extends SwipeBackActivity {
                     .setAction("Action", null).show();
         }
     };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_news_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action__addtocollection) {
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onBackPressed() {
