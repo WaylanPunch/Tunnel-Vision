@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.way.tunnelvision.ui.activity.NewsDetailActivity">
     <item
-        android:id="@+id/action__addtocollection"
+        android:id="@+id/action_addtocollection"
         android:orderInCategory="100"
         app:showAsAction="always"
         android:title="@string/action_addtocollection" />

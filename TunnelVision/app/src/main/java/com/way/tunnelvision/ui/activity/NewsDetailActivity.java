@@ -22,6 +22,7 @@ import com.way.tunnelvision.entity.dao.NewsDetailDao;
 import com.way.tunnelvision.entity.impl.NewsModelImpl;
 import com.way.tunnelvision.entity.model.NewsDetailModel;
 import com.way.tunnelvision.entity.model.NewsModel;
+import com.way.tunnelvision.entity.service.NewsDetailDaoHelper;
 import com.way.tunnelvision.ui.base.SwipeBackActivity;
 import com.way.tunnelvision.ui.widget.SwipeBackLayout;
 import com.way.tunnelvision.util.ImageLoaderUtil;
@@ -43,6 +44,7 @@ public class NewsDetailActivity extends SwipeBackActivity {
     private DaoSession daoSession;
     private NewsDetailDao newsDetailDao;
     private Cursor cursor;
+    private NewsDetailModel newsDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +104,7 @@ public class NewsDetailActivity extends SwipeBackActivity {
             Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Ptime = " + newsDetailModel.getPtime());
             //Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Body = " + newsDetailModel.getBody());
             Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel ImgList = " + newsDetailModel.getImgList());
+            newsDetail = newsDetailModel;
         }
 
         @Override
@@ -122,21 +125,25 @@ public class NewsDetailActivity extends SwipeBackActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action__addtocollection) {
-
-            return true;
+        if (id == R.id.action_addtocollection) {
+            if (null != newsDetail) {
+                NewsDetailDaoHelper newsDetailDaoHelper = NewsDetailDaoHelper.getInstance();
+                newsDetailDaoHelper.addData(newsDetail);
+                return true;
+            }
+            return false;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        finish();
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//    }
 }

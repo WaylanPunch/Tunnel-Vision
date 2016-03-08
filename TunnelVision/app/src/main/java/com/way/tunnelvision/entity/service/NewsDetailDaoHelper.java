@@ -1,5 +1,6 @@
 package com.way.tunnelvision.entity.service;
 
+import com.way.tunnelvision.base.MainApp;
 import com.way.tunnelvision.entity.dao.NewsDetailDao;
 import com.way.tunnelvision.entity.model.NewsDetailModel;
 
@@ -10,7 +11,7 @@ import de.greenrobot.dao.query.QueryBuilder;
 /**
  * Created by pc on 2016/3/7.
  */
-public class NewsDetailDaoHelper implements THDaoHelperInterface {
+public class NewsDetailDaoHelper implements GreenDaoHelperInterface {
 
 
     private static NewsDetailDaoHelper instance;
@@ -18,7 +19,7 @@ public class NewsDetailDaoHelper implements THDaoHelperInterface {
 
     private NewsDetailDaoHelper() {
         try {
-            newsDetailDao = THDatabaseLoader.getDaoSession().getNewsDetailDao();
+            newsDetailDao = MainApp.getDaoSession().getNewsDetailDao();
         } catch (Exception e) {
             e.printStackTrace();
         }

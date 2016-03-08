@@ -279,6 +279,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             MENU_ITEM_CHOSEN_INDEX = 0;
         } else if (id == R.id.nav_menu_item_collection) {
             Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_collection index = " + 1);
+            openActivity(CollectionActivity.class);
             MENU_ITEM_CHOSEN_INDEX = 1;
 
         } else if (id == R.id.nav_menu_item_photo) {
