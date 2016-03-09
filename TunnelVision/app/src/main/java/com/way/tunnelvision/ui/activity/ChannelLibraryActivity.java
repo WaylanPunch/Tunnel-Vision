@@ -165,7 +165,7 @@ public class ChannelLibraryActivity extends BaseActivity {
     private void initListData() {
         Log.d(TAG, "initListData debug, start");
         try {
-            String orderColumn = ChannelDao.Properties.ChannelChosen.columnName;
+            String orderColumn = ChannelDao.Properties.Channel_Chosen.columnName;
             String orderBy = orderColumn + " COLLATE LOCALIZED ASC";
             cursor = db.query(channelDao.getTablename(), channelDao.getAllColumns(), null, null, null, null, orderBy);
             if (null != cursor && cursor.getCount() > 0) {

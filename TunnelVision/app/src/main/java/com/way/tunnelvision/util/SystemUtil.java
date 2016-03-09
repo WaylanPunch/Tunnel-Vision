@@ -2,7 +2,11 @@ package com.way.tunnelvision.util;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
+
+import com.way.tunnelvision.R;
 
 import java.lang.reflect.Method;
 
@@ -128,5 +132,14 @@ public class SystemUtil {
             convertToTranslucent.invoke(activity, null, options);
         } catch (Throwable t) {
         }
+    }
+
+    public static int getToolbarHeight(Context context) {
+        final TypedArray styledAttributes = context.getTheme().obtainStyledAttributes(
+                new int[]{R.attr.actionBarSize});
+        int toolbarHeight = (int) styledAttributes.getDimension(0, 0);
+        styledAttributes.recycle();
+
+        return toolbarHeight;
     }
 }

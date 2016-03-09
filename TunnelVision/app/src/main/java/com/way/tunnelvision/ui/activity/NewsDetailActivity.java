@@ -1,7 +1,5 @@
 package com.way.tunnelvision.ui.activity;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -13,15 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.base.Constants;
-import com.way.tunnelvision.entity.dao.DaoMaster;
-import com.way.tunnelvision.entity.dao.DaoSession;
-import com.way.tunnelvision.entity.dao.NewsDetailDao;
 import com.way.tunnelvision.entity.impl.NewsModelImpl;
 import com.way.tunnelvision.entity.model.NewsDetailModel;
 import com.way.tunnelvision.entity.model.NewsModel;
+import com.way.tunnelvision.entity.service.NewsDaoHelper;
 import com.way.tunnelvision.entity.service.NewsDetailDaoHelper;
 import com.way.tunnelvision.ui.base.SwipeBackActivity;
 import com.way.tunnelvision.ui.widget.SwipeBackLayout;
@@ -32,18 +29,13 @@ import org.sufficientlysecure.htmltextview.HtmlTextView;
 public class NewsDetailActivity extends SwipeBackActivity {
     private final static String TAG = NewsDetailActivity.class.getName();
 
-    private NewsModel mNewsModel;
+    private NewsModel mNews;
     private HtmlTextView mHtmlTextView;
     private NewsModelImpl newsModelImpl;
     private ProgressBar mProgressBar;
     private SwipeBackLayout mSwipeBackLayout;
     private FloatingActionButton fab;
 
-    private SQLiteDatabase db;
-    private DaoMaster daoMaster;
-    private DaoSession daoSession;
-    private NewsDetailDao newsDetailDao;
-    private Cursor cursor;
     private NewsDetailModel newsDetail;
 
     @Override
@@ -68,9 +60,9 @@ public class NewsDetailActivity extends SwipeBackActivity {
         mSwipeBackLayout = getSwipeBackLayout();
         //mSwipeBackLayout.setEdgeSize(ToolsUtil.getWidthInPx(this));
         mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
-        mNewsModel = (NewsModel) getIntent().getParcelableExtra(Constants.NEWSDETAILACTIVITY_PARAMETER);
+        mNews = (NewsModel) getIntent().getParcelableExtra(Constants.NEWSDETAILACTIVITY_PARAMETER);
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.ctl_news_detail_toolbarlayout);
-        collapsingToolbar.setTitle(mNewsModel.getTitle());
+        collapsingToolbar.setTitle(mNews.getTitle());
 
         newsModelImpl = new NewsModelImpl();
         refreshData();
@@ -84,9 +76,9 @@ public class NewsDetailActivity extends SwipeBackActivity {
     }
 
     private void refreshData() {
-        ImageLoaderUtil.display(getApplicationContext(), (ImageView) findViewById(R.id.iv_news_detail_toolbarbackgroud), mNewsModel.getImgsrc());
+        ImageLoaderUtil.display(getApplicationContext(), (ImageView) findViewById(R.id.iv_news_detail_toolbarbackgroud), mNews.getImgsrc());
         mProgressBar.setVisibility(View.VISIBLE);
-        newsModelImpl.loadNewsDetail(mNewsModel.getDocid(), onLoadNewsDetailListener);
+        newsModelImpl.loadNewsDetail(mNews.getDocid(), onLoadNewsDetailListener);
     }
 
     NewsModelImpl.OnLoadNewsDetailListener onLoadNewsDetailListener = new NewsModelImpl.OnLoadNewsDetailListener() {
@@ -126,12 +118,23 @@ public class NewsDetailActivity extends SwipeBackActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_addtocollection) {
-            if (null != newsDetail) {
-                NewsDetailDaoHelper newsDetailDaoHelper = NewsDetailDaoHelper.getInstance();
-                newsDetailDaoHelper.addData(newsDetail);
-                return true;
+            try {
+                if (null != newsDetail) {
+                    newsDetail.setIsCollection(1);
+                    NewsDetailDaoHelper newsDetailDaoHelper = NewsDetailDaoHelper.getInstance();
+                    newsDetailDaoHelper.addData(newsDetail);
+                    //isOK = true;
+                }
+                if (null != mNews) {
+                    mNews.setIsCollection(1);
+                    NewsDaoHelper newsDaoHelper = NewsDaoHelper.getInstance();
+                    newsDaoHelper.addData(mNews);
+                    //isOK = true;
+                }
+                Toast.makeText(NewsDetailActivity.this, "fsdfsssssssssssss", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Log.e(TAG, "onOptionsItemSelected error, action_addtocollection", e);
             }
-            return false;
         }
         return super.onOptionsItemSelected(item);
     }

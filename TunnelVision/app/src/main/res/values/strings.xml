@@ -93,4 +93,5 @@
     <string name="text_dialog_collect_info">点击确定即可收藏！</string>
     <string name="action_addtocollection">添加收藏</string>
     <string name="title_activity_collection">CollectionActivity</string>
+    <string name="action_collection_refresh">刷新</string>
 </resources>

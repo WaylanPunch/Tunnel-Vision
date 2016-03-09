@@ -33,12 +33,12 @@ public class ChannelDao extends AbstractDao<ChannelModel, Long> {
 
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, PROPERTYNAME_ID, true, COLUMNNAME_ID);
-        public final static Property ChannelGUID = new Property(1, String.class, PROPERTYNAME_GUID, false, COLUMNNAME_GUID);
-        public final static Property ChannelTitle = new Property(2, String.class, PROPERTYNAME_TITLE, false, COLUMNNAME_TITLE);
-        public final static Property ChannelName = new Property(3, String.class, PROPERTYNAME_NAME, false, COLUMNNAME_NAME);
-        public final static Property ChannelLink = new Property(4, String.class, PROPERTYNAME_LINK, false, COLUMNNAME_LINK);
-        public final static Property ChannelType = new Property(5, String.class, PROPERTYNAME_TYPE, false, COLUMNNAME_TYPE);
-        public final static Property ChannelChosen = new Property(6, Integer.class, PROPERTYNAME_CHOSEN, false, COLUMNNAME_CHOSEN);
+        public final static Property Channel_GUID = new Property(1, String.class, PROPERTYNAME_GUID, false, COLUMNNAME_GUID);
+        public final static Property Channel_Title = new Property(2, String.class, PROPERTYNAME_TITLE, false, COLUMNNAME_TITLE);
+        public final static Property Channel_Name = new Property(3, String.class, PROPERTYNAME_NAME, false, COLUMNNAME_NAME);
+        public final static Property Channel_Link = new Property(4, String.class, PROPERTYNAME_LINK, false, COLUMNNAME_LINK);
+        public final static Property Channel_Type = new Property(5, String.class, PROPERTYNAME_TYPE, false, COLUMNNAME_TYPE);
+        public final static Property Channel_Chosen = new Property(6, Integer.class, PROPERTYNAME_CHOSEN, false, COLUMNNAME_CHOSEN);
     }
 
     public ChannelDao(DaoConfig config) {

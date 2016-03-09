@@ -7,6 +7,8 @@ import android.os.Parcelable;
  * Created by pc on 2016/1/10.
  */
 public class NewsModel implements Parcelable {
+    private Long id;
+
     /**
      * docid
      */
@@ -35,6 +37,16 @@ public class NewsModel implements Parcelable {
      * TAG
      */
     private String tag;
+
+    private int isCollection;
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDocid() {
         return docid;
@@ -92,6 +104,33 @@ public class NewsModel implements Parcelable {
         this.tag = tag;
     }
 
+    public int getIsCollection() {
+        return this.isCollection;
+    }
+
+    public void setIsCollection(int collection) {
+        this.isCollection = collection;
+    }
+
+    public NewsModel() {
+    }
+
+    public NewsModel(Long id) {
+        this.id = id;
+    }
+
+    public NewsModel(Long id, String docid, String title, String digest, String imgsrc, String source, String ptime, String tag, int isCollection) {
+        this.id = id;
+        this.docid = docid;
+        this.title = title;
+        this.digest = digest;
+        this.imgsrc = imgsrc;
+        this.source = source;
+        this.ptime = ptime;
+        this.tag = tag;
+        this.isCollection = isCollection;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -99,6 +138,7 @@ public class NewsModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
         dest.writeString(this.docid);
         dest.writeString(this.title);
         dest.writeString(this.digest);
@@ -106,12 +146,11 @@ public class NewsModel implements Parcelable {
         dest.writeString(this.source);
         dest.writeString(this.ptime);
         dest.writeString(this.tag);
-    }
-
-    public NewsModel() {
+        dest.writeInt(this.isCollection);
     }
 
     protected NewsModel(Parcel in) {
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.docid = in.readString();
         this.title = in.readString();
         this.digest = in.readString();
@@ -119,9 +158,10 @@ public class NewsModel implements Parcelable {
         this.source = in.readString();
         this.ptime = in.readString();
         this.tag = in.readString();
+        this.isCollection = in.readInt();
     }
 
-    public static final Parcelable.Creator<NewsModel> CREATOR = new Parcelable.Creator<NewsModel>() {
+    public static final Creator<NewsModel> CREATOR = new Creator<NewsModel>() {
         public NewsModel createFromParcel(Parcel source) {
             return new NewsModel(source);
         }

@@ -63,11 +63,21 @@ public class NewsDetailDaoHelper implements GreenDaoHelperInterface {
     }
 
     @Override
+    public List getAllDataByDocId(String selection, String orderby) {
+        if(newsDetailDao != null) {
+            QueryBuilder<NewsDetailModel> qb = newsDetailDao.queryBuilder();
+            qb.where(NewsDetailDao.Properties.NEWSDETAIL_DOCID.eq(selection));
+            qb.orderAsc(NewsDetailDao.Properties.Id);// 排序依据
+            return qb.list();
+        }
+        return null;
+    }
+
+    @Override
     public boolean hasKey(Long id) {
         if(newsDetailDao == null || -1 != id) {
             return false;
         }
-
         QueryBuilder<NewsDetailModel> qb = newsDetailDao.queryBuilder();
         qb.where(NewsDetailDao.Properties.Id.eq(id));
         long count = qb.buildCount().count();

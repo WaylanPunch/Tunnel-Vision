@@ -9,9 +9,10 @@ import android.util.Log;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.SplashViewPagerAdapter;
 import com.way.tunnelvision.base.Constants;
+import com.way.tunnelvision.base.MainApp;
+import com.way.tunnelvision.entity.service.DatabaseUtil;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
-import com.way.tunnelvision.entity.service.DatabaseUtil;
 import com.way.tunnelvision.util.PreferencesUtil;
 
 public class SplashActivity extends BaseActivity {
@@ -47,8 +48,9 @@ public class SplashActivity extends BaseActivity {
         try {
             DatabaseUtil.initDataBase(this);
             int first_enter_valuue = PreferencesUtil.getInt(getApplicationContext(), Constants.PREFERENCE_KEY_FIRST_ENTER);
-            if (-1 == first_enter_valuue) {
-                PreferencesUtil.putInt(getApplicationContext(), Constants.PREFERENCE_KEY_FIRST_ENTER, 1);
+            if (1 != first_enter_valuue) {
+                Log.d(TAG, "onCreate debug, First Enter App = True");
+                PreferencesUtil.putInt(MainApp.getContext(), Constants.PREFERENCE_KEY_FIRST_ENTER, 1);
                 // Create the adapter that will return a fragment for each of the three
                 // primary sections of the activity.
                 mSectionsPagerAdapter = new SplashViewPagerAdapter(getSupportFragmentManager());
@@ -59,6 +61,7 @@ public class SplashActivity extends BaseActivity {
             } else {
                 openActivity(AdDisplayActivity.class);
             }
+            //DatabaseUtil.initDataBase(this);
         } catch (Exception e) {
             Log.e(TAG, "onCreate error", e);
         }

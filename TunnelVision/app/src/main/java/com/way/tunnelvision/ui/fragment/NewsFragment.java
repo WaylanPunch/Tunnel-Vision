@@ -90,7 +90,7 @@ public class NewsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView = (XRecyclerView) view.findViewById(R.id.rv_news_list);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
@@ -155,30 +155,7 @@ public class NewsFragment extends Fragment {
         mRecyclerView.firstRefresh();
     }
 
-    /*
-    private void initNewsListData() {
-        //mRecyclerView.noMoreLoading();
-        //mRecyclerView.re
-        pageIndex = 0;
-        mContentItems.clear();
-        Log.d(TAG, "initNewsListData debug, start");
 
-        newsModelImpl.loadNews(mType, pageIndex, new NewsModelImpl.OnLoadNewsListListener() {
-            @Override
-            public void onSuccess(List<NewsModel> list) {
-                mContentItems.addAll(list);
-                Log.d(TAG, "initNewsListData debug, News Count = " + list.size());
-            }
-
-            @Override
-            public void onFailure(String msg, Exception e) {
-                Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "initNewsListData error, Message = " + msg, e);
-            }
-        });
-        Log.d(TAG, "initNewsListData debug, end");
-    }
-    */
 
     NewsAdapter.OnItemClickListener recyclerOnItemClickListener = new NewsAdapter.OnItemClickListener() {
         @Override

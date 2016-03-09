@@ -19,6 +19,9 @@ public class MainApp extends Application {
     private final static String TAG = MainApp.class.getName();
 
     private static Context mContext;
+    private static DaoMaster.DevOpenHelper helper;
+    private static SQLiteDatabase db;
+    private static DaoMaster daoMaster;
     private static DaoSession daoSession;
 
     @Override
@@ -40,24 +43,45 @@ public class MainApp extends Application {
         Log.d(TAG, "onCreate debug, end");
     }
 
-    public static Context getContext(){
+    public static Context getContext() {
         return mContext;
     }
 
     public static void initGreenDao() {
-        Log.d(TAG, "initGreenDao debug, start");
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(MainApp.getContext(), Constants.DATABASE_NAME, null);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(db);
+        helper = new DaoMaster.DevOpenHelper(MainApp.getContext(), Constants.DATABASE_NAME, null);
+        db = helper.getWritableDatabase();
+        daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();
-        Log.d(TAG, "initGreenDao debug, end");
     }
 
     public static DaoSession getDaoSession() {
-        if(null == daoSession) {
+        if (null == daoSession) {
             Log.d(TAG, "getDaoSession debug, Execute initGreenDao()");
             initGreenDao();
         }
         return daoSession;
+    }
+
+    public static DaoMaster.DevOpenHelper getDevOpenHelper() {
+        if (null == helper) {
+            Log.d(TAG, "getDevOpenHelper debug, Execute initGreenDao()");
+            initGreenDao();
+        }
+        return helper;
+    }
+    public static SQLiteDatabase getSQLiteDatabase() {
+        if (null == db) {
+            Log.d(TAG, "getSQLiteDatabase debug, Execute initGreenDao()");
+            initGreenDao();
+        }
+        return db;
+    }
+
+    public static DaoMaster getDaoMaster() {
+        if (null == daoMaster) {
+            Log.d(TAG, "getDaoMaster debug, Execute initGreenDao()");
+            initGreenDao();
+        }
+        return daoMaster;
     }
 }

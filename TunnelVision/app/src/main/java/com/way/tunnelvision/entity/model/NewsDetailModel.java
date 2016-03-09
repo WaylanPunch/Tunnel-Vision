@@ -44,6 +44,7 @@ public class NewsDetailModel implements Parcelable {
 
     private String imgArrayString;
 
+    private int isCollection;//1 Yes, 0 No
 
     public Long getId() {
         return this.id;
@@ -117,6 +118,14 @@ public class NewsDetailModel implements Parcelable {
         this.imgArrayString = imgArrayString;
     }
 
+    public int getIsCollection() {
+        return this.isCollection;
+    }
+
+    public void setIsCollection(int collection) {
+        this.isCollection = collection;
+    }
+
     public NewsDetailModel() {
     }
 
@@ -124,7 +133,7 @@ public class NewsDetailModel implements Parcelable {
         this.id = id;
     }
 
-    public NewsDetailModel(Long id, String docid, String title, String source, String body, String ptime, String cover, String imgArrayString) {
+    public NewsDetailModel(Long id, String docid, String title, String source, String body, String ptime, String cover, String imgArrayString, int isCollection) {
         this.id = id;
         this.docid = docid;
         this.title = title;
@@ -133,6 +142,7 @@ public class NewsDetailModel implements Parcelable {
         this.ptime = ptime;
         this.cover = cover;
         this.imgArrayString = imgArrayString;
+        this.isCollection = isCollection;
     }
 
     @Override
@@ -151,6 +161,7 @@ public class NewsDetailModel implements Parcelable {
         dest.writeString(this.cover);
         dest.writeStringList(this.imgList);
         dest.writeString(this.imgArrayString);
+        dest.writeInt(this.isCollection);
     }
 
     protected NewsDetailModel(Parcel in) {
@@ -163,6 +174,7 @@ public class NewsDetailModel implements Parcelable {
         this.cover = in.readString();
         this.imgList = in.createStringArrayList();
         this.imgArrayString = in.readString();
+        this.isCollection = in.readInt();
     }
 
     public static final Creator<NewsDetailModel> CREATOR = new Creator<NewsDetailModel>() {

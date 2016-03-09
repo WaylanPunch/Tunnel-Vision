@@ -24,6 +24,7 @@ public class DaoMaster extends AbstractDaoMaster {
         super(db, Constants.SCHEMA_VERSION);
         registerDaoClass(MenuDao.class);
         registerDaoClass(ChannelDao.class);
+        registerDaoClass(NewsDao.class);
         registerDaoClass(NewsDetailDao.class);
     }
 
@@ -33,6 +34,7 @@ public class DaoMaster extends AbstractDaoMaster {
     public static void createAllTables(SQLiteDatabase db, boolean ifNotExists) {
         MenuDao.createTable(db, ifNotExists);
         ChannelDao.createTable(db, ifNotExists);
+        NewsDao.createTable(db, ifNotExists);
         NewsDetailDao.createTable(db, ifNotExists);
     }
 
@@ -42,6 +44,7 @@ public class DaoMaster extends AbstractDaoMaster {
     public static void dropAllTables(SQLiteDatabase db, boolean ifExists) {
         MenuDao.dropTable(db, ifExists);
         ChannelDao.dropTable(db, ifExists);
+        NewsDao.dropTable(db, ifExists);
         NewsDetailDao.dropTable(db, ifExists);
     }
 

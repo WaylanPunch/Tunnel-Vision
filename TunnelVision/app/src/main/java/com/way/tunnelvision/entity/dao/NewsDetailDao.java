@@ -23,6 +23,7 @@ public class NewsDetailDao extends AbstractDao<NewsDetailModel, Long> {
     public static final String COLUMNNAME_PTIME = "NEWSDETAILPTIME";
     public static final String COLUMNNAME_COVER = "NEWSDETAILCOVER";
     public static final String COLUMNNAME_IMGARRAY = "NEWSDETAILIMGARRAY";
+    public static final String COLUMNNAME_ISCOLLECTION = "NEWSDETAILISCOLLECTION";
 
     private static final String PROPERTYNAME_ID = "id";
     private static final String PROPERTYNAME_DOCID = "docid";
@@ -32,16 +33,18 @@ public class NewsDetailDao extends AbstractDao<NewsDetailModel, Long> {
     private static final String PROPERTYNAME_PTIME = "ptime";
     private static final String PROPERTYNAME_COVER = "cover";
     private static final String PROPERTYNAME_IMGARRAY = "imgarray";
+    private static final String PROPERTYNAME_ISCOLLECTION = "iscollection";
 
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, PROPERTYNAME_ID, true, COLUMNNAME_ID);
-        public final static Property NEWSDETAILDOCID = new Property(1, String.class, PROPERTYNAME_DOCID, false, COLUMNNAME_DOCID);
-        public final static Property NEWSDETAILTITLE = new Property(2, String.class, PROPERTYNAME_TITLE, false, COLUMNNAME_TITLE);
-        public final static Property NEWSDETAILSOURCE = new Property(3, String.class, PROPERTYNAME_SOURCE, false, COLUMNNAME_SOURCE);
-        public final static Property NEWSDETAILBODY = new Property(4, String.class, PROPERTYNAME_BODY, false, COLUMNNAME_BODY);
-        public final static Property NEWSDETAILPTIME = new Property(5, String.class, PROPERTYNAME_PTIME, false, COLUMNNAME_PTIME);
-        public final static Property NEWSDETAILCOVER = new Property(6, String.class, PROPERTYNAME_COVER, false, COLUMNNAME_COVER);
-        public final static Property NEWSDETAILIMGARRAY = new Property(7, String.class, PROPERTYNAME_IMGARRAY, false, COLUMNNAME_IMGARRAY);
+        public final static Property NEWSDETAIL_DOCID = new Property(1, String.class, PROPERTYNAME_DOCID, false, COLUMNNAME_DOCID);
+        public final static Property NEWSDETAIL_TITLE = new Property(2, String.class, PROPERTYNAME_TITLE, false, COLUMNNAME_TITLE);
+        public final static Property NEWSDETAIL_SOURCE = new Property(3, String.class, PROPERTYNAME_SOURCE, false, COLUMNNAME_SOURCE);
+        public final static Property NEWSDETAIL_BODY = new Property(4, String.class, PROPERTYNAME_BODY, false, COLUMNNAME_BODY);
+        public final static Property NEWSDETAIL_PTIME = new Property(5, String.class, PROPERTYNAME_PTIME, false, COLUMNNAME_PTIME);
+        public final static Property NEWSDETAIL_COVER = new Property(6, String.class, PROPERTYNAME_COVER, false, COLUMNNAME_COVER);
+        public final static Property NEWSDETAIL_IMGARRAY = new Property(7, String.class, PROPERTYNAME_IMGARRAY, false, COLUMNNAME_IMGARRAY);
+        public final static Property NEWSDETAIL_ISCOLLECTION = new Property(8, Integer.class, PROPERTYNAME_ISCOLLECTION, false, COLUMNNAME_ISCOLLECTION);
     }
 
     public NewsDetailDao(DaoConfig config) {
@@ -65,8 +68,9 @@ public class NewsDetailDao extends AbstractDao<NewsDetailModel, Long> {
                 "\"" + COLUMNNAME_SOURCE + "\" TEXT," + // 3: source
                 "\"" + COLUMNNAME_BODY + "\" TEXT," + // 4: body
                 "\"" + COLUMNNAME_PTIME + "\" TEXT," + // 5: ptime
-                "\"" + COLUMNNAME_COVER + "\" TEXT," + // 5: cover
-                "\"" + COLUMNNAME_IMGARRAY + "\" TEXT);"); // 6: imgarray
+                "\"" + COLUMNNAME_COVER + "\" TEXT," + // 6: cover
+                "\"" + COLUMNNAME_IMGARRAY + "\" TEXT," + // 7: imgarray
+                "\"" + COLUMNNAME_ISCOLLECTION + "\" INTEGER);"); // 8: isCollection
     }
 
     /**
@@ -87,7 +91,8 @@ public class NewsDetailDao extends AbstractDao<NewsDetailModel, Long> {
                 cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // body
                 cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // ptime
                 cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // cover
-                cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7)  // imgarray
+                cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7),  // imgarray
+                cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8)  // isCollection
         );
         return entity;
     }
@@ -107,6 +112,7 @@ public class NewsDetailDao extends AbstractDao<NewsDetailModel, Long> {
         entity.setPtime(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));           // ptime
         entity.setCover(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));           // cover
         entity.setImgArrayString(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));  // imgarray
+        entity.setIsCollection(cursor.isNull(offset + 8) ? null : cursor.getInt(offset + 8));  // isCollection
     }
 
     @Override
@@ -151,6 +157,11 @@ public class NewsDetailDao extends AbstractDao<NewsDetailModel, Long> {
         String imgarray = entity.getImgArrayString();
         if (imgarray != null) {
             stmt.bindString(8, imgarray);
+        }
+
+        int isCollection = entity.getIsCollection();
+        if (isCollection > -1) {
+            stmt.bindLong(9, isCollection);
         }
     }
 

@@ -2,8 +2,6 @@ package com.way.tunnelvision.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -25,11 +23,8 @@ import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.NewsViewPagerAdapter;
-import com.way.tunnelvision.base.Constants;
-import com.way.tunnelvision.entity.dao.ChannelDao;
-import com.way.tunnelvision.entity.dao.DaoMaster;
-import com.way.tunnelvision.entity.dao.DaoSession;
 import com.way.tunnelvision.entity.model.ChannelModel;
+import com.way.tunnelvision.entity.service.ChannelDaoHelper;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
 
@@ -42,11 +37,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private int requestCode;
 
     //About the Database
-    private SQLiteDatabase db;
-    private DaoMaster daoMaster;
-    private DaoSession daoSession;
-    private ChannelDao channelDao;
-    private Cursor cursor;
+//    private SQLiteDatabase db;
+//    private DaoMaster daoMaster;
+//    private DaoSession daoSession;
+//    private ChannelDao channelDao;
+//    private Cursor cursor;
+    private ChannelDaoHelper channelDaoHelper;
 
     private MaterialViewPager mMaterialViewPager;
 
@@ -154,58 +150,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         channelModels = new ArrayList<>();
         ///*
         try {
-            DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Constants.DATABASE_NAME, null);
-            db = helper.getReadableDatabase();//db.up
-            daoMaster = new DaoMaster(db);
-            daoSession = daoMaster.newSession();
-            channelDao = daoSession.getChannelDao();
+            if(null == channelDaoHelper) {
+                channelDaoHelper = ChannelDaoHelper.getInstance();
+            }
+            long totalCount = channelDaoHelper.getTotalCount();;
+            Log.d(TAG, "initChannelData debug, Total Count = " + totalCount);
 
-            String orderColumn = ChannelDao.Properties.ChannelChosen.columnName;
-            String orderBy = orderColumn + " COLLATE LOCALIZED ASC";
-            String selection = orderColumn + " != 2";
-            cursor = db.query(channelDao.getTablename(), channelDao.getAllColumns(), selection, null, null, null, orderBy);
-            getChannelDataFromCursor(cursor);
+            channelModels = channelDaoHelper.getAllDataByChosen();
+            Log.d(TAG, "initChannelData debug, Chosen Count = " + channelModels.size());
         } catch (Exception e) {
             Log.e(TAG, "initChannelData error", e);
         }
-        //*/
-        /*
-        for (int i = 0; i < 3; i++) {
-            ChannelModel channelModel = new ChannelModel(1L,"aaaaaa","AAAAAA","a_a_a_a_a_a","www.baidu.com",1);
-            channelModels.add(channelModel);
-        }
-        */
         Log.d(TAG, "initChannelData debug, end");
-    }
-
-    public void getChannelDataFromCursor(Cursor cursor1) {
-        Log.d(TAG, "getChannelDataFromCursor debug, start");
-        try {
-            if (null != cursor1 && cursor1.getCount() > 0) {
-                channelModels.clear();
-                while (cursor1.moveToNext()) {
-                    int columnIndex_id = cursor1.getColumnIndex(ChannelDao.COLUMNNAME_ID);
-                    Long id = cursor1.getLong(columnIndex_id);
-                    int columnIndex_guid = cursor1.getColumnIndex(ChannelDao.COLUMNNAME_GUID);
-                    String guid = cursor1.getString(columnIndex_guid);
-                    int columnIndex_title = cursor1.getColumnIndex(ChannelDao.COLUMNNAME_TITLE);
-                    String title = cursor1.getString(columnIndex_title);
-                    int columnIndex_name = cursor1.getColumnIndex(ChannelDao.COLUMNNAME_NAME);
-                    String name = cursor1.getString(columnIndex_name);
-                    int columnIndex_link = cursor1.getColumnIndex(ChannelDao.COLUMNNAME_LINK);
-                    String link = cursor1.getString(columnIndex_link);
-                    int columnIndex_type = cursor.getColumnIndex(ChannelDao.COLUMNNAME_TYPE);
-                    int type = cursor.getInt(columnIndex_type);
-                    int columnIndex_chosen = cursor1.getColumnIndex(ChannelDao.COLUMNNAME_CHOSEN);
-                    int chosen = cursor1.getInt(columnIndex_chosen);
-                    ChannelModel channelModel = new ChannelModel(id, guid, title, name, link, type, chosen);
-                    channelModels.add(channelModel);
-                }
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "getChannelDataFromCursor error", e);
-        }
-        Log.d(TAG, "getChannelDataFromCursor debug, end");
     }
 
     private View.OnClickListener viewOnClickListener = new View.OnClickListener() {
@@ -263,8 +219,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     public void refreshNewsViewPager() {
         if (0 == MENU_ITEM_CHOSEN_INDEX) {
-            cursor.requery();
-            getChannelDataFromCursor(cursor);
+            initChannelData();
             newsViewPagerAdapter.notifyDataSetChanged();
         }
     }
@@ -314,7 +269,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             });
             builder.show();
         }
-        mDrawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
@@ -348,15 +302,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (null != cursor) {
-            cursor.close();
-        }
-        if (null != daoSession) {
-            daoSession.clear();
-        }
-        if (null != db) {
-            db.close();
-        }
         ActivityCollector.finishAll();
     }
 
