@@ -1,9 +1,9 @@
 package com.way.tunnelvision.ui.activity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.way.tunnelvision.R;
@@ -25,7 +25,6 @@ import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.entity.model.NewsModel;
 import com.way.tunnelvision.entity.service.NewsDaoHelper;
 import com.way.tunnelvision.ui.base.BaseActivity;
-import com.way.tunnelvision.util.SystemUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +34,12 @@ public class CollectionActivity extends BaseActivity {
     private List<NewsModel> newsModels = new ArrayList<>();
     private NewsDaoHelper newsDaoHelper;
 
-    private LinearLayout mToolbarContainer;
-    private int mToolbarHeight;
+    //private LinearLayout mToolbarContainer;
+    //private int mToolbarHeight;
 
+    private Toolbar mToolbar;
+    private FloatingActionButton mFabButton;
+    ;
     private RecyclerView xRecyclerView;
     private NewsCollectionAdapter newsCollectionAdapter;
 
@@ -47,22 +49,26 @@ public class CollectionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tb_collection_toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.tb_collection_toolbar);
+        setSupportActionBar(mToolbar);
         setTitle(getString(R.string.title_activity_collection));
-        toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();
             }
         });
 
-        mToolbarHeight = SystemUtil.getToolbarHeight(this);
+        //mToolbarHeight = SystemUtil.getToolbarHeight(this);
 
-        mToolbarContainer = (LinearLayout) findViewById(R.id.ll_collection_toolbarContainer);
+        //mToolbarContainer = (LinearLayout) findViewById(R.id.ll_collection_toolbarContainer);
+        mFabButton = (FloatingActionButton) findViewById(R.id.fab_collection_refresh);
         xRecyclerView = (RecyclerView) findViewById(R.id.xrv_collection_list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(CollectionActivity.this);
+        xRecyclerView.setLayoutManager(layoutManager);
+        xRecyclerView.setHasFixedSize(true);
 
         refreshData();
         initView();
@@ -71,10 +77,13 @@ public class CollectionActivity extends BaseActivity {
     private void initView() {
         Log.d(TAG, "initView debug, start");
         try {
-            LinearLayoutManager layoutManager = new LinearLayoutManager(CollectionActivity.this);
-            xRecyclerView.setLayoutManager(layoutManager);
-            xRecyclerView.setHasFixedSize(true);
-
+            mFabButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    refreshData();
+                    newsCollectionAdapter.notifyDataSetChanged();
+                }
+            });
 
             newsCollectionAdapter = new NewsCollectionAdapter(CollectionActivity.this, newsModels);
             newsCollectionAdapter.setOnItemClickListener(recyclerOnItemClickListener);
@@ -83,23 +92,16 @@ public class CollectionActivity extends BaseActivity {
             Log.d(TAG, "initView debug, NewsModels COUNT = " + newsModels.size());
             xRecyclerView.setAdapter(newsCollectionAdapter);
 
-            xRecyclerView.setOnScrollListener(new HidingScrollListener(this) {
-
+            xRecyclerView.setOnScrollListener(new HidingScrollListener() {
                 @Override
-                public void onMoved(int distance) {
-                    mToolbarContainer.setTranslationY(-distance);
+                public void onHide() {
+                    hideViews();
                 }
 
                 @Override
                 public void onShow() {
-                    mToolbarContainer.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+                    showViews();
                 }
-
-                @Override
-                public void onHide() {
-                    mToolbarContainer.animate().translationY(-mToolbarHeight).setInterpolator(new AccelerateInterpolator(2)).start();
-                }
-
             });
         } catch (Exception e) {
             Log.e(TAG, "initView error", e);
@@ -166,21 +168,13 @@ public class CollectionActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_collection, menu);
-        MenuItem item = menu.getItem(0);
-        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(CollectionActivity.this, "sdsdssssssssssss", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_collection_refresh) {
+        if (id == R.id.action_collection_edit) {
 
             try {
                 refreshData();
@@ -195,82 +189,44 @@ public class CollectionActivity extends BaseActivity {
         return true;
     }
 
+    private void hideViews() {
+        mToolbar.animate().translationY(-mToolbar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mFabButton.getLayoutParams();
+        int fabBottomMargin = lp.bottomMargin;
+        mFabButton.animate().translationY(mFabButton.getHeight() + fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
+    }
+
+    private void showViews() {
+        mToolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+        mFabButton.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+    }
 
     public abstract class HidingScrollListener extends RecyclerView.OnScrollListener {
-
-        private static final float HIDE_THRESHOLD = 10;
-        private static final float SHOW_THRESHOLD = 70;
-
-        private int mToolbarOffset = 0;
-        private boolean mControlsVisible = true;
-        private int mToolbarHeight;
-
-        public HidingScrollListener(Context context) {
-            mToolbarHeight = SystemUtil.getToolbarHeight(context);
-        }
-
-        @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-
-            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                if (mControlsVisible) {
-                    if (mToolbarOffset > HIDE_THRESHOLD) {
-                        setInvisible();
-                    } else {
-                        setVisible();
-                    }
-                } else {
-                    if ((mToolbarHeight - mToolbarOffset) > SHOW_THRESHOLD) {
-                        setVisible();
-                    } else {
-                        setInvisible();
-                    }
-                }
-            }
-        }
+        private static final int HIDE_THRESHOLD = 20;
+        private int scrolledDistance = 0;
+        private boolean controlsVisible = true;
 
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-
-            clipToolbarOffset();
-            onMoved(mToolbarOffset);
-
-            if ((mToolbarOffset < mToolbarHeight && dy > 0) || (mToolbarOffset > 0 && dy < 0)) {
-                mToolbarOffset += dy;
-            }
-
-        }
-
-        private void clipToolbarOffset() {
-            if (mToolbarOffset > mToolbarHeight) {
-                mToolbarOffset = mToolbarHeight;
-            } else if (mToolbarOffset < 0) {
-                mToolbarOffset = 0;
-            }
-        }
-
-        private void setVisible() {
-            if (mToolbarOffset > 0) {
-                onShow();
-                mToolbarOffset = 0;
-            }
-            mControlsVisible = true;
-        }
-
-        private void setInvisible() {
-            if (mToolbarOffset < mToolbarHeight) {
+            if (scrolledDistance > HIDE_THRESHOLD && controlsVisible) {
                 onHide();
-                mToolbarOffset = mToolbarHeight;
+                controlsVisible = false;
+                scrolledDistance = 0;
+            } else if (scrolledDistance < -HIDE_THRESHOLD && !controlsVisible) {
+                onShow();
+                controlsVisible = true;
+                scrolledDistance = 0;
             }
-            mControlsVisible = false;
+            if ((controlsVisible && dy > 0) || (!controlsVisible && dy < 0)) {
+                scrolledDistance += dy;
+            }
         }
 
-        public abstract void onMoved(int distance);
+        public abstract void onHide();
 
         public abstract void onShow();
 
-        public abstract void onHide();
     }
+
 }

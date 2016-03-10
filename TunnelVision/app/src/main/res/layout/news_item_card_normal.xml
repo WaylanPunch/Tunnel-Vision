@@ -4,12 +4,16 @@
     android:id="@+id/cv_news_item_normal_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/grayLight"
-    android:layout_marginTop="2dip"
     app:cardCornerRadius="0dp"
     app:cardElevation="2dp"
     app:cardPreventCornerOverlap="false"
     app:contentPadding="0dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_gravity="top|center_horizontal"
+        android:background="@drawable/ic_divider_background_gray" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,8 +25,8 @@
             android:id="@+id/iv_news_item_normal_img"
             android:layout_width="60dip"
             android:layout_height="60dip"
-            android:scaleType="centerCrop"
-            android:layout_gravity="start|center_vertical" />
+            android:layout_gravity="start|center_vertical"
+            android:scaleType="centerCrop" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,20 +38,20 @@
                 android:id="@+id/tv_news_item_normal_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:layout_gravity="top|start"
                 android:text="test"
-                android:textSize="14sp"
-                android:layout_gravity="top|start" />
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tv_news_item_normal_digest"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
-                android:textColor="@color/black"
-                android:text="test"
-                android:textSize="12sp"
                 android:layout_gravity="center_vertical|start"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:text="test"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
