@@ -134,6 +134,7 @@ public class NewsDetailActivity extends SwipeBackActivity {
                 Toast.makeText(NewsDetailActivity.this, "fsdfsssssssssssss", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Log.e(TAG, "onOptionsItemSelected error, action_addtocollection", e);
+                return false;
             }
         }
         return super.onOptionsItemSelected(item);

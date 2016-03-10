@@ -41,8 +41,7 @@ public class CollectionActivity extends BaseActivity {
     private RecyclerView xRecyclerView;
     private NewsCollectionAdapter newsCollectionAdapter;
 
-    //    private RecyclerView.Adapter mAdapter;
-//
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +51,14 @@ public class CollectionActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         setTitle(getString(R.string.title_activity_collection));
         toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         mToolbarHeight = SystemUtil.getToolbarHeight(this);
 
         mToolbarContainer = (LinearLayout) findViewById(R.id.ll_collection_toolbarContainer);
@@ -67,11 +74,7 @@ public class CollectionActivity extends BaseActivity {
             LinearLayoutManager layoutManager = new LinearLayoutManager(CollectionActivity.this);
             xRecyclerView.setLayoutManager(layoutManager);
             xRecyclerView.setHasFixedSize(true);
-//            xRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
-//            xRecyclerView.setLaodingMoreProgressStyle(ProgressStyle.BallRotate);
-//            xRecyclerView.setArrowImageView(R.drawable.ic_arrow_down_gray);
-//            xRecyclerView.setLoadingMoreEnabled(true);
-//            xRecyclerView.setPullRefreshEnabled(true);
+
 
             newsCollectionAdapter = new NewsCollectionAdapter(CollectionActivity.this, newsModels);
             newsCollectionAdapter.setOnItemClickListener(recyclerOnItemClickListener);
@@ -79,34 +82,6 @@ public class CollectionActivity extends BaseActivity {
 
             Log.d(TAG, "initView debug, NewsModels COUNT = " + newsModels.size());
             xRecyclerView.setAdapter(newsCollectionAdapter);
-            /*
-
-            xRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
-
-                @Override
-                public void onRefresh() {
-                    Log.d(TAG, "onViewCreated onRefresh debug, Refresh, Begin");
-
-                    refreshData();
-                    newsCollectionAdapter.notifyDataSetChanged();
-                    xRecyclerView.refreshComplete();
-                    xRecyclerView.setLoadingMoreEnabled(true);
-                }
-
-                @Override
-                public void onLoadMore() {
-                    xRecyclerView.loadMoreComplete();
-                    Log.d(TAG, "onViewCreated onLoadMore debug, Load More, Begin");
-
-                    newsCollectionAdapter.notifyDataSetChanged();
-                    xRecyclerView.refreshComplete();
-                }
-            });
-            //MaterialViewPagerHelper.registerRecyclerView(CollectionActivity.this, xRecyclerView, null);
-
-            Log.d(TAG, "onViewCreated debug, First Refresh");
-            xRecyclerView.firstRefresh();
-            */
 
             xRecyclerView.setOnScrollListener(new HidingScrollListener(this) {
 
@@ -191,6 +166,14 @@ public class CollectionActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_collection, menu);
+        MenuItem item = menu.getItem(0);
+        item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(CollectionActivity.this, "sdsdssssssssssss", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
         return true;
     }
 
@@ -198,14 +181,18 @@ public class CollectionActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_collection_refresh) {
-            try {
 
+            try {
+                refreshData();
+                newsCollectionAdapter.notifyDataSetChanged();
                 Toast.makeText(CollectionActivity.this, "sdsdssssssssssss", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onOptionsItemSelected error, action_collection_refresh ");
             } catch (Exception e) {
-                Log.e(TAG, "onOptionsItemSelected error, action_addtocollection", e);
+                Log.e(TAG, "onOptionsItemSelected error, action_collection_refresh", e);
+                return false;
             }
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
 

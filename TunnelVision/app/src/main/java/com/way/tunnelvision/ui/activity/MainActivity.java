@@ -269,6 +269,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             });
             builder.show();
         }
+        mDrawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
