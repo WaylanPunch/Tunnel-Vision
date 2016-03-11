@@ -6,21 +6,21 @@
     android:fitsSystemWindows="true">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/xrv_collection_list"
+        android:id="@+id/xrv_photo_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:paddingTop="?attr/actionBarSize" />
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/tb_collection_toolbar"
+        android:id="@+id/tb_photo_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:fitsSystemWindows="true" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_collection_refresh"
+        android:id="@+id/fab_photo_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"

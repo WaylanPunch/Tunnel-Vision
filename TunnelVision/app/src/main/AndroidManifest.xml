@@ -67,7 +67,13 @@
             android:label="@string/title_activity_news_detail" />
         <activity
             android:name=".ui.activity.CollectionActivity"
-            android:label="@string/title_activity_collection"></activity>
+            android:label="@string/title_activity_collection" />
+        <activity
+            android:name=".ui.activity.PhotoActivity"
+            android:label="@string/title_activity_photo" />
+        <activity
+            android:name=".ui.activity.WeatherActivity"
+            android:label="@string/title_activity_weather"></activity>
     </application>
 
 </manifest>

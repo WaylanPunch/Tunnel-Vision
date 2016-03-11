@@ -94,4 +94,6 @@
     <string name="action_addtocollection">添加收藏</string>
     <string name="title_activity_collection">CollectionActivity</string>
     <string name="action_collection_edit">编辑</string>
+    <string name="title_activity_photo">PhotoActivity</string>
+    <string name="title_activity_weather">WeatherActivity</string>
 </resources>
