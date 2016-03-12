@@ -54,7 +54,7 @@ public class ChannelUnchosenAdapter extends RecyclerView.Adapter<ChannelUnchosen
 
     @Override
     public void onBindViewHolder(ViewHolderChannelUnchosen viewHolder, int position) {
-        //viewHolder.mTextView.setText(channelModels.get(position).getChannelTitle());
+        //PhotoViewHolder.mTextView.setText(channelModels.get(position).getChannelTitle());
         ChannelModel channelItem = channelModels.get(position);
         /*设置TextView显示的内容，即我们存放在动态数组中的数据*/
         viewHolder.tv_title.setText(channelItem.getChannelTitle());

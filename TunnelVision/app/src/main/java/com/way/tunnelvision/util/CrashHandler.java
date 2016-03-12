@@ -99,7 +99,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         if (ex == null) {
             return false;
         }
-
+        Log.e(TAG, "handleException error", ex);
         // 使用 Toast 来显示异常信息
         new Thread() {
             @Override
