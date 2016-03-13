@@ -2,8 +2,6 @@ package com.way.tunnelvision.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,9 +10,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
 import com.way.tunnelvision.R;
-import com.way.tunnelvision.entity.dao.ChannelDao;
-import com.way.tunnelvision.entity.dao.DaoMaster;
-import com.way.tunnelvision.entity.dao.DaoSession;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
 
@@ -25,11 +20,11 @@ import kll.dod.rtk.st.SpotManager;
 public class AdDisplayActivity extends BaseActivity {
     private final static String TAG = AdDisplayActivity.class.getName();
 
-    private SQLiteDatabase db;
-    private DaoMaster daoMaster;
-    private DaoSession daoSession;
-    private ChannelDao channelDao;
-    private Cursor cursor;
+//    private SQLiteDatabase db;
+//    private DaoMaster daoMaster;
+//    private DaoSession daoSession;
+//    private ChannelDao channelDao;
+//    private Cursor cursor;
 
     private Context mContext;
     @Override
@@ -55,7 +50,7 @@ public class AdDisplayActivity extends BaseActivity {
         // 设置是否显示倒计时，默认显示
         splashView.setShowReciprocal(true);
         // 设置是否显示关闭按钮，默认不显示
-        splashView.hideCloseBtn(true);
+        splashView.hideCloseBtn(false);
         //传入跳转的intent，若传入intent，初始化时目标activity应传入null
         Intent intent = new Intent(this, MainActivity.class);
         splashView.setIntent(intent);

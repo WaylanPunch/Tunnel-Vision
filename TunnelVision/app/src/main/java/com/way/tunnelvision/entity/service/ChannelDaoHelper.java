@@ -39,6 +39,12 @@ public class ChannelDaoHelper implements GreenDaoHelperInterface {
         }
     }
 
+    public <T> void updateData(T bean) {
+        if(channelDao != null && bean != null) {
+            channelDao.update((ChannelModel) bean);
+        }
+    }
+
     @Override
     public void deleteData(Long id) {
         if(channelDao != null && -1 != id) {

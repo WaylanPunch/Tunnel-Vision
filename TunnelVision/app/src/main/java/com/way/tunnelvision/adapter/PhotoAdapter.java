@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -64,8 +65,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ImageViewHol
         if (height > mMaxHeight) {
             height = mMaxHeight;
         }
-        holder.mImage.setMinimumHeight(height);
-        //holder.mImage.setLayoutParams(new LinearLayout.LayoutParams(mMaxWidth, height));
+        //holder.mImage.setMinimumHeight(height);
+        holder.mImage.setLayoutParams(new FrameLayout.LayoutParams(mMaxWidth, height));
         ImageLoaderUtil.display(mContext, holder.mImage, imageModel.getThumburl());
     }
 

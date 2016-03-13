@@ -2,8 +2,8 @@ package com.way.tunnelvision.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -53,12 +53,12 @@ public class PhotoActivity extends BaseActivity {
 //            mLayoutManager = new StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.VERTICAL);
 //            mRecyclerView.setLayoutManager(mLayoutManager);
 
-//            LinearLayoutManager layoutManager = new LinearLayoutManager(PhotoActivity.this);
-//            mRecyclerView.setLayoutManager(layoutManager);
-//            mRecyclerView.setHasFixedSize(true);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(PhotoActivity.this);
+            mRecyclerView.setLayoutManager(layoutManager);
+            mRecyclerView.setHasFixedSize(true);
 
             //设置layoutManager
-            mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+            //mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
 
 
             mPhotoAdapter = new PhotoAdapter(PhotoActivity.this);

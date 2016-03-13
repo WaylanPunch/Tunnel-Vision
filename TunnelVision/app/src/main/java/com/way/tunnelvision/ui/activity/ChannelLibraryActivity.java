@@ -1,7 +1,5 @@
 package com.way.tunnelvision.ui.activity;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,18 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.ChannelUnchosenAdapter;
 import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.entity.model.ChannelModel;
-import com.way.tunnelvision.entity.dao.ChannelDao;
-import com.way.tunnelvision.entity.dao.DaoMaster;
-import com.way.tunnelvision.entity.dao.DaoSession;
+import com.way.tunnelvision.entity.service.ChannelDaoHelper;
 import com.way.tunnelvision.ui.base.BaseActivity;
 
 import java.util.ArrayList;
@@ -34,11 +27,12 @@ public class ChannelLibraryActivity extends BaseActivity {
 
     private int resultCode = 0;
 
-    private SQLiteDatabase db;
-    private DaoMaster daoMaster;
-    private DaoSession daoSession;
-    private ChannelDao channelDao;
-    private Cursor cursor;
+//    private SQLiteDatabase db;
+//    private DaoMaster daoMaster;
+//    private DaoSession daoSession;
+//    private ChannelDao channelDao;
+//    private Cursor cursor;
+    private ChannelDaoHelper channelDaoHelper;
     //private List<ChannelModel> channelModelsChosen = new ArrayList<>();
     private List<ChannelModel> channelModelsUnchosen = new ArrayList<>();
     //private ChannelChosenAdapter channelChosenAdapter;
@@ -56,23 +50,10 @@ public class ChannelLibraryActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.tb_channel_library_toolbar);
         setSupportActionBar(toolbar);
 
-        initDataBase();
+        initListData();
         initView();
     }
 
-    private void initDataBase() {
-        Log.d(TAG, "initDataBase debug, start");
-        try {
-            DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Constants.DATABASE_NAME, null);
-            db = helper.getWritableDatabase();
-            daoMaster = new DaoMaster(db);
-            daoSession = daoMaster.newSession();
-            channelDao = daoSession.getChannelDao();
-        } catch (Exception e) {
-            Log.e(TAG, "initDataBase error", e);
-        }
-        Log.d(TAG, "initDataBase debug, end");
-    }
 
     private void initView() {
         Log.d(TAG, "initView debug, start");
@@ -96,7 +77,7 @@ public class ChannelLibraryActivity extends BaseActivity {
             rv_unchosenList.setLayoutManager(layoutManager);
 
 
-            initListData();
+
             Log.d(TAG, "initView debug, Channel Items Count = " + channelModelsUnchosen.size());
             channelUnchosenAdapter = new ChannelUnchosenAdapter(ChannelLibraryActivity.this, channelModelsUnchosen);
             //channelUnchosenAdapter = new ChannelChosenAdapter(ChannelLibraryActivity.this, channelModelsUnchosen);
@@ -104,6 +85,7 @@ public class ChannelLibraryActivity extends BaseActivity {
             rv_unchosenList.setAdapter(channelUnchosenAdapter);
             //setListViewHeightBasedOnChildren(lv_chosenList);
             //setListViewHeightBasedOnChildren(lv_unchosenList);
+
 
             SwipeDismissRecyclerViewTouchListener listener = new SwipeDismissRecyclerViewTouchListener.Builder(
                     rv_unchosenList,
@@ -125,14 +107,16 @@ public class ChannelLibraryActivity extends BaseActivity {
                                 channelItem.setChannelChosen(2);
                                 channelModelsUnchosen.set(position, channelItem);
                                 channelUnchosenAdapter.notifyDataSetChanged();
-                                channelDao.update(channelItem);
+                                //channelDao.update(channelItem);
+                                channelDaoHelper.updateData(channelItem);
                                 setResult(resultCode);
                                 Snackbar.make(view, "Cancel Channel", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                             } else if (2 == channelItem.getChannelChosen()) {
                                 channelItem.setChannelChosen(1);
                                 channelModelsUnchosen.set(position, channelItem);
                                 channelUnchosenAdapter.notifyDataSetChanged();
-                                channelDao.update(channelItem);
+                                //channelDao.update(channelItem);
+                                channelDaoHelper.updateData(channelItem);
                                 setResult(resultCode);
                                 Snackbar.make(view, "Subscribe Channel", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
                             } else {
@@ -154,7 +138,6 @@ public class ChannelLibraryActivity extends BaseActivity {
                                 }
                             })
                     .create();
-
             rv_unchosenList.setOnTouchListener(listener);
         } catch (Exception e) {
             Log.e(TAG, "initView error", e);
@@ -162,36 +145,16 @@ public class ChannelLibraryActivity extends BaseActivity {
         Log.d(TAG, "initView debug, end");
     }
 
+
+
     private void initListData() {
         Log.d(TAG, "initListData debug, start");
         try {
-            String orderColumn = ChannelDao.Properties.Channel_Chosen.columnName;
-            String orderBy = orderColumn + " COLLATE LOCALIZED ASC";
-            cursor = db.query(channelDao.getTablename(), channelDao.getAllColumns(), null, null, null, null, orderBy);
-            if (null != cursor && cursor.getCount() > 0) {
-                Log.d(TAG, "initListData debug, Cursor Row Count = " + cursor.getCount());
-                while (cursor.moveToNext()) {
-                    int columnIndex_id = cursor.getColumnIndex(ChannelDao.COLUMNNAME_ID);
-                    Long id = cursor.getLong(columnIndex_id);
-                    int columnIndex_guid = cursor.getColumnIndex(ChannelDao.COLUMNNAME_GUID);
-                    String guid = cursor.getString(columnIndex_guid);
-                    int columnIndex_title = cursor.getColumnIndex(ChannelDao.COLUMNNAME_TITLE);
-                    String title = cursor.getString(columnIndex_title);
-                    int columnIndex_name = cursor.getColumnIndex(ChannelDao.COLUMNNAME_NAME);
-                    String name = cursor.getString(columnIndex_name);
-                    int columnIndex_link = cursor.getColumnIndex(ChannelDao.COLUMNNAME_LINK);
-                    String link = cursor.getString(columnIndex_link);
-                    int columnIndex_type = cursor.getColumnIndex(ChannelDao.COLUMNNAME_TYPE);
-                    int type = cursor.getInt(columnIndex_type);
-                    int columnIndex_chosen = cursor.getColumnIndex(ChannelDao.COLUMNNAME_CHOSEN);
-                    int chosen = cursor.getInt(columnIndex_chosen);
-                    ChannelModel channelModel = new ChannelModel(id, guid, title, name, link, type, chosen);
-                    //if (0 == chosen || 1 == chosen) {
-                    //channelModelsChosen.add(channelModel);
-                    //} else {
-                    channelModelsUnchosen.add(channelModel);
-                    //}
-                }
+            channelDaoHelper = ChannelDaoHelper.getInstance();
+            Long rowCount = channelDaoHelper.getTotalCount();
+            if(rowCount>0){
+                channelModelsUnchosen = channelDaoHelper.getAllData();
+                Log.d(TAG, "initListData debug, ChannelModels COUNT = " + rowCount + "," + channelModelsUnchosen.size());
             }
         } catch (Exception e) {
             Log.e(TAG, "initListData error", e);
@@ -202,10 +165,8 @@ public class ChannelLibraryActivity extends BaseActivity {
     private void initDataTableChannel() {
         Log.d(TAG, "initDataTableChannel debug, start");
         try {
-//            String orderColumn = ChannelDao.Properties.ChannelChosen.columnName;
-//            String orderBy = orderColumn + " COLLATE LOCALIZED ASC";
-//            cursor = db.query(channelDao.getTablename(), channelDao.getAllColumns(), null, null, null, null, orderBy);
-            channelDao.deleteAll();
+            //channelDao.deleteAll();
+            channelDaoHelper.deleteAll();
             String headline_guid = Constants.NEWS.TOP_ID;
             String headline_title = Constants.NEWS.TOP_TITLE;
             String headline_name = Constants.NEWS.TOP_NAME;
@@ -213,7 +174,8 @@ public class ChannelLibraryActivity extends BaseActivity {
             int headline_type = Constants.NEWS.NEWS_TYPE_TOP;
             int headline_chosen = 0;
             ChannelModel headline_channel = new ChannelModel(null, headline_guid, headline_title, headline_name, headline_link, headline_type, headline_chosen);
-            channelDao.insert(headline_channel);
+            //channelDao.insert(headline_channel);
+            channelDaoHelper.addData(headline_channel);
 
             String nba_guid = Constants.NEWS.NBA_ID;
             String nba_title = Constants.NEWS.NBA_TITLE;
@@ -222,7 +184,8 @@ public class ChannelLibraryActivity extends BaseActivity {
             int nba_type = Constants.NEWS.NEWS_TYPE_NBA;
             int nba_chosen = 1;
             ChannelModel nba_channel = new ChannelModel(null, nba_guid, nba_title, nba_name, nba_link, nba_type, nba_chosen);
-            channelDao.insert(nba_channel);
+            //channelDao.insert(nba_channel);
+            channelDaoHelper.addData(nba_channel);
 
             String car_guid = Constants.NEWS.CAR_ID;
             String car_title = Constants.NEWS.CAR_TITLE;
@@ -231,7 +194,8 @@ public class ChannelLibraryActivity extends BaseActivity {
             int car_type = Constants.NEWS.NEWS_TYPE_CARS;
             int car_chosen = 1;
             ChannelModel car_channel = new ChannelModel(null, car_guid, car_title, car_name, car_link, car_type, car_chosen);
-            channelDao.insert(car_channel);
+            //channelDao.insert(car_channel);
+            channelDaoHelper.addData(car_channel);
 
             String joke_guid = Constants.NEWS.JOKE_ID;
             String joke_title = Constants.NEWS.JOKE_TITLE;
@@ -240,14 +204,9 @@ public class ChannelLibraryActivity extends BaseActivity {
             int joke_type = Constants.NEWS.NEWS_TYPE_JOKES;
             int joke_chosen = 1;
             ChannelModel joke_channel = new ChannelModel(null, joke_guid, joke_title, joke_name, joke_link, joke_type, joke_chosen);
-            channelDao.insert(joke_channel);
-            //MainActivity.refreshNewsViewPager();
+            //channelDao.insert(joke_channel);
+            channelDaoHelper.addData(joke_channel);
 
-//                    Intent mIntent = new Intent();
-//                    mIntent.putExtra("change01", "1000");
-//                    mIntent.putExtra("change02", "2000");
-//                    // 设置结果，并进行传送
-//                    setResult(resultCode, mIntent);
             setResult(resultCode);
         } catch (Exception e) {
             Log.e(TAG, "initDataTableChannel error", e);
@@ -255,53 +214,11 @@ public class ChannelLibraryActivity extends BaseActivity {
         Log.d(TAG, "initDataTableChannel debug, end");
     }
 
-    /***
-     * 动态设置listview的高度
-     *
-     * @param listView
-     */
-    private void setListViewHeightBasedOnChildren(ListView listView) {
-        Log.d(TAG, "setListViewHeightBasedOnChildren debug, start");
-        try {
-            ListAdapter listAdapter = listView.getAdapter();
-            if (listAdapter == null) {
-                return;
-            }
-            int totalHeight = 0;
-            for (int i = 0; i < listAdapter.getCount(); i++) {
-                View listItem = listAdapter.getView(i, null, listView);
-                listItem.measure(0, 0);  //在还没有构建View 之前无法取得View的度宽,在此之前我们必须选 measure 一下
-                totalHeight += listItem.getMeasuredHeight();
-            }
-            ViewGroup.LayoutParams params = listView.getLayoutParams();
-            params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-            // params.height += 5;// if without this statement,the listview will be a little short
-            // listView.getDividerHeight()获取子项间分隔符占用的高度
-            // params.height最后得到整个ListView完整显示需要的高度
-            listView.setLayoutParams(params);
-        } catch (Exception e) {
-            Log.e(TAG, "setListViewHeightBasedOnChildren error", e);
-        }
-        Log.d(TAG, "setListViewHeightBasedOnChildren debug, end");
-    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        setResult(resultCode);
         finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (null != cursor) {
-            cursor.close();
-        }
-        if (null != daoSession) {
-            daoSession.clear();
-        }
-        if (null != db) {
-            db.close();
-        }
     }
 }

@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
 
-    private List<ChannelModel> channelModels;
+    private List<ChannelModel> channelModels = new ArrayList<>();
     private NewsViewPagerAdapter newsViewPagerAdapter;
     private int FIRST_TIME_NEWS = 0;
     private int FIRST_TIME_COLLECTION = 0;
@@ -147,13 +147,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void initChannelData() {
         Log.d(TAG, "initChannelData debug, start");
-        channelModels = new ArrayList<>();
+        channelModels.clear();
         ///*
         try {
-            if(null == channelDaoHelper) {
+            if (null == channelDaoHelper) {
                 channelDaoHelper = ChannelDaoHelper.getInstance();
             }
-            long totalCount = channelDaoHelper.getTotalCount();;
+            long totalCount = channelDaoHelper.getTotalCount();
+            ;
             Log.d(TAG, "initChannelData debug, Total Count = " + totalCount);
 
             channelModels = channelDaoHelper.getAllDataByChosen();
@@ -218,10 +219,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     public void refreshNewsViewPager() {
-        if (0 == MENU_ITEM_CHOSEN_INDEX) {
-            initChannelData();
-            newsViewPagerAdapter.notifyDataSetChanged();
-        }
+        Log.d(TAG, "refreshNewsViewPager debug, Get Data from Database Again.");
+        initChannelData();
+        newsViewPagerAdapter.setData(channelModels);
+        newsViewPagerAdapter.notifyDataSetChanged();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
