@@ -11,7 +11,7 @@ public class Constants {
 
     public static final String NEWSFRAGMENT_PARAMETER = "ChannelModel";
     public static final String NEWSDETAILACTIVITY_PARAMETER = "NewsDetailModel";
-
+    public static final String ACTIVITY_PARAMETER = "ActivityParam";
     //SQLite Database
     public static final String  DATABASE_NAME = "TunnelVisionDB";
     public static final int SCHEMA_VERSION = 1000;

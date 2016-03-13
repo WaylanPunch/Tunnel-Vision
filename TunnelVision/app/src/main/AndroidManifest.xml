@@ -73,7 +73,8 @@
             android:label="@string/title_activity_photo" />
         <activity
             android:name=".ui.activity.WeatherActivity"
-            android:label="@string/title_activity_weather"></activity>
+            android:label="@string/title_activity_weather" />
+        <activity android:name=".ui.activity.ImageExpandActivity"></activity>
     </application>
 
 </manifest>

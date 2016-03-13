@@ -30,6 +30,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ImageViewHol
     private int mMaxHeight;
 
     private OnItemClickListener mOnItemClickListener;
+    private OnDownloadClickListener mOnDownloadClickListener;
 
     public PhotoAdapter(Context context) {
         this.mContext = context;
@@ -65,7 +66,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ImageViewHol
         if (height > mMaxHeight) {
             height = mMaxHeight;
         }
-        //holder.mImage.setMinimumHeight(height);
+        holder.position = position;
         holder.mImage.setLayoutParams(new FrameLayout.LayoutParams(mMaxWidth, height));
         ImageLoaderUtil.display(mContext, holder.mImage, imageModel.getThumburl());
     }
@@ -85,28 +86,45 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ImageViewHol
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.mOnItemClickListener = onItemClickListener;
     }
+    public void setOnDownloadClickListener(OnDownloadClickListener onDownloadClickListener) {
+        this.mOnDownloadClickListener = onDownloadClickListener;
+    }
 
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
     }
 
-    class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public interface OnDownloadClickListener {
+        void onDownloadClick(View view, int position);
+    }
 
+    class ImageViewHolder extends RecyclerView.ViewHolder{
+        public int position;
         public TextView mTitle;
         public ImageView mImage;
+        public ImageView mImage_download;
+        public ImageViewHolder(View itemView) {
+            super(itemView);
+            mTitle = (TextView) itemView.findViewById(R.id.tv_photo_item_title);
+            mImage = (ImageView) itemView.findViewById(R.id.iv_photo_item_image);
+            mImage_download = (ImageView) itemView.findViewById(R.id.iv_photo_item_download);
+            itemView.setOnClickListener(new View.OnClickListener(){
 
-        public ImageViewHolder(View v) {
-            super(v);
-            mTitle = (TextView) v.findViewById(R.id.tv_photo_item_title);
-            mImage = (ImageView) v.findViewById(R.id.iv_photo_item_image);
-            v.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (mOnItemClickListener != null) {
-                mOnItemClickListener.onItemClick(view, this.getPosition());
-            }
+                @Override
+                public void onClick(View v) {
+                    if (mOnItemClickListener != null) {
+                        mOnItemClickListener.onItemClick(v, position);
+                    }
+                }
+            });
+            mImage_download.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mOnDownloadClickListener != null){
+                        mOnDownloadClickListener.onDownloadClick(v, position);
+                    }
+                }
+            });
         }
     }
 

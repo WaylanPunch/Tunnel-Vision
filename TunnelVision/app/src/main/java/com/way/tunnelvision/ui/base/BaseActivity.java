@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.util.ActivityCollector;
 
 /**
@@ -40,6 +42,12 @@ public class BaseActivity extends AppCompatActivity {
         context.startActivity(intent);
     }
 
+    protected void openActivityWithParcelable(Class<?> cls, Parcelable parcelable){
+        Intent intent = new Intent(this, cls);
+        intent.putExtra(Constants.ACTIVITY_PARAMETER, parcelable);
+        startActivity(intent);
+        overridePendingTransition(R.anim.create_zoomin, R.anim.create_zoomout);
+    }
 
     protected void openActivityForResult(Class<?> cls, int requestCode) {
         openActivityForResult(this, cls, requestCode);

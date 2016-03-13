@@ -64,6 +64,7 @@ public class PhotoActivity extends BaseActivity {
             mPhotoAdapter = new PhotoAdapter(PhotoActivity.this);
             mPhotoAdapter.setContent(imageModels);
             mPhotoAdapter.setOnItemClickListener(onImageItemClickListener);
+            mPhotoAdapter.setOnDownloadClickListener(onImageDownloadClickListener);
             mRecyclerView.setAdapter(mPhotoAdapter);
             //设置item之间的间隔
 //            SpacesItemDecoration decoration=new SpacesItemDecoration(16);
@@ -92,7 +93,16 @@ public class PhotoActivity extends BaseActivity {
     PhotoAdapter.OnItemClickListener onImageItemClickListener = new PhotoAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View view, int position) {
-            Toast.makeText(PhotoActivity.this,"Item Position = "+position,Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "onImageItemClickListener debug, Click Item = " + position);
+            ImageModel imageModel = imageModels.get(position);
+            openActivityWithParcelable(ImageExpandActivity.class, imageModel);
+        }
+    };
+    PhotoAdapter.OnDownloadClickListener onImageDownloadClickListener = new PhotoAdapter.OnDownloadClickListener() {
+
+        @Override
+        public void onDownloadClick(View view, int position) {
+            Toast.makeText(PhotoActivity.this,"Item Download = "+position,Toast.LENGTH_SHORT).show();
         }
     };
 
