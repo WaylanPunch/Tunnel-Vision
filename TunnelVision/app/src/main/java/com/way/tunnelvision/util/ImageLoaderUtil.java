@@ -3,7 +3,6 @@ package com.way.tunnelvision.util;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -47,7 +46,7 @@ public class ImageLoaderUtil {
             public void onSuccess(byte[] response) {
 //                byte[] image = new byte[0];
 //                image = response;
-                Log.d(TAG, "downloadImage debug, Result Length = " + response.length);
+                LogUtil.d(TAG, "downloadImage debug, Result Length = " + response.length);
                 Bitmap bitmap = BitmapFactory.decodeByteArray(response, 0, response.length);
                 listener.onSuccess(bitmap);
             }

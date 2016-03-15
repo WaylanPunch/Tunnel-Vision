@@ -1,10 +1,10 @@
 package com.way.tunnelvision.ui.activity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,6 +13,9 @@ import com.way.tunnelvision.adapter.PhotoAdapter;
 import com.way.tunnelvision.entity.impl.ImageModelImpl;
 import com.way.tunnelvision.entity.model.ImageModel;
 import com.way.tunnelvision.ui.base.BaseActivity;
+import com.way.tunnelvision.util.ImageLoaderUtil;
+import com.way.tunnelvision.util.ImageUtil;
+import com.way.tunnelvision.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +39,7 @@ public class PhotoActivity extends BaseActivity {
     }
 
     private void initView() {
-        Log.d(TAG, "initView debug, start");
+        LogUtil.d(TAG, "initView debug, start");
         try {
             imageModelImpl = new ImageModelImpl();
 
@@ -73,11 +76,11 @@ public class PhotoActivity extends BaseActivity {
             //mRecyclerView.setOnScrollListener(mOnScrollListener);
 
             refreshData();
-            Log.d(TAG, "initView debug,ImageModels COUNT = " + imageModels.size());
+            LogUtil.d(TAG, "initView debug,ImageModels COUNT = " + imageModels.size());
         } catch (Exception e) {
-            Log.e(TAG, "initView error", e);
+            LogUtil.e(TAG, "initView error", e);
         }
-        Log.d(TAG, "initView debug, end");
+        LogUtil.d(TAG, "initView debug, end");
     }
 
     /*
@@ -93,7 +96,7 @@ public class PhotoActivity extends BaseActivity {
     PhotoAdapter.OnItemClickListener onImageItemClickListener = new PhotoAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View view, int position) {
-            Log.d(TAG, "onImageItemClickListener debug, Click Item = " + position);
+            LogUtil.d(TAG, "onImageItemClickListener debug, Click Item = " + position);
             ImageModel imageModel = imageModels.get(position);
             openActivityWithParcelable(ImageExpandActivity.class, imageModel);
         }
@@ -102,7 +105,48 @@ public class PhotoActivity extends BaseActivity {
 
         @Override
         public void onDownloadClick(View view, int position) {
-            Toast.makeText(PhotoActivity.this,"Item Download = "+position,Toast.LENGTH_SHORT).show();
+            ImageModel imageModel = imageModels.get(position);
+            if (null != imageModel) {
+                String imageUrl = imageModel.getSourceurl();
+                String imageThumbUrl = imageModel.getThumburl();
+                LogUtil.d(TAG, "onImageDownloadClickListener debug, Image Source Url = " + imageUrl);
+                LogUtil.d(TAG, "onImageDownloadClickListener debug, Image Thumb Url = " + imageThumbUrl);
+                int lastIndexSlash = 0;
+                if (imageThumbUrl.contains("/")) {
+                    lastIndexSlash = imageThumbUrl.lastIndexOf("/");
+                } else {
+                    if (imageThumbUrl.contains("\\")) {
+                        lastIndexSlash = imageThumbUrl.lastIndexOf("\\");
+                    }
+                }
+                final String fileName = imageThumbUrl.substring(lastIndexSlash + 1, imageThumbUrl.length());
+                int lastIndexDot = 0;
+                lastIndexDot = fileName.lastIndexOf(".");
+                String fileExtension = fileName.substring(lastIndexDot, fileName.length());
+                LogUtil.d(TAG, "onImageDownloadClickListener debug, Image Name = " + fileName);
+                LogUtil.d(TAG, "onImageDownloadClickListener debug, Image Format = " + fileExtension);
+
+                ImageLoaderUtil.downloadImage(imageUrl, new ImageLoaderUtil.OnDownloadImageListener() {
+
+                    @Override
+                    public void onSuccess(Bitmap bitmap) {
+                        if (null != bitmap) {
+                            LogUtil.d(TAG, "onImageDownloadClickListener debug, bitmap != NULL");
+                            ImageUtil.saveBitmapToExternalStorage(bitmap, fileName);
+                            //saveBitmap(bitmap);
+                            Toast.makeText(PhotoActivity.this, "下载成功", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(PhotoActivity.this, "下载失败", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(String msg, Exception e) {
+                        LogUtil.e(TAG, "onImageDownloadClickListener error", e);
+                        Toast.makeText(PhotoActivity.this, "下载失败", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         }
     };
 
@@ -114,7 +158,7 @@ public class PhotoActivity extends BaseActivity {
     ImageModelImpl.OnLoadImageListListener onLoadImageListListener = new ImageModelImpl.OnLoadImageListListener() {
         @Override
         public void onSuccess(List<ImageModel> list) {
-            Log.d(TAG, "onLoadImageListListener debug, onSuccess, ImageModels COUNT = " + list.size());
+            LogUtil.d(TAG, "onLoadImageListListener debug, onSuccess, ImageModels COUNT = " + list.size());
             imageModels = list;
             mPhotoAdapter.setContent(imageModels);
             mPhotoAdapter.notifyDataSetChanged();

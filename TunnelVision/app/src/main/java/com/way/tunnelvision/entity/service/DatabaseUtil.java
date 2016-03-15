@@ -1,11 +1,11 @@
 package com.way.tunnelvision.entity.service;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.base.MainApp;
 import com.way.tunnelvision.entity.model.ChannelModel;
+import com.way.tunnelvision.util.LogUtil;
 import com.way.tunnelvision.util.PreferencesUtil;
 
 /**
@@ -20,7 +20,7 @@ public class DatabaseUtil {
 
 
     public static void initDataBase(Context context) {
-        Log.d(TAG, "initDataBase debug, start");
+        LogUtil.d(TAG, "initDataBase debug, start");
         ChannelDaoHelper channelDaoHelper = ChannelDaoHelper.getInstance();
 
         int currentVersion = PreferencesUtil.getInt(MainApp.getContext(), Constants.PREFERENCE_KEY_DATABASE_VERSION_CURRENT);
@@ -29,7 +29,7 @@ public class DatabaseUtil {
         }
 
         long rowCount = channelDaoHelper.getTotalCount();
-        Log.d(TAG, "initDataBase debug, Cursor Row Count = " + rowCount);
+        LogUtil.d(TAG, "initDataBase debug, Row Count = " + rowCount);
         try {
             if (rowCount == 0) {
                 String headline_guid = Constants.NEWS.TOP_ID;
@@ -69,9 +69,9 @@ public class DatabaseUtil {
                 channelDaoHelper.addData(joke_channel);
             }
         } catch (Exception e) {
-            Log.e(TAG, "initDataBase error", e);
+            LogUtil.e(TAG, "initDataBase error", e);
         }
-        Log.d(TAG, "initDataBase debug, end");
+        LogUtil.d(TAG, "initDataBase debug, end");
     }
 
 

@@ -2,7 +2,6 @@ package com.way.tunnelvision.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +57,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ImageViewHol
             return;
         }
         if (!StringUtil.isEmpty(imageModel.getTitle()) && !StringUtil.isBlank(imageModel.getTitle())) {
-            Log.d(TAG, "onBindViewHolder debug, ImageModel Title = " + imageModel.getTitle());
+            //LogUtil.d(TAG, "onBindViewHolder debug, ImageModel Title = " + imageModel.getTitle());
             holder.mTitle.setText(imageModel.getTitle());
         }
         float scale = (float) imageModel.getWidth() / (float) mMaxWidth;

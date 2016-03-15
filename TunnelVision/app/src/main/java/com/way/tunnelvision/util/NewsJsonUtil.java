@@ -49,7 +49,7 @@ public class NewsJsonUtil {
                 }
             }
         } catch (Exception e) {
-            Log.e(TAG, "readJsonNewsModels error" , e);
+            LogUtil.e(TAG, "readJsonNewsModels error" , e);
         }
         return newsModels;
     }
@@ -65,7 +65,7 @@ public class NewsJsonUtil {
             }
             newsDetail = JsonUtil.deserialize(jsonElement.getAsJsonObject(), NewsDetailModel.class);
         } catch (Exception e) {
-            Log.e(TAG, "readJsonNewsDetailModels error" , e);
+            LogUtil.e(TAG, "readJsonNewsDetailModels error" , e);
         }
         return newsDetail;
     }

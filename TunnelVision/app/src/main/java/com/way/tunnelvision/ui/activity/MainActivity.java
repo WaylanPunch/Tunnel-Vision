@@ -13,7 +13,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +26,7 @@ import com.way.tunnelvision.entity.model.ChannelModel;
 import com.way.tunnelvision.entity.service.ChannelDaoHelper;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
+import com.way.tunnelvision.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,7 +146,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void initChannelData() {
-        Log.d(TAG, "initChannelData debug, start");
+        LogUtil.d(TAG, "initChannelData debug, start");
         channelModels.clear();
         ///*
         try {
@@ -155,14 +155,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
             long totalCount = channelDaoHelper.getTotalCount();
             ;
-            Log.d(TAG, "initChannelData debug, Total Count = " + totalCount);
+            LogUtil.d(TAG, "initChannelData debug, Total Count = " + totalCount);
 
             channelModels = channelDaoHelper.getAllDataByChosen();
-            Log.d(TAG, "initChannelData debug, Chosen Count = " + channelModels.size());
+            LogUtil.d(TAG, "initChannelData debug, Chosen Count = " + channelModels.size());
         } catch (Exception e) {
-            Log.e(TAG, "initChannelData error", e);
+            LogUtil.e(TAG, "initChannelData error", e);
         }
-        Log.d(TAG, "initChannelData debug, end");
+        LogUtil.d(TAG, "initChannelData debug, end");
     }
 
     private View.OnClickListener viewOnClickListener = new View.OnClickListener() {
@@ -219,7 +219,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     public void refreshNewsViewPager() {
-        Log.d(TAG, "refreshNewsViewPager debug, Get Data from Database Again.");
+        LogUtil.d(TAG, "refreshNewsViewPager debug, Get Data from Database Again.");
         initChannelData();
         newsViewPagerAdapter.setData(channelModels);
         newsViewPagerAdapter.notifyDataSetChanged();
@@ -231,26 +231,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_menu_item_news) {
-            Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_news index = " + 0);
+            LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_news index = " + 0);
             MENU_ITEM_CHOSEN_INDEX = 0;
         } else if (id == R.id.nav_menu_item_collection) {
-            Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_collection index = " + 1);
+            LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_collection index = " + 1);
             openActivity(CollectionActivity.class);
             MENU_ITEM_CHOSEN_INDEX = 1;
         } else if (id == R.id.nav_menu_item_photo) {
-            Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_photo index = " + 2);
+            LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_photo index = " + 2);
             openActivity(PhotoActivity.class);
             MENU_ITEM_CHOSEN_INDEX = 2;
         } else if (id == R.id.nav_menu_item_weather) {
-            Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_weather index = " + 3);
+            LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_weather index = " + 3);
             openActivity(WeatherActivity.class);
             MENU_ITEM_CHOSEN_INDEX = 3;
         } else if (id == R.id.nav_menu_item_settings) {
-            Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_settings index = " + 4);
+            LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_settings index = " + 4);
             openActivity(SettingsActivity.class);
             MENU_ITEM_CHOSEN_INDEX = 4;
         } else if (id == R.id.nav_menu_item_exit) {
-            Log.d(TAG, "onNavigationItemSelected debug, nav_menu_item_exit index = " + 5);
+            LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_exit index = " + 5);
             MENU_ITEM_CHOSEN_INDEX = 5;
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             //AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);

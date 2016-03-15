@@ -33,7 +33,7 @@ public class ImageJsonUtil {
                 imageModels.add(news);
             }
         } catch (Exception e) {
-            Log.e(TAG, "readJsonImageModels error", e);
+            LogUtil.e(TAG, "readJsonImageModels error", e);
         }
         return imageModels;
     }

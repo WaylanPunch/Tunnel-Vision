@@ -6,7 +6,13 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import com.way.tunnelvision.base.MainApp;
+
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * ImageUtil
@@ -28,6 +34,7 @@ import java.io.ByteArrayOutputStream;
  * Created by pc on 2016/2/1.
  */
 public class ImageUtil {
+    private final static String TAG = ImageUtil.class.getName();
 
     private ImageUtil() {
         throw new AssertionError();
@@ -130,4 +137,29 @@ public class ImageUtil {
         return Bitmap.createBitmap(org, 0, 0, org.getWidth(), org.getHeight(), matrix, true);
     }
 
+
+    public static void saveBitmapToExternalStorage(Bitmap bm, String fileName) {
+        String picFolder = MainApp.getExternalStoragePicFolder();
+        if (null != picFolder) {
+            LogUtil.d(TAG, "saveBitmapToExternalStorage debug, Pictures Folder = " + picFolder);
+            String picFullPath = picFolder + File.separator + fileName;
+            LogUtil.d(TAG, "saveBitmapToExternalStorage debug, Pictures Full Path = " + picFullPath);
+            File file = new File(picFullPath);
+//        if (file.exists())
+//            return;
+            if (file.exists()) {
+                file.delete();
+            }
+            try {
+                FileOutputStream out = new FileOutputStream(file);
+                bm.compress(Bitmap.CompressFormat.PNG, 100, out);
+                out.flush();
+                out.close();
+            } catch (FileNotFoundException e) {
+                LogUtil.e(TAG, "saveBitmap error", e);
+            } catch (IOException e) {
+                LogUtil.e(TAG, "saveBitmap error", e);
+            }
+        }
+    }
 }

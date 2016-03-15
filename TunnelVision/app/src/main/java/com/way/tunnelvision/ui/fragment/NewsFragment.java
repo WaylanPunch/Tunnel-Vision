@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +26,7 @@ import com.way.tunnelvision.entity.impl.NewsModelImpl;
 import com.way.tunnelvision.entity.model.ChannelModel;
 import com.way.tunnelvision.entity.model.NewsModel;
 import com.way.tunnelvision.ui.activity.NewsDetailActivity;
+import com.way.tunnelvision.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,23 +62,23 @@ public class NewsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate debug, start");
+        LogUtil.d(TAG, "onCreate debug, start");
         try {
             newsModelImpl = new NewsModelImpl();
             Bundle bundle = getArguments();
             if (bundle != null) {
                 channelModel = (ChannelModel) bundle.getParcelable(Constants.NEWSFRAGMENT_PARAMETER);
-                Log.d(TAG, "onCreate debug, Channel GUID = " + channelModel.getChannelGUID());
-                Log.d(TAG, "onCreate debug, Channel Title = " + channelModel.getChannelTitle());
-                Log.d(TAG, "onCreate debug, Channel Name = " + channelModel.getChannelName());
-                Log.d(TAG, "onCreate debug, Channel Type = " + channelModel.getChannelType());
-                Log.d(TAG, "onCreate debug, Channel Link = " + channelModel.getChannelLink());
+                LogUtil.d(TAG, "onCreate debug, Channel GUID = " + channelModel.getChannelGUID());
+                LogUtil.d(TAG, "onCreate debug, Channel Title = " + channelModel.getChannelTitle());
+                LogUtil.d(TAG, "onCreate debug, Channel Name = " + channelModel.getChannelName());
+                LogUtil.d(TAG, "onCreate debug, Channel Type = " + channelModel.getChannelType());
+                LogUtil.d(TAG, "onCreate debug, Channel Link = " + channelModel.getChannelLink());
                 mType = channelModel.getChannelType();
             }
         } catch (Exception e) {
-            Log.e(TAG, "onCreate error", e);
+            LogUtil.e(TAG, "onCreate error", e);
         }
-        Log.d(TAG, "onCreate debug, end");
+        LogUtil.d(TAG, "onCreate debug, end");
     }
 
     @Override
@@ -110,13 +110,13 @@ public class NewsFragment extends Fragment {
             public void onRefresh() {
                 pageIndex = 0;
                 mContentItems.clear();
-                Log.d(TAG, "onViewCreated onRefresh debug, Refresh, Begin");
+                LogUtil.d(TAG, "onViewCreated onRefresh debug, Refresh, Begin");
 
                 newsModelImpl.loadNews(mType, pageIndex, new NewsModelImpl.OnLoadNewsListListener() {
                     @Override
                     public void onSuccess(List<NewsModel> list) {
                         mContentItems.addAll(list);
-                        Log.d(TAG, "onViewCreated onRefresh debug, Refresh, News Count = " + list.size());
+                        LogUtil.d(TAG, "onViewCreated onRefresh debug, Refresh, News Count = " + list.size());
                     }
 
                     @Override
@@ -131,12 +131,12 @@ public class NewsFragment extends Fragment {
             @Override
             public void onLoadMore() {
                 mRecyclerView.loadMoreComplete();
-                Log.d(TAG, "onViewCreated onLoadMore debug, Load More, Begin");
+                LogUtil.d(TAG, "onViewCreated onLoadMore debug, Load More, Begin");
                 newsModelImpl.loadNews(mType, pageIndex + Constants.NEWS.PAGE_SIZE, new NewsModelImpl.OnLoadNewsListListener() {
                     @Override
                     public void onSuccess(List<NewsModel> list) {
                         mContentItems.addAll(list);
-                        Log.d(TAG, "onViewCreated onLoadMore debug, Load More, News Count = " + list.size());
+                        LogUtil.d(TAG, "onViewCreated onLoadMore debug, Load More, News Count = " + list.size());
                         pageIndex += Constants.NEWS.PAGE_SIZE;
                     }
 
@@ -151,7 +151,7 @@ public class NewsFragment extends Fragment {
         });
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
 
-        Log.d(TAG, "onViewCreated debug, First Refresh");
+        LogUtil.d(TAG, "onViewCreated debug, First Refresh");
         mRecyclerView.firstRefresh();
     }
 

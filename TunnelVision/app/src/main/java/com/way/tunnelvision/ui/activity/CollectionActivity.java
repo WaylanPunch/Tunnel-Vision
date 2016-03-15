@@ -10,7 +10,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +24,7 @@ import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.entity.model.NewsModel;
 import com.way.tunnelvision.entity.service.NewsDaoHelper;
 import com.way.tunnelvision.ui.base.BaseActivity;
+import com.way.tunnelvision.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +75,7 @@ public class CollectionActivity extends BaseActivity {
     }
 
     private void initView() {
-        Log.d(TAG, "initView debug, start");
+        LogUtil.d(TAG, "initView debug, start");
         try {
             mFabButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -89,7 +89,7 @@ public class CollectionActivity extends BaseActivity {
             newsCollectionAdapter.setOnItemClickListener(recyclerOnItemClickListener);
             newsCollectionAdapter.setOnItemLongClickListener(recyclerOnLongItemClickListener);
 
-            Log.d(TAG, "initView debug, NewsModels COUNT = " + newsModels.size());
+            LogUtil.d(TAG, "initView debug, NewsModels COUNT = " + newsModels.size());
             xRecyclerView.setAdapter(newsCollectionAdapter);
 
             xRecyclerView.setOnScrollListener(new HidingScrollListener() {
@@ -104,24 +104,24 @@ public class CollectionActivity extends BaseActivity {
                 }
             });
         } catch (Exception e) {
-            Log.e(TAG, "initView error", e);
+            LogUtil.e(TAG, "initView error", e);
         }
-        Log.d(TAG, "initView debug, end");
+        LogUtil.d(TAG, "initView debug, end");
     }
 
     private void refreshData() {
-        Log.d(TAG, "refreshData debug, start");
+        LogUtil.d(TAG, "refreshData debug, start");
         try {
             newsModels.clear();
             newsDaoHelper = NewsDaoHelper.getInstance();
             newsModels = newsDaoHelper.getAllData();
             if (null != newsModels) {
-                Log.d(TAG, "refreshData debug, NewsModels COUNT = " + newsModels.size());
+                LogUtil.d(TAG, "refreshData debug, NewsModels COUNT = " + newsModels.size());
             }
         } catch (Exception e) {
-            Log.e(TAG, "refreshData error", e);
+            LogUtil.e(TAG, "refreshData error", e);
         }
-        Log.d(TAG, "refreshData debug, end");
+        LogUtil.d(TAG, "refreshData debug, end");
     }
 
     NewsCollectionAdapter.OnItemClickListener recyclerOnItemClickListener = new NewsCollectionAdapter.OnItemClickListener() {
@@ -180,9 +180,9 @@ public class CollectionActivity extends BaseActivity {
                 refreshData();
                 newsCollectionAdapter.notifyDataSetChanged();
                 Toast.makeText(CollectionActivity.this, "sdsdssssssssssss", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onOptionsItemSelected error, action_collection_refresh ");
+                LogUtil.d(TAG, "onOptionsItemSelected error, action_collection_refresh ");
             } catch (Exception e) {
-                Log.e(TAG, "onOptionsItemSelected error, action_collection_refresh", e);
+                LogUtil.e(TAG, "onOptionsItemSelected error, action_collection_refresh", e);
                 return false;
             }
         }

@@ -177,11 +177,11 @@ public class XRecyclerView extends RecyclerView {
     public void onScrollStateChanged(int state) {
         super.onScrollStateChanged(state);
 
-        Log.i(TAG, "onScrollStateChanged debug, start");
-        Log.i(TAG, "onScrollStateChanged debug, state == RecyclerView.SCROLL_STATE_IDLE, " + (state == RecyclerView.SCROLL_STATE_IDLE) + "");
-        Log.i(TAG, "onScrollStateChanged debug, mLoadingListener != null, " + (mLoadingListener != null) + "");
-        Log.i(TAG, "onScrollStateChanged debug,isLoadingData, " + (isLoadingData) + "");
-        Log.i(TAG, "onScrollStateChanged debug,loadingMoreEnabled, " + (loadingMoreEnabled) + "");
+        LogUtil.i(TAG, "onScrollStateChanged debug, start");
+        LogUtil.i(TAG, "onScrollStateChanged debug, state == RecyclerView.SCROLL_STATE_IDLE, " + (state == RecyclerView.SCROLL_STATE_IDLE) + "");
+        LogUtil.i(TAG, "onScrollStateChanged debug, mLoadingListener != null, " + (mLoadingListener != null) + "");
+        LogUtil.i(TAG, "onScrollStateChanged debug,isLoadingData, " + (isLoadingData) + "");
+        LogUtil.i(TAG, "onScrollStateChanged debug,loadingMoreEnabled, " + (loadingMoreEnabled) + "");
         //isLoadingData =false;
         if (state == RecyclerView.SCROLL_STATE_IDLE && mLoadingListener != null && !isLoadingData && loadingMoreEnabled) {
             if (mRefreshHeader.getState() < ArrowRefreshHeader.STATE_REFRESHING) {
@@ -213,8 +213,8 @@ public class XRecyclerView extends RecyclerView {
                 if (isOnTop() && pullRefreshEnabled) {
                     mRefreshHeader.onMove(deltaY / DRAG_RATE);
                     if (mRefreshHeader.getVisiableHeight() > 0 && mRefreshHeader.getState() < ArrowRefreshHeader.STATE_REFRESHING) {
-                        Log.i(TAG, "onTouchEvent debug, getVisiableHeight, getVisiableHeight = " + mRefreshHeader.getVisiableHeight());
-                        Log.i(TAG, "onTouchEvent debug, getVisiableHeight, mRefreshHeader.getState() = " + mRefreshHeader.getState());
+                        LogUtil.i(TAG, "onTouchEvent debug, getVisiableHeight, getVisiableHeight = " + mRefreshHeader.getVisiableHeight());
+                        LogUtil.i(TAG, "onTouchEvent debug, getVisiableHeight, mRefreshHeader.getState() = " + mRefreshHeader.getState());
                         return false;
                     }
                 }

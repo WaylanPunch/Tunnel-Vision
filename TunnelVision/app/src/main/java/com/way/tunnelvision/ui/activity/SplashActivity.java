@@ -4,7 +4,6 @@ package com.way.tunnelvision.ui.activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.SplashViewPagerAdapter;
@@ -13,6 +12,7 @@ import com.way.tunnelvision.base.MainApp;
 import com.way.tunnelvision.entity.service.DatabaseUtil;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
+import com.way.tunnelvision.util.LogUtil;
 import com.way.tunnelvision.util.PreferencesUtil;
 
 public class SplashActivity extends BaseActivity {
@@ -44,12 +44,12 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        Log.d(TAG, "onCreate debug, start");
+        LogUtil.d(TAG, "onCreate debug, start");
         try {
             DatabaseUtil.initDataBase(this);
             int first_enter_valuue = PreferencesUtil.getInt(getApplicationContext(), Constants.PREFERENCE_KEY_FIRST_ENTER);
             if (1 != first_enter_valuue) {
-                Log.d(TAG, "onCreate debug, First Enter App = True");
+                LogUtil.d(TAG, "onCreate debug, First Enter App = True");
                 PreferencesUtil.putInt(MainApp.getContext(), Constants.PREFERENCE_KEY_FIRST_ENTER, 1);
                 // Create the adapter that will return a fragment for each of the three
                 // primary sections of the activity.
@@ -63,9 +63,9 @@ public class SplashActivity extends BaseActivity {
             }
             //DatabaseUtil.initDataBase(this);
         } catch (Exception e) {
-            Log.e(TAG, "onCreate error", e);
+            LogUtil.e(TAG, "onCreate error", e);
         }
-        Log.d(TAG, "onCreate debug, end");
+        LogUtil.d(TAG, "onCreate debug, end");
     }
 
 

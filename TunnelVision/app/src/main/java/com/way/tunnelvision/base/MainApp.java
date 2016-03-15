@@ -4,12 +4,12 @@ import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
-import android.util.Log;
 
 import com.tencent.bugly.crashreport.CrashReport;
 import com.way.tunnelvision.entity.dao.DaoMaster;
 import com.way.tunnelvision.entity.dao.DaoSession;
 import com.way.tunnelvision.util.CrashHandler;
+import com.way.tunnelvision.util.LogUtil;
 
 import java.io.File;
 
@@ -35,7 +35,7 @@ public class MainApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG, "onCreate debug, start");
+        LogUtil.d(TAG, "onCreate debug, start");
         try {
             mContext = getApplicationContext();
             CrashHandler crashHandler = CrashHandler.getInstance();
@@ -54,9 +54,9 @@ public class MainApp extends Application {
                 createPackagePath(externalStorageFolder, externalStoragePicFolder);
             }
         } catch (Exception e) {
-            Log.e(TAG, "onCreate error", e);
+            LogUtil.e(TAG, "onCreate error", e);
         }
-        Log.d(TAG, "onCreate debug, end");
+        LogUtil.d(TAG, "onCreate debug, end");
     }
 
     public static Context getContext() {
@@ -72,7 +72,7 @@ public class MainApp extends Application {
 
     public static DaoSession getDaoSession() {
         if (null == daoSession) {
-            Log.d(TAG, "getDaoSession debug, Execute initGreenDao()");
+            LogUtil.d(TAG, "getDaoSession debug, Execute initGreenDao()");
             initGreenDao();
         }
         return daoSession;
@@ -80,7 +80,7 @@ public class MainApp extends Application {
 
     public static DaoMaster.DevOpenHelper getDevOpenHelper() {
         if (null == helper) {
-            Log.d(TAG, "getDevOpenHelper debug, Execute initGreenDao()");
+            LogUtil.d(TAG, "getDevOpenHelper debug, Execute initGreenDao()");
             initGreenDao();
         }
         return helper;
@@ -88,7 +88,7 @@ public class MainApp extends Application {
 
     public static SQLiteDatabase getSQLiteDatabase() {
         if (null == db) {
-            Log.d(TAG, "getSQLiteDatabase debug, Execute initGreenDao()");
+            LogUtil.d(TAG, "getSQLiteDatabase debug, Execute initGreenDao()");
             initGreenDao();
         }
         return db;
@@ -96,7 +96,7 @@ public class MainApp extends Application {
 
     public static DaoMaster getDaoMaster() {
         if (null == daoMaster) {
-            Log.d(TAG, "getDaoMaster debug, Execute initGreenDao()");
+            LogUtil.d(TAG, "getDaoMaster debug, Execute initGreenDao()");
             initGreenDao();
         }
         return daoMaster;
@@ -115,10 +115,10 @@ public class MainApp extends Application {
             if (sdCardExist) {
                 File sdDir = Environment.getExternalStorageDirectory();//获取跟目录
                 absolutePath = sdDir.getAbsolutePath();
-                Log.d(TAG, "getSDPath debug, Absolute Path = " + absolutePath);
+                LogUtil.d(TAG, "getSDPath debug, Absolute Path = " + absolutePath);
             }
         } catch (Exception e) {
-            Log.e(TAG, "getSDPath error", e);
+            LogUtil.e(TAG, "getSDPath error", e);
             return null;
         }
         return absolutePath;
@@ -136,18 +136,18 @@ public class MainApp extends Application {
             File file = new File(packpath);
             if (!file.exists()) {
                 file.mkdir();
-                Log.d(TAG, "getSDPath debug, Path Not Exists");
+                LogUtil.d(TAG, "getSDPath debug, Path Not Exists");
             }
 
             File filePic = new File(packPicPath);
             if (!filePic.exists()) {
                 filePic.mkdir();
-                Log.d(TAG, "getSDPath debug, Pictures Path Not Exists");
+                LogUtil.d(TAG, "getSDPath debug, Pictures Path Not Exists");
             }
-            Log.d(TAG, "getSDPath debug, Package Path = " + packpath);
-            Log.d(TAG, "getSDPath debug, Package Pictures Path = " + packPicPath);
+            LogUtil.d(TAG, "getSDPath debug, Package Path = " + packpath);
+            LogUtil.d(TAG, "getSDPath debug, Package Pictures Path = " + packPicPath);
         } catch (Exception e) {
-            Log.e(TAG, "createPackagePath error", e);
+            LogUtil.e(TAG, "createPackagePath error", e);
         }
     }
 

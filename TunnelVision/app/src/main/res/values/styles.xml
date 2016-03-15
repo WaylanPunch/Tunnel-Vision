@@ -54,4 +54,12 @@
         <item name="shadow_bottom">@drawable/shadow_bottom</item>
     </style>
 
+    <style name="weacher_title">
+        <item name="android:textSize">21.0sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="weacher_temp">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

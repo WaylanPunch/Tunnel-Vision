@@ -81,7 +81,7 @@ public class OkHttpUtil {
                         sendSuccessCallBack(callback, object);
                     }
                 } catch (final Exception e) {
-                    Log.e(TAG, "deliveryResult error, convert json failure", e);
+                    LogUtil.e(TAG, "deliveryResult error, convert json failure", e);
                     sendFailCallback(callback, e);
                 }
 
@@ -103,7 +103,7 @@ public class OkHttpUtil {
                     byte[] byteResult = response.body().bytes();
                     sendSuccessCallBack(callback, byteResult);
                 } catch (final Exception e) {
-                    Log.e(TAG, "deliveryResult error, convert json failure", e);
+                    LogUtil.e(TAG, "deliveryResult error, convert json failure", e);
                     sendFailCallback(callback, e);
                 }
 

@@ -5,13 +5,13 @@ import android.content.res.TypedArray;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 import android.widget.ScrollView;
 
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.util.LogUtil;
 
 /**
  * 自定义ScrollView
@@ -19,7 +19,7 @@ import com.way.tunnelvision.R;
  * Created by pc on 2016/1/6.
  */
 public class PullScrollView extends ScrollView {
-    private static final String LOG_TAG = "PullScrollView";
+    private final static String TAG = PullScrollView.class.getName();
     /**
      * 阻尼系数,越小阻力就越大.
      */
@@ -218,7 +218,7 @@ public class PullScrollView extends ScrollView {
             try {
                 isHandle = super.onTouchEvent(ev);
             } catch (Exception e) {
-                Log.w(LOG_TAG, e);
+                LogUtil.e(TAG, "onTouchEvent debug", e);
             }
         }
         return isHandle;

@@ -5,7 +5,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +22,7 @@ import com.way.tunnelvision.entity.service.NewsDetailDaoHelper;
 import com.way.tunnelvision.ui.base.SwipeBackActivity;
 import com.way.tunnelvision.ui.widget.SwipeBackLayout;
 import com.way.tunnelvision.util.ImageLoaderUtil;
+import com.way.tunnelvision.util.LogUtil;
 
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
@@ -89,13 +89,13 @@ public class NewsDetailActivity extends SwipeBackActivity {
             mProgressBar.setVisibility(View.GONE);
             Snackbar.make(fab, "Refresh Finished", Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show();
-            Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Docid = " + newsDetailModel.getDocid());
-            Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Title = " + newsDetailModel.getTitle());
-            Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Cover = " + newsDetailModel.getCover());
-            Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Source = " + newsDetailModel.getSource());
-            Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Ptime = " + newsDetailModel.getPtime());
-            //Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Body = " + newsDetailModel.getBody());
-            Log.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel ImgList = " + newsDetailModel.getImgList());
+            LogUtil.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Docid = " + newsDetailModel.getDocid());
+            LogUtil.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Title = " + newsDetailModel.getTitle());
+            LogUtil.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Cover = " + newsDetailModel.getCover());
+            LogUtil.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Source = " + newsDetailModel.getSource());
+            LogUtil.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Ptime = " + newsDetailModel.getPtime());
+            //LogUtil.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel Body = " + newsDetailModel.getBody());
+            LogUtil.i(TAG, "OnLoadNewsDetailListener debug, NewsDetailModel ImgList = " + newsDetailModel.getImgList());
             newsDetail = newsDetailModel;
         }
 
@@ -133,7 +133,7 @@ public class NewsDetailActivity extends SwipeBackActivity {
                 }
                 Toast.makeText(NewsDetailActivity.this, "fsdfsssssssssssss", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
-                Log.e(TAG, "onOptionsItemSelected error, action_addtocollection", e);
+                LogUtil.e(TAG, "onOptionsItemSelected error, action_addtocollection", e);
                 return false;
             }
         }

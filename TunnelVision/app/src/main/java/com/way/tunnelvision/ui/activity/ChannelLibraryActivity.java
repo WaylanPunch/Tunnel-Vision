@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,6 +15,7 @@ import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.entity.model.ChannelModel;
 import com.way.tunnelvision.entity.service.ChannelDaoHelper;
 import com.way.tunnelvision.ui.base.BaseActivity;
+import com.way.tunnelvision.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ public class ChannelLibraryActivity extends BaseActivity {
 
 
     private void initView() {
-        Log.d(TAG, "initView debug, start");
+        LogUtil.d(TAG, "initView debug, start");
         try {
             fab = (FloatingActionButton) findViewById(R.id.fab_channel_liabrary_initialize);
             fab.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +78,7 @@ public class ChannelLibraryActivity extends BaseActivity {
 
 
 
-            Log.d(TAG, "initView debug, Channel Items Count = " + channelModelsUnchosen.size());
+            LogUtil.d(TAG, "initView debug, Channel Items Count = " + channelModelsUnchosen.size());
             channelUnchosenAdapter = new ChannelUnchosenAdapter(ChannelLibraryActivity.this, channelModelsUnchosen);
             //channelUnchosenAdapter = new ChannelChosenAdapter(ChannelLibraryActivity.this, channelModelsUnchosen);
             //lv_chosenList.setAdapter(channelUnchosenAdapter);
@@ -140,30 +140,30 @@ public class ChannelLibraryActivity extends BaseActivity {
                     .create();
             rv_unchosenList.setOnTouchListener(listener);
         } catch (Exception e) {
-            Log.e(TAG, "initView error", e);
+            LogUtil.e(TAG, "initView error", e);
         }
-        Log.d(TAG, "initView debug, end");
+        LogUtil.d(TAG, "initView debug, end");
     }
 
 
 
     private void initListData() {
-        Log.d(TAG, "initListData debug, start");
+        LogUtil.d(TAG, "initListData debug, start");
         try {
             channelDaoHelper = ChannelDaoHelper.getInstance();
             Long rowCount = channelDaoHelper.getTotalCount();
             if(rowCount>0){
                 channelModelsUnchosen = channelDaoHelper.getAllData();
-                Log.d(TAG, "initListData debug, ChannelModels COUNT = " + rowCount + "," + channelModelsUnchosen.size());
+                LogUtil.d(TAG, "initListData debug, ChannelModels COUNT = " + rowCount + "," + channelModelsUnchosen.size());
             }
         } catch (Exception e) {
-            Log.e(TAG, "initListData error", e);
+            LogUtil.e(TAG, "initListData error", e);
         }
-        Log.d(TAG, "initListData debug, end");
+        LogUtil.d(TAG, "initListData debug, end");
     }
 
     private void initDataTableChannel() {
-        Log.d(TAG, "initDataTableChannel debug, start");
+        LogUtil.d(TAG, "initDataTableChannel debug, start");
         try {
             //channelDao.deleteAll();
             channelDaoHelper.deleteAll();
@@ -209,9 +209,9 @@ public class ChannelLibraryActivity extends BaseActivity {
 
             setResult(resultCode);
         } catch (Exception e) {
-            Log.e(TAG, "initDataTableChannel error", e);
+            LogUtil.e(TAG, "initDataTableChannel error", e);
         }
-        Log.d(TAG, "initDataTableChannel debug, end");
+        LogUtil.d(TAG, "initDataTableChannel debug, end");
     }
 
 

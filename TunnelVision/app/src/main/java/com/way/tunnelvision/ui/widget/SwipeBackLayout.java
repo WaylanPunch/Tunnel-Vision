@@ -9,13 +9,13 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,7 +149,7 @@ public class SwipeBackLayout extends FrameLayout {
         if (edgeSize > 0) {
             //setEdgeSize(edgeSize);
         }
-        Log.d(TAG, "SwipeBackLayout debug, edgeSize = " + edgeSize);
+        LogUtil.d(TAG, "SwipeBackLayout debug, edgeSize = " + edgeSize);
 
         int mode = EDGE_FLAGS[a.getInt(R.styleable.SwipeBackLayout_edge_flag, 0)];
         setEdgeTrackingEnabled(mode);

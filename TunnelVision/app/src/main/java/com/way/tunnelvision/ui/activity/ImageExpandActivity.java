@@ -2,7 +2,6 @@ package com.way.tunnelvision.ui.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -11,15 +10,11 @@ import android.widget.Toast;
 
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.base.Constants;
-import com.way.tunnelvision.base.MainApp;
 import com.way.tunnelvision.entity.model.ImageModel;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ImageLoaderUtil;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.way.tunnelvision.util.ImageUtil;
+import com.way.tunnelvision.util.LogUtil;
 
 public class ImageExpandActivity extends BaseActivity {
     private final static String TAG = ImageExpandActivity.class.getName();
@@ -45,8 +40,8 @@ public class ImageExpandActivity extends BaseActivity {
         if (null != imageModel) {
             imageUrl = imageModel.getSourceurl();
             imageThumbUrl = imageModel.getThumburl();
-            Log.d(TAG, "onCreate debug, Image Source Url = " + imageUrl);
-            Log.d(TAG, "onCreate debug, Image Thumb Url = " + imageThumbUrl);
+            LogUtil.d(TAG, "onCreate debug, Image Source Url = " + imageUrl);
+            LogUtil.d(TAG, "onCreate debug, Image Thumb Url = " + imageThumbUrl);
             int lastIndexSlash = 0;
             if (imageThumbUrl.contains("/")) {
                 lastIndexSlash = imageThumbUrl.lastIndexOf("/");
@@ -59,8 +54,8 @@ public class ImageExpandActivity extends BaseActivity {
             int lastIndexDot = 0;
             lastIndexDot = fileName.lastIndexOf(".");
             fileExtension = fileName.substring(lastIndexDot, fileName.length());
-            Log.d(TAG, "onCreate debug, Image Name = " + fileName);
-            Log.d(TAG, "onCreate debug, Image Format = " + fileExtension);
+            LogUtil.d(TAG, "onCreate debug, Image Name = " + fileName);
+            LogUtil.d(TAG, "onCreate debug, Image Format = " + fileExtension);
         }
         initView();
     }
@@ -81,8 +76,9 @@ public class ImageExpandActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Bitmap bitmap) {
                         if (null != bitmap) {
-                            Log.d(TAG, "onCreate debug, bitmap != NULL");
-                            saveBitmap(bitmap);
+                            LogUtil.d(TAG, "onCreate debug, bitmap != NULL");
+                            ImageUtil.saveBitmapToExternalStorage(bitmap, fileName);
+                            //saveBitmap(bitmap);
                             Toast.makeText(ImageExpandActivity.this, "下载成功", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(ImageExpandActivity.this, "下载失败", Toast.LENGTH_SHORT).show();
@@ -100,31 +96,31 @@ public class ImageExpandActivity extends BaseActivity {
         });
     }
 
-    /**
-     * 保存方法
-     */
-    public void saveBitmap(Bitmap bm) {
-        String picFolder = MainApp.getExternalStoragePicFolder();
-        if (null != picFolder) {
-            Log.d(TAG, "saveBitmap debug, Pictures Folder = " + picFolder);
-            String picFullPath = picFolder + File.separator + fileName;
-            Log.d(TAG, "saveBitmap debug, Pictures Full Path = " + picFullPath);
-            File file = new File(picFullPath);
-//        if (file.exists())
-//            return;
-            if (file.exists()) {
-                file.delete();
-            }
-            try {
-                FileOutputStream out = new FileOutputStream(file);
-                bm.compress(Bitmap.CompressFormat.PNG, 100, out);
-                out.flush();
-                out.close();
-            } catch (FileNotFoundException e) {
-                Log.e(TAG, "saveBitmap error", e);
-            } catch (IOException e) {
-                Log.e(TAG, "saveBitmap error", e);
-            }
-        }
-    }
+//    /**
+//     * 保存方法
+//     */
+//    public void saveBitmap(Bitmap bm) {
+//        String picFolder = MainApp.getExternalStoragePicFolder();
+//        if (null != picFolder) {
+//            LogUtil.d(TAG, "saveBitmap debug, Pictures Folder = " + picFolder);
+//            String picFullPath = picFolder + File.separator + fileName;
+//            LogUtil.d(TAG, "saveBitmap debug, Pictures Full Path = " + picFullPath);
+//            File file = new File(picFullPath);
+////        if (file.exists())
+////            return;
+//            if (file.exists()) {
+//                file.delete();
+//            }
+//            try {
+//                FileOutputStream out = new FileOutputStream(file);
+//                bm.compress(Bitmap.CompressFormat.PNG, 100, out);
+//                out.flush();
+//                out.close();
+//            } catch (FileNotFoundException e) {
+//                LogUtil.e(TAG, "saveBitmap error", e);
+//            } catch (IOException e) {
+//                LogUtil.e(TAG, "saveBitmap error", e);
+//            }
+//        }
+//    }
 }

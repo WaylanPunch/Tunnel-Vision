@@ -3,7 +3,6 @@ package com.way.tunnelvision.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -12,6 +11,7 @@ import android.widget.RelativeLayout;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
+import com.way.tunnelvision.util.LogUtil;
 
 import kll.dod.rtk.st.SplashView;
 import kll.dod.rtk.st.SpotDialogListener;
@@ -72,24 +72,24 @@ public class AdDisplayActivity extends BaseActivity {
 
                     @Override
                     public void onShowSuccess() {
-                        Log.i(TAG, "开屏展示成功");
+                        LogUtil.i(TAG, "setupSplashAd debug, 开屏展示成功");
                         splashLayout.setVisibility(View.VISIBLE);
                         splashLayout.startAnimation(AnimationUtils.loadAnimation(AdDisplayActivity.this, R.anim.ad_display_enter));
                     }
 
                     @Override
                     public void onShowFailed() {
-                        Log.i(TAG, "开屏展示失败");
+                        LogUtil.i(TAG, "setupSplashAd debug, 开屏展示失败");
                     }
 
                     @Override
                     public void onSpotClosed() {
-                        Log.i(TAG, "开屏被关闭");
+                        LogUtil.i(TAG, "setupSplashAd debug, 开屏被关闭");
                     }
 
                     @Override
                     public void onSpotClick(boolean isWebPath) {
-                        Log.i(TAG, "开屏被点击");
+                        LogUtil.i(TAG, "setupSplashAd debug, 开屏被点击");
                     }
                 });
 

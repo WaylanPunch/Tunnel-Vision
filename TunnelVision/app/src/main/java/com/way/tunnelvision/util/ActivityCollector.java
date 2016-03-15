@@ -20,27 +20,27 @@ public class ActivityCollector {
     public static List<Activity> activities = new ArrayList<Activity>();
 
     public static void addActivity(Activity activity) {
-        Log.d(TAG, "addActivity debug, start");
+        LogUtil.d(TAG, "addActivity debug, start");
         try {
             activities.add(activity);
         } catch (Exception e) {
-            Log.e(TAG, "addActivity error", e);
+            LogUtil.e(TAG, "addActivity error", e);
         }
-        Log.d(TAG, "addActivity debug, end");
+        LogUtil.d(TAG, "addActivity debug, end");
     }
 
     public static void removeActivity(Activity activity) {
-        Log.d(TAG, "removeActivity debug, start");
+        LogUtil.d(TAG, "removeActivity debug, start");
         try {
             activities.remove(activity);
         } catch (Exception e) {
-            Log.e(TAG, "removeActivity error", e);
+            LogUtil.e(TAG, "removeActivity error", e);
         }
-        Log.d(TAG, "removeActivity debug, end");
+        LogUtil.d(TAG, "removeActivity debug, end");
     }
 
     public static void finishAll() {
-        Log.d(TAG, "finishAll debug, start");
+        LogUtil.d(TAG, "finishAll debug, start");
         try {
             for (Activity activity : activities) {
                 if (!activity.isFinishing()) {
@@ -48,9 +48,9 @@ public class ActivityCollector {
                 }
             }
         } catch (Exception e) {
-            Log.e(TAG, "finishAll error", e);
+            LogUtil.e(TAG, "finishAll error", e);
         }
-        Log.d(TAG, "finishAll debug, end");
+        LogUtil.d(TAG, "finishAll debug, end");
     }
 }
 
