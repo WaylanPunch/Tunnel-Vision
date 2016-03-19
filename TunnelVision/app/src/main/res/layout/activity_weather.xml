@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root_layout"
+    android:id="@+id/fl_weather_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_news_local_weather_bg_big"
@@ -10,7 +10,7 @@
     tools:context=".ui.activity.WeatherActivity">
 
     <LinearLayout
-        android:id="@+id/weather_layout"
+        android:id="@+id/ll_weather_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
@@ -26,14 +26,14 @@
             android:padding="12dp">
 
             <TextView
-                android:id="@+id/city"
+                android:id="@+id/tv_weather_city"
                 style="@style/weacher_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="深圳" />
 
             <TextView
-                android:id="@+id/today"
+                android:id="@+id/tv_weather_today"
                 style="@style/weacher_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
             android:padding="12dp">
 
             <ImageView
-                android:id="@+id/weatherImage"
+                android:id="@+id/iv_weather_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/biz_plugin_weather_qing" />
@@ -61,7 +61,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/weatherTemp"
+                    android:id="@+id/tv_weather_temp"
                     style="@style/weacher_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
                     android:text="22℃-28℃" />
 
                 <TextView
-                    android:id="@+id/wind"
+                    android:id="@+id/tv_weather_wind"
                     style="@style/weacher_temp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
                     android:text="微风" />
 
                 <TextView
-                    android:id="@+id/weather"
+                    android:id="@+id/tv_weather_weather"
                     style="@style/weacher_temp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/weather_content"
+                android:id="@+id/ll_weather_content"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -102,7 +102,7 @@
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/progress"
+        android:id="@+id/pb_weather_progress"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
