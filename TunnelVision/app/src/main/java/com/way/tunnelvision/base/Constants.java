@@ -9,9 +9,11 @@ public class Constants {
     public static final String PREFERENCE_KEY_FIRST_ENTER = "First_Enter";
     public static final String PREFERENCE_KEY_DATABASE_VERSION_CURRENT = "Database_Version_Current";
 
+    //Key of Activity Bundle
     public static final String NEWSFRAGMENT_PARAMETER = "ChannelModel";
     public static final String NEWSDETAILACTIVITY_PARAMETER = "NewsDetailModel";
     public static final String ACTIVITY_PARAMETER = "ActivityParam";
+
     //SQLite Database
     public static final String  DATABASE_NAME = "TunnelVisionDB";
     public static final int SCHEMA_VERSION = 1000;
@@ -25,25 +27,6 @@ public class Constants {
     public static final String YouMi_ID = "2b60c18b7e10fab4";
     public static final String YouMi_KEY = "46f38e0e7ac8754e";
 
-    public  class RSS {
-        public static final String RSS_CHANNEL = "channel";
-        public static final String RSS_CHANNEL_TITLE = "rss channel title";
-        public static final String RSS_CHANNEL_DESCRIPTION = "rss channel description";
-        public static final String RSS_CHANNEL_LINK = "rss channel link";
-        public static final String RSS_CHANNEL_GENERATOR = "rss channel generator";
-        public static final String RSS_CHANNEL_PUBDATE = "rss channel pubDate";
-        public static final String RSS_CHANNEL_LANGUAGE = "rss channel language";
-        public static final String RSS_ITEM = "item";
-        public static final String RSS_ITEM_TITLE = "title";
-        public static final String RSS_ITEM_CATEGORY = "category";
-        public static final String RSS_ITEM_DESCRIPTION = "description";
-        public static final String RSS_ITEM_LINK = "link";
-        public static final String RSS_ITEM_PUBDATE = "pubDate";
-        public static final String RSS_ITEM_SOURCE = "source";
-        public static final String RSS_ITEM_GUID = "guid";
-        public static final String RSS_ITEM_AUTHOR = "author";
-        public static final String RSS_ITEM_LINK_3G = "link_3g";
-    }
 
     /**
      * Description : 接口API的URL

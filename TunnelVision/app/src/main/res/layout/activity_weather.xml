@@ -7,99 +7,117 @@
     android:background="@drawable/bg_news_local_weather_bg_big"
     android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants"
+    android:focusable="true"
     tools:context=".ui.activity.WeatherActivity">
 
-    <LinearLayout
-        android:id="@+id/ll_weather_layout"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_weather_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/transparent"
+        android:fitsSystemWindows="true" />
+
+    <ScrollView
+        android:id="@+id/sv_weather_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:padding="12dp"
-        android:visibility="gone">
+        android:layout_marginTop="?attr/actionBarSize"
+        android:fitsSystemWindows="true"
+        android:scrollbars="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_weather_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:padding="12dp">
-
-            <TextView
-                android:id="@+id/tv_weather_city"
-                style="@style/weacher_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="深圳" />
-
-            <TextView
-                android:id="@+id/tv_weather_today"
-                style="@style/weacher_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:text="2015年12月22日 星期二" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="12dp">
-
-            <ImageView
-                android:id="@+id/iv_weather_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/biz_plugin_weather_qing" />
+            android:orientation="vertical"
+            android:padding="12dp"
+            android:visibility="gone">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:orientation="vertical">
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:padding="12dp">
 
                 <TextView
-                    android:id="@+id/tv_weather_temp"
+                    android:id="@+id/tv_weather_city"
                     style="@style/weacher_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:text="22℃-28℃" />
+                    android:text="深圳" />
 
                 <TextView
-                    android:id="@+id/tv_weather_wind"
-                    style="@style/weacher_temp"
+                    android:id="@+id/tv_weather_today"
+                    style="@style/weacher_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:text="微风" />
-
-                <TextView
-                    android:id="@+id/tv_weather_weather"
-                    style="@style/weacher_temp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:text="阵雨转阴" />
+                    android:layout_marginLeft="24dp"
+                    android:text="2015年12月22日 星期二" />
             </LinearLayout>
-        </LinearLayout>
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/ll_weather_content"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="12dp">
 
+                <ImageView
+                    android:id="@+id/iv_weather_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/biz_plugin_weather_qing" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_weather_temp"
+                        style="@style/weacher_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:text="22℃-28℃" />
+
+                    <TextView
+                        android:id="@+id/tv_weather_wind"
+                        style="@style/weacher_temp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:text="微风" />
+
+                    <TextView
+                        android:id="@+id/tv_weather_weather"
+                        style="@style/weacher_temp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:text="阵雨转阴" />
+                </LinearLayout>
             </LinearLayout>
-        </HorizontalScrollView>
-    </LinearLayout>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/ll_weather_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/pb_weather_progress"

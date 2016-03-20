@@ -28,6 +28,8 @@ public class WeatherModel {
 
     private int imageRes;
 
+    private int backgroundImageRes;
+
     public String getTemperature() {
         return temperature;
     }
@@ -74,5 +76,13 @@ public class WeatherModel {
 
     public void setImageRes(int imageRes) {
         this.imageRes = imageRes;
+    }
+
+    public int getBackgroundImageRes() {
+        return this.backgroundImageRes;
+    }
+
+    public void setBackgroundImageRes(int backgroundImageRes) {
+        this.backgroundImageRes = backgroundImageRes;
     }
 }
