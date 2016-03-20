@@ -1,16 +1,7 @@
 <resources>
     <string name="app_name">Tunnel Vision</string>
     <string name="action_subscribe">订阅</string>
-    <string name="action_shortcut">快捷方式</string>
     <string name="action_share">分享</string>
-    <string name="large_text">什么鬼</string>
-    <string name="action_settings">设置</string>
-    <string name="action_temperature">温度</string>
-    <string name="action_exit">退出</string>
-    <string name="action_add_feeds">添加</string>
-    <string name="fragment_news_title">新闻</string>
-    <string name="fragment_topic_title">话题</string>
-    <string name="fragment_recommend_title">推荐</string>
     <string name="text_dialog_title">消息</string>
     <string name="text_dialog_exit_warning">确定退出程序吗？</string>
     <string name="text_dialog_ok">确定</string>
@@ -18,13 +9,10 @@
     <string name="title_activity_feeds_library">订阅</string>
     <string name="menu_title_news">新闻</string>
     <string name="menu_title_collection">收藏</string>
-    <string name="menu_title_photo">图片</string>
+    <string name="menu_title_image">图片</string>
     <string name="menu_title_weather">天气</string>
     <string name="menu_title_settings">设置</string>
     <string name="menu_title_exit">退出</string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
-    <string name="title_activity_splash">SplashActivity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
     <string name="menu_category_more">更多</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -92,9 +80,10 @@
     <string name="transition_news_img">transition_news_img</string>
     <string name="text_dialog_collect_info">点击确定即可收藏！</string>
     <string name="action_addtocollection">添加收藏</string>
-    <string name="title_activity_collection">CollectionActivity</string>
+    <string name="title_activity_collection">收藏</string>
     <string name="action_collection_edit">编辑</string>
-    <string name="title_activity_photo">PhotoActivity</string>
-    <string name="title_activity_weather">WeatherActivity</string>
+    <string name="title_activity_image">图片</string>
+    <string name="title_activity_weather">天气</string>
     <string name="action_weather_refresh">刷新</string>
+    <string name="action_image_refresh">刷新</string>
 </resources>

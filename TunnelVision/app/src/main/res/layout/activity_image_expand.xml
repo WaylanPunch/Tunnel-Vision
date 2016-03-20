@@ -28,7 +28,7 @@
         android:layout_width="24dip"
         android:layout_height="24dip"
         android:layout_gravity="center_horizontal|bottom"
-        android:background="@drawable/ic_cloud_download_white" />
+        android:background="@drawable/ic_cloud_download_gray_light" />
 
     <ProgressBar
         android:id="@+id/pb_image_expand_progress"

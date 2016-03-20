@@ -52,12 +52,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private List<ChannelModel> channelModels = new ArrayList<>();
     private NewsViewPagerAdapter newsViewPagerAdapter;
-    private int FIRST_TIME_NEWS = 0;
-    private int FIRST_TIME_COLLECTION = 0;
-    private int FIRST_TIME_PHOTO = 0;
-    private int FIRST_TIME_WEATHER = 0;
-    private int FIRST_TIME_SETTINGS = 0;
-    private static int MENU_ITEM_CHOSEN_INDEX = 0;
+//    private int FIRST_TIME_NEWS = 0;
+//    private int FIRST_TIME_COLLECTION = 0;
+//    private int FIRST_TIME_PHOTO = 0;
+//    private int FIRST_TIME_WEATHER = 0;
+//    private int FIRST_TIME_SETTINGS = 0;
+//    private static int MENU_ITEM_CHOSEN_INDEX = 0;
 
     private FragmentManager fragmentManager;
 
@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_main_menu);
         navigationView.setNavigationItemSelectedListener(this);
 
-        FIRST_TIME_NEWS = 1;
+        //FIRST_TIME_NEWS = 1;
         initChannelData();
 
         fragmentManager = getSupportFragmentManager();
@@ -232,26 +232,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         int id = item.getItemId();
         if (id == R.id.nav_menu_item_news) {
             LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_news index = " + 0);
-            MENU_ITEM_CHOSEN_INDEX = 0;
+            //MENU_ITEM_CHOSEN_INDEX = 0;
         } else if (id == R.id.nav_menu_item_collection) {
             LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_collection index = " + 1);
             openActivity(CollectionActivity.class);
-            MENU_ITEM_CHOSEN_INDEX = 1;
-        } else if (id == R.id.nav_menu_item_photo) {
+            //MENU_ITEM_CHOSEN_INDEX = 1;
+        } else if (id == R.id.nav_menu_item_image) {
             LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_photo index = " + 2);
-            openActivity(PhotoActivity.class);
-            MENU_ITEM_CHOSEN_INDEX = 2;
+            openActivity(ImageActivity.class);
+            //MENU_ITEM_CHOSEN_INDEX = 2;
         } else if (id == R.id.nav_menu_item_weather) {
             LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_weather index = " + 3);
             openActivity(WeatherActivity.class);
-            MENU_ITEM_CHOSEN_INDEX = 3;
+            //MENU_ITEM_CHOSEN_INDEX = 3;
         } else if (id == R.id.nav_menu_item_settings) {
             LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_settings index = " + 4);
             openActivity(SettingsActivity.class);
-            MENU_ITEM_CHOSEN_INDEX = 4;
+            //MENU_ITEM_CHOSEN_INDEX = 4;
         } else if (id == R.id.nav_menu_item_exit) {
             LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_exit index = " + 5);
-            MENU_ITEM_CHOSEN_INDEX = 5;
+            //MENU_ITEM_CHOSEN_INDEX = 5;
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             //AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
             builder.setTitle(getString(R.string.text_dialog_title));

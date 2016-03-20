@@ -4,10 +4,7 @@
     <color name="colorPrimaryLight">#F8BBD0</color>
     <color name="colorPrimaryDark">#C2185B</color>
     <color name="colorAccent">#FF5722</color>
-    <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#727272</color>
-    <color name="colorIcons">#FFFFFF</color>
-    <color name="colorIconsDark">#FF8200</color>
     <color name="colorDivider">#B6B6B6</color>
     <color name="statusBarColor">@color/colorPrimary</color>
     <color name="navigationBarColor">@android:color/black</color>
