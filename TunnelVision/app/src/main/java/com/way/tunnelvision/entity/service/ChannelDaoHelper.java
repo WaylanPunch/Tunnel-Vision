@@ -68,7 +68,6 @@ public class ChannelDaoHelper implements GreenDaoHelperInterface {
         return null;
     }
 
-    @Override
     public List getAllDataByDocId(String selection, String orderby) {
         if(channelDao != null) {
             QueryBuilder<ChannelModel> qb = channelDao.queryBuilder();

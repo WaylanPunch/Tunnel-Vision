@@ -129,9 +129,8 @@ public class NewsDetailActivity extends SwipeBackActivity {
                     mNews.setIsCollection(1);
                     NewsDaoHelper newsDaoHelper = NewsDaoHelper.getInstance();
                     newsDaoHelper.addData(mNews);
-                    //isOK = true;
+                    Toast.makeText(NewsDetailActivity.this, "您已收藏该新闻", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(NewsDetailActivity.this, "fsdfsssssssssssss", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 LogUtil.e(TAG, "onOptionsItemSelected error, action_addtocollection", e);
                 return false;

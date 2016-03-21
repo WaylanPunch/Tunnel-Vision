@@ -10,7 +10,6 @@ public interface GreenDaoHelperInterface {
     public void deleteData(Long id);
     public <T> T getDataById(Long id);
     public List getAllData();
-    public List getAllDataByDocId(String selection, String orderby);
     public boolean hasKey(Long id);
     public long getTotalCount();
     public void deleteAll();

@@ -2,13 +2,17 @@ package com.way.tunnelvision.ui.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.way.tunnelvision.R;
@@ -26,8 +30,12 @@ import java.util.List;
 public class ImageActivity extends BaseActivity {
     private final static String TAG = ImageActivity.class.getName();
 
-    private SwipeRefreshLayout mSwipeRefreshWidget;
+    private Toolbar toolbar;
+    //private SwipeRefreshLayout mSwipeRefreshWidget;
     private RecyclerView mRecyclerView;
+    private FloatingActionButton fab;
+    private ProgressBar mProgressBar;
+
     private ImageAdapter mImageAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<ImageModel> imageModels = new ArrayList<>();
@@ -44,7 +52,7 @@ public class ImageActivity extends BaseActivity {
     private void initView() {
         LogUtil.d(TAG, "initView debug, start");
         try {
-            Toolbar toolbar = (Toolbar) findViewById(R.id.tb_image_toolbar);
+            toolbar = (Toolbar) findViewById(R.id.tb_image_toolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -56,11 +64,13 @@ public class ImageActivity extends BaseActivity {
 
             imageModelImpl = new ImageModelImpl();
 
-            mSwipeRefreshWidget = (SwipeRefreshLayout) findViewById(R.id.srl_image_refresh_layout);
+            //mSwipeRefreshWidget = (SwipeRefreshLayout) findViewById(R.id.srl_image_refresh_layout);
             mRecyclerView = (RecyclerView) findViewById(R.id.xrv_image_list);
+            fab = (FloatingActionButton) findViewById(R.id.fab_image_refresh);
+            mProgressBar = (ProgressBar) findViewById(R.id.pb_image_progress);
 
-            mSwipeRefreshWidget.setColorSchemeResources(R.color.colorPrimary,R.color.colorPrimaryDark, R.color.colorPrimaryLight, R.color.colorAccent);
-            mSwipeRefreshWidget.setOnRefreshListener(onRefreshListener);
+//            mSwipeRefreshWidget.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorPrimaryLight, R.color.colorAccent);
+//            mSwipeRefreshWidget.setOnRefreshListener(onRefreshListener);
 
 
             //列数为两列
@@ -85,7 +95,17 @@ public class ImageActivity extends BaseActivity {
 //            SpacesItemDecoration decoration=new SpacesItemDecoration(16);
 //            mRecyclerView.addItemDecoration(decoration);
 
-            //mRecyclerView.setOnScrollListener(mOnScrollListener);
+            mRecyclerView.setOnScrollListener(new HidingScrollListener() {
+                @Override
+                public void onHide() {
+                    hideViews();
+                }
+
+                @Override
+                public void onShow() {
+                    showViews();
+                }
+            });
 
             refreshData();
             LogUtil.d(TAG, "initView debug,ImageModels COUNT = " + imageModels.size());
@@ -163,7 +183,7 @@ public class ImageActivity extends BaseActivity {
     };
 
     private void refreshData() {
-        mSwipeRefreshWidget.setRefreshing(true);
+        mProgressBar.setVisibility(View.VISIBLE);
         imageModelImpl.loadImageList(onLoadImageListListener);
     }
 
@@ -174,17 +194,17 @@ public class ImageActivity extends BaseActivity {
             imageModels = list;
             mImageAdapter.setContent(imageModels);
             mImageAdapter.notifyDataSetChanged();
-            mSwipeRefreshWidget.setRefreshing(false);
+            mProgressBar.setVisibility(View.GONE);
         }
 
         @Override
         public void onFailure(String msg, Exception e) {
             Toast.makeText(ImageActivity.this, msg, Toast.LENGTH_SHORT).show();
-            mSwipeRefreshWidget.setRefreshing(false);
+            mProgressBar.setVisibility(View.GONE);
         }
     };
 
-    ///*
+    /*
     SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
@@ -194,7 +214,7 @@ public class ImageActivity extends BaseActivity {
             refreshData();
         }
     };
-    //*/
+    */
 
     /*
     private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -218,6 +238,55 @@ public class ImageActivity extends BaseActivity {
         }
     };
     */
+
+    private void hideViews() {
+        toolbar.animate().translationY(-toolbar.getHeight()).setInterpolator(new AccelerateInterpolator(2));
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) fab.getLayoutParams();
+        int fabBottomMargin = lp.bottomMargin;
+        fab.animate().translationY(fab.getHeight() + fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
+    }
+
+    private void showViews() {
+        toolbar.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2));
+        fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+    }
+
+    public abstract class HidingScrollListener extends RecyclerView.OnScrollListener {
+        private static final int HIDE_THRESHOLD = 20;
+        private int scrolledDistance = 0;
+        private boolean controlsVisible = true;
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            int firstVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+            //show views if first item is first visible position and views are hidden
+            if (firstVisibleItem == 0) {
+                if (!controlsVisible) {
+                    onShow();
+                    controlsVisible = true;
+                }
+            } else {
+                if (scrolledDistance > HIDE_THRESHOLD && controlsVisible) {
+                    onHide();
+                    controlsVisible = false;
+                    scrolledDistance = 0;
+                } else if (scrolledDistance < -HIDE_THRESHOLD && !controlsVisible) {
+                    onShow();
+                    controlsVisible = true;
+                    scrolledDistance = 0;
+                }
+            }
+            if ((controlsVisible && dy > 0) || (!controlsVisible && dy < 0)) {
+                scrolledDistance += dy;
+            }
+        }
+
+        public abstract void onHide();
+
+        public abstract void onShow();
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -2,15 +2,18 @@ package com.way.tunnelvision.ui.activity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.entity.model.ImageModel;
+import com.way.tunnelvision.entity.service.ImageDaoHelper;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ImageLoaderUtil;
 import com.way.tunnelvision.util.ImageUtil;
@@ -19,12 +22,13 @@ import com.way.tunnelvision.util.LogUtil;
 public class ImageExpandActivity extends BaseActivity {
     private final static String TAG = ImageExpandActivity.class.getName();
 
-    private TextView tv_title;
+    //private TextView tv_title;
     private ImageView iv_image;
     private ImageView iv_download;
     private ProgressBar pb_progress;
 
     private ImageModel imageModel;
+    private String imageTitle;
     private String imageUrl;
     private String imageThumbUrl;
     private String fileName;
@@ -36,8 +40,19 @@ public class ImageExpandActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_expand);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tb_image_expand_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         imageModel = getIntent().getParcelableExtra(Constants.ACTIVITY_PARAMETER);
         if (null != imageModel) {
+            imageTitle = imageModel.getTitle();
             imageUrl = imageModel.getSourceurl();
             imageThumbUrl = imageModel.getThumburl();
             LogUtil.d(TAG, "onCreate debug, Image Source Url = " + imageUrl);
@@ -57,14 +72,19 @@ public class ImageExpandActivity extends BaseActivity {
             LogUtil.d(TAG, "onCreate debug, Image Name = " + fileName);
             LogUtil.d(TAG, "onCreate debug, Image Format = " + fileExtension);
         }
+        toolbar.setTitle(imageTitle);
+
         initView();
     }
 
     private void initView() {
-        tv_title = (TextView) findViewById(R.id.tv_image_expand_title);
+        //tv_title = (TextView) findViewById(R.id.tv_image_expand_title);
         iv_image = (ImageView) findViewById(R.id.iv_image_expand_image);
         iv_download = (ImageView) findViewById(R.id.iv_image_expand_download);
         pb_progress = (ProgressBar) findViewById(R.id.pb_image_expand_progress);
+
+        //tv_title.setText(imageTitle);
+
         ImageLoaderUtil.display(ImageExpandActivity.this, iv_image, imageUrl);
         iv_download.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,31 +116,29 @@ public class ImageExpandActivity extends BaseActivity {
         });
     }
 
-//    /**
-//     * 保存方法
-//     */
-//    public void saveBitmap(Bitmap bm) {
-//        String picFolder = MainApp.getExternalStoragePicFolder();
-//        if (null != picFolder) {
-//            LogUtil.d(TAG, "saveBitmap debug, Pictures Folder = " + picFolder);
-//            String picFullPath = picFolder + File.separator + fileName;
-//            LogUtil.d(TAG, "saveBitmap debug, Pictures Full Path = " + picFullPath);
-//            File file = new File(picFullPath);
-////        if (file.exists())
-////            return;
-//            if (file.exists()) {
-//                file.delete();
-//            }
-//            try {
-//                FileOutputStream out = new FileOutputStream(file);
-//                bm.compress(Bitmap.CompressFormat.PNG, 100, out);
-//                out.flush();
-//                out.close();
-//            } catch (FileNotFoundException e) {
-//                LogUtil.e(TAG, "saveBitmap error", e);
-//            } catch (IOException e) {
-//                LogUtil.e(TAG, "saveBitmap error", e);
-//            }
-//        }
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_image_expand, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_image_expand_collection) {
+            try {
+                if (null != imageModel) {
+                    imageModel.setIsCollection(1);
+                    ImageDaoHelper imageDaoHelper = ImageDaoHelper.getInstance();
+                    imageDaoHelper.addData(imageModel);
+                    Toast.makeText(ImageExpandActivity.this, "您已收藏该图片", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                LogUtil.e(TAG, "onOptionsItemSelected error, action_image_refresh", e);
+                return false;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

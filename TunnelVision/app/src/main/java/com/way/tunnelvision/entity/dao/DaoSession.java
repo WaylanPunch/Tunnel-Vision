@@ -4,6 +4,7 @@ package com.way.tunnelvision.entity.dao;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.way.tunnelvision.entity.model.ChannelModel;
+import com.way.tunnelvision.entity.model.ImageModel;
 import com.way.tunnelvision.entity.model.MenuModel;
 import com.way.tunnelvision.entity.model.NewsDetailModel;
 import com.way.tunnelvision.entity.model.NewsModel;
@@ -27,11 +28,13 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig channelDaoConfig;
     private final DaoConfig newsDaoConfig;
     private final DaoConfig newsDetailDaoConfig;
+    private final DaoConfig imageDaoConfig;
 
     private final MenuDao menuDao;
     private final ChannelDao channelDao;
     private final NewsDao newsDao;
     private final NewsDetailDao newsDetailDao;
+    private final ImageDao imageDao;
 
     public DaoSession(SQLiteDatabase db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
@@ -49,15 +52,20 @@ public class DaoSession extends AbstractDaoSession {
         newsDetailDaoConfig = daoConfigMap.get(NewsDetailDao.class).clone();
         newsDetailDaoConfig.initIdentityScope(type);
 
+        imageDaoConfig = daoConfigMap.get(ImageDao.class).clone();
+        imageDaoConfig.initIdentityScope(type);
+
         menuDao = new MenuDao(menuDaoConfig, this);
         channelDao = new ChannelDao(channelDaoConfig, this);
         newsDao = new NewsDao(newsDaoConfig, this);
         newsDetailDao = new NewsDetailDao(newsDetailDaoConfig, this);
+        imageDao = new ImageDao(newsDetailDaoConfig, this);
 
         registerDao(MenuModel.class, menuDao);
         registerDao(ChannelModel.class, channelDao);
         registerDao(NewsModel.class, newsDao);
         registerDao(NewsDetailModel.class, newsDetailDao);
+        registerDao(ImageModel.class, imageDao);
     }
 
     public void clear() {
@@ -65,6 +73,7 @@ public class DaoSession extends AbstractDaoSession {
         channelDaoConfig.getIdentityScope().clear();
         newsDaoConfig.getIdentityScope().clear();
         newsDetailDaoConfig.getIdentityScope().clear();
+        imageDaoConfig.getIdentityScope().clear();
     }
 
     public MenuDao getMenuDao() {
@@ -81,5 +90,9 @@ public class DaoSession extends AbstractDaoSession {
 
     public NewsDetailDao getNewsDetailDao() {
         return newsDetailDao;
+    }
+
+    public ImageDao getImageDao() {
+        return imageDao;
     }
 }

@@ -62,7 +62,6 @@ public class MenuDaoHelper implements GreenDaoHelperInterface {
         return null;
     }
 
-    @Override
     public List getAllDataByDocId(String selection, String orderby) {
         if(menuDao != null) {
             QueryBuilder<MenuModel> qb = menuDao.queryBuilder();

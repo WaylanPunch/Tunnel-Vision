@@ -17,7 +17,7 @@ public class Constants {
     //SQLite Database
     public static final String  DATABASE_NAME = "TunnelVisionDB";
     public static final int SCHEMA_VERSION = 1000;
-    public static final int SCHEMA_VERSION_NEW = 1001;
+    public static final int SCHEMA_VERSION_NEW = 1002;
 
     //Bugly监控追踪
     public static final String  BUGLY_APPID = "900018056";

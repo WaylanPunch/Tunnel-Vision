@@ -62,7 +62,6 @@ public class NewsDetailDaoHelper implements GreenDaoHelperInterface {
         return null;
     }
 
-    @Override
     public List getAllDataByDocId(String selection, String orderby) {
         if(newsDetailDao != null) {
             QueryBuilder<NewsDetailModel> qb = newsDetailDao.queryBuilder();
