@@ -69,9 +69,6 @@
             android:name=".ui.activity.NewsDetailActivity"
             android:label="@string/title_activity_news_detail" />
         <activity
-            android:name=".ui.activity.CollectionActivity"
-            android:label="@string/title_activity_collection" />
-        <activity
             android:name=".ui.activity.ImageActivity"
             android:label="@string/title_activity_image" />
         <activity

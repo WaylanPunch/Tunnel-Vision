@@ -145,6 +145,10 @@ public class SystemUtil {
         return toolbarHeight;
     }
 
+    public static int getTabsHeight(Context context) {
+        return (int) context.getResources().getDimension(R.dimen.tabsHeight);
+    }
+
     public static final int getHeightInPx(Context context) {
         final int height = context.getResources().getDisplayMetrics().heightPixels;
         return height;

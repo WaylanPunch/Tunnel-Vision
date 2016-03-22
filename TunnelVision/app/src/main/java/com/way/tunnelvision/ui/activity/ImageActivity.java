@@ -61,6 +61,7 @@ public class ImageActivity extends BaseActivity {
                     onBackPressed();
                 }
             });
+            toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
 
             imageModelImpl = new ImageModelImpl();
 

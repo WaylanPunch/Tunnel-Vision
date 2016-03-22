@@ -7,11 +7,11 @@
             android:checked="true"
             android:title="@string/menu_title_news" />
         <item
-            android:id="@+id/nav_menu_item_collection"
-            android:title="@string/menu_title_collection" />
-        <item
             android:id="@+id/nav_menu_item_image"
             android:title="@string/menu_title_image" />
+        <item
+            android:id="@+id/nav_menu_item_collection"
+            android:title="@string/menu_title_collection" />
         <item
             android:id="@+id/nav_menu_item_weather"
             android:title="@string/menu_title_weather" />

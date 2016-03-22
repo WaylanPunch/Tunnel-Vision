@@ -55,8 +55,12 @@ public class ImageExpandActivity extends BaseActivity {
             imageTitle = imageModel.getTitle();
             imageUrl = imageModel.getSourceurl();
             imageThumbUrl = imageModel.getThumburl();
+            LogUtil.d(TAG, "onCreate debug, Image Title = " + imageModel.getTitle());
             LogUtil.d(TAG, "onCreate debug, Image Source Url = " + imageUrl);
             LogUtil.d(TAG, "onCreate debug, Image Thumb Url = " + imageThumbUrl);
+            LogUtil.d(TAG, "onCreate debug, Image Height = " + imageModel.getHeight());
+            LogUtil.d(TAG, "onCreate debug, Image Width = " + imageModel.getWidth());
+            LogUtil.d(TAG, "onCreate debug, Image IsCollection = " + imageModel.getIsCollection());
             int lastIndexSlash = 0;
             if (imageThumbUrl.contains("/")) {
                 lastIndexSlash = imageThumbUrl.lastIndexOf("/");

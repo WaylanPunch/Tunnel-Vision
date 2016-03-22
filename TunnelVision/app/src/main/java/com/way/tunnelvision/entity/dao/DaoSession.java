@@ -59,7 +59,7 @@ public class DaoSession extends AbstractDaoSession {
         channelDao = new ChannelDao(channelDaoConfig, this);
         newsDao = new NewsDao(newsDaoConfig, this);
         newsDetailDao = new NewsDetailDao(newsDetailDaoConfig, this);
-        imageDao = new ImageDao(newsDetailDaoConfig, this);
+        imageDao = new ImageDao(imageDaoConfig, this);
 
         registerDao(MenuModel.class, menuDao);
         registerDao(ChannelModel.class, channelDao);

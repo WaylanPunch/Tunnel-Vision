@@ -100,7 +100,7 @@ public class ImageDao extends AbstractDao<ImageModel, Long> {
         entity.setSourceurl(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));  // sourceurl
         entity.setHeight(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));        // height
         entity.setWidth(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));         // width
-        entity.setWidth(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));         // iscollection
+        entity.setIsCollection(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));         // iscollection
     }
 
     @Override

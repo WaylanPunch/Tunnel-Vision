@@ -197,6 +197,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             openActivityForResult(ChannelLibraryActivity.class, requestCode);
             return true;
         } else if (id == R.id.action_share) {
+            //openActivity(TestActivity.class);
             return true;
         }
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
@@ -233,14 +234,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (id == R.id.nav_menu_item_news) {
             LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_news index = " + 0);
             //MENU_ITEM_CHOSEN_INDEX = 0;
-        } else if (id == R.id.nav_menu_item_collection) {
-            LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_collection index = " + 1);
-            openActivity(CollectionActivity.class);
-            //MENU_ITEM_CHOSEN_INDEX = 1;
         } else if (id == R.id.nav_menu_item_image) {
             LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_photo index = " + 2);
             openActivity(ImageActivity.class);
             //MENU_ITEM_CHOSEN_INDEX = 2;
+        } else if (id == R.id.nav_menu_item_collection) {
+            LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_collection index = " + 1);
+            openActivity(TestActivity.class);
+            //MENU_ITEM_CHOSEN_INDEX = 1;
         } else if (id == R.id.nav_menu_item_weather) {
             LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_weather index = " + 3);
             openActivity(WeatherActivity.class);
