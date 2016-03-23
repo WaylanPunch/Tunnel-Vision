@@ -78,5 +78,20 @@ public class Constants {
         //百度定位
         public static final String INTERFACE_LOCATION = "http://api.map.baidu.com/geocoder";
 
+        //标题图片
+        public static final String HEADER_IMAGE_SOURCE = "http://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss";
+        public static final String HEADER_IMAGE_DEFAULT = "http://img2.ph.126.net/V9FofHGlVia0G5Fxk9owLg==/6631375628955284885.jpg";
+    }
+
+    public class RSSFEED {
+        public static final String HEADER_IMAGE_TAG_TITLE = "title";
+        public static final String HEADER_IMAGE_TAG_LINK = "link";
+        public static final String HEADER_IMAGE_TAG_DESCRIPTION = "description";
+        public static final String HEADER_IMAGE_TAG_ENCLOSURE = "enclosure";
+        public static final String HEADER_IMAGE_TAG_ENCLOSURE_URL = "url";
+        public static final String HEADER_IMAGE_TAG_ENCLOSURE_LENGTH = "length";
+        public static final String HEADER_IMAGE_TAG_ENCLOSURE_TYPE = "type";
+        public static final String HEADER_IMAGE_TAG_GUID = "guid";
+        public static final String HEADER_IMAGE_TAG_PUBDATE = "pubDate";
     }
 }

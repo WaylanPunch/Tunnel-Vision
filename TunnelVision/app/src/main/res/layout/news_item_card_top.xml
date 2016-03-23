@@ -30,11 +30,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_text_headline_border"
                 android:gravity="start|center_vertical"
                 android:padding="0.5dip"
                 android:text="头条"
-                android:textColor="@color/colorDivider"
+                android:textColor="@color/colorAccent"
                 android:textSize="8sp" />
 
             <TextView

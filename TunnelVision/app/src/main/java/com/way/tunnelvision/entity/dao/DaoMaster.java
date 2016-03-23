@@ -27,6 +27,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(NewsDao.class);
         registerDaoClass(NewsDetailDao.class);
         registerDaoClass(ImageDao.class);
+        registerDaoClass(HeaderImageDao.class);
     }
 
     /**
@@ -38,6 +39,7 @@ public class DaoMaster extends AbstractDaoMaster {
         NewsDao.createTable(db, ifNotExists);
         NewsDetailDao.createTable(db, ifNotExists);
         ImageDao.createTable(db, ifNotExists);
+        HeaderImageDao.createTable(db, ifNotExists);
     }
 
     /**
@@ -49,6 +51,7 @@ public class DaoMaster extends AbstractDaoMaster {
         NewsDao.dropTable(db, ifExists);
         NewsDetailDao.dropTable(db, ifExists);
         ImageDao.dropTable(db, ifExists);
+        HeaderImageDao.dropTable(db, ifExists);
     }
 
     public static abstract class OpenHelper extends SQLiteOpenHelper {

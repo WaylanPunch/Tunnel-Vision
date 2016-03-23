@@ -22,6 +22,7 @@ import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.NewsViewPagerAdapter;
+import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.entity.model.ChannelModel;
 import com.way.tunnelvision.entity.service.ChannelDaoHelper;
 import com.way.tunnelvision.ui.base.BaseActivity;
@@ -108,7 +109,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 ChannelModel channelModel = channelModels.get(position);
                 return HeaderDesign.fromColorResAndUrl(
                         R.color.colorPrimary,
-                        "http://i4.tietuku.com/3590bb53f5752fe9.jpg");
+                        Constants.NEWS.HEADER_IMAGE_DEFAULT);
 //                switch (position) {
 //                    case 0:
 //                        return HeaderDesign.fromColorResAndUrl(
@@ -197,7 +198,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             openActivityForResult(ChannelLibraryActivity.class, requestCode);
             return true;
         } else if (id == R.id.action_share) {
-            //openActivity(TestActivity.class);
+            openActivity(TestActivity.class);
             return true;
         }
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
@@ -240,7 +241,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             //MENU_ITEM_CHOSEN_INDEX = 2;
         } else if (id == R.id.nav_menu_item_collection) {
             LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_collection index = " + 1);
-            openActivity(TestActivity.class);
+            openActivity(CollectionActivity.class);
             //MENU_ITEM_CHOSEN_INDEX = 1;
         } else if (id == R.id.nav_menu_item_weather) {
             LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_weather index = " + 3);

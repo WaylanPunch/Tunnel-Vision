@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.TestActivity" />
+        <activity android:name=".ui.activity.CollectionActivity" />
         <activity
             android:name=".ui.activity.ChannelLibraryActivity"
             android:label="@string/title_activity_feeds_library" />
@@ -74,7 +74,15 @@
         <activity
             android:name=".ui.activity.WeatherActivity"
             android:label="@string/title_activity_weather" />
-        <activity android:name=".ui.activity.ImageExpandActivity"></activity>
+        <activity android:name=".ui.activity.ImageExpandActivity" />
+
+        <service android:name=".entity.service.HeaderImageService" android:enabled="true" android:process="system">
+            <intent-filter>
+                <action android:name="com.way.tunnelvision.entity.service.HeaderImageService" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".ui.activity.TestActivity"></activity>
     </application>
 
 </manifest>

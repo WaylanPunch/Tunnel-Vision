@@ -1,87 +1,75 @@
 package com.way.tunnelvision.ui.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.widget.LinearLayout;
+import android.view.View;
+import android.widget.Button;
 
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.entity.impl.HeaderImageModelImpl;
+import com.way.tunnelvision.entity.model.HeaderImageModel;
+import com.way.tunnelvision.entity.service.HeaderImageService;
 import com.way.tunnelvision.ui.base.BaseActivity;
-import com.way.tunnelvision.ui.fragment.CollectionFragment;
-import com.way.tunnelvision.util.SystemUtil;
+import com.way.tunnelvision.util.LogUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TestActivity extends BaseActivity {
-    private static final String TAG = TestActivity.class.getName();
+    private final static String TAG = TestActivity.class.getName();
 
-    private LinearLayout mToolbarContainer;
-    private int mToolbarHeight;
-    private Toolbar mToolbar;
-    private FloatingActionButton mFabButton;
-    private RecyclerView recyclerView;
-    private List<String> mData = new ArrayList<>();
+    HeaderImageModelImpl headerImageModelImpl;
+    Button btnStart;
+    Button btnStop;
+    Button btnImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        initView();
-    }
+        headerImageModelImpl = new HeaderImageModelImpl();
 
-    private void initView() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        setTitle(getString(R.string.app_name));
-        mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
-        mToolbarHeight = SystemUtil.getToolbarHeight(this);
+        btnStart = (Button) findViewById(R.id.btn_test_startservice);
+        btnStop = (Button) findViewById(R.id.btn_test_stopservice);
+        btnImage = (Button) findViewById(R.id.btn_test_getimage);
 
-        mFabButton = (FloatingActionButton) findViewById(R.id.fabButton);
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HeaderImageService.addNotification(5000, "通知", "测试消息", "测试内容");
+            }
+        });
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
-        pagerAdapter.addFragment(CollectionFragment.newInstance(1), "News");
-        pagerAdapter.addFragment(CollectionFragment.newInstance(2), "Image");
-        viewPager.setAdapter(pagerAdapter);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
-    }
+        btnStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HeaderImageService.cleanAllNotification();
+            }
+        });
 
-    static class PagerAdapter extends FragmentPagerAdapter {
+        btnImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    if (headerImageModelImpl == null) {
+                        headerImageModelImpl = new HeaderImageModelImpl();
+                    }
+                    headerImageModelImpl.loadHeaderImageList(new HeaderImageModelImpl.OnLoadHeaderImageListListener() {
+                        @Override
+                        public void onSuccess(List<HeaderImageModel> list) {
+                            if (list != null && list.size() > 0) {
+                                LogUtil.d(TAG, "btnImage.setOnClickListener debug, HeaderImageModels COUNT = " + list.size());
+                            }
+                        }
 
-        private final List<Fragment> fragmentList = new ArrayList<>();
-        private final List<String> fragmentTitleList = new ArrayList<>();
-
-        public PagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            fragmentList.add(fragment);
-            fragmentTitleList.add(title);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragmentList.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return fragmentTitleList.get(position);
-        }
+                        @Override
+                        public void onFailure(String msg, Exception e) {
+                            LogUtil.e(TAG, "btnImage.setOnClickListener error, " + msg, e);
+                        }
+                    });
+                } catch (Exception e) {
+                    LogUtil.e(TAG, "btnImage.setOnClickListener error", e);
+                }
+            }
+        });
     }
 }
