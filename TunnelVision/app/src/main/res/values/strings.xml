@@ -85,8 +85,9 @@
     <string name="title_activity_image">图片</string>
     <string name="title_activity_weather">天气</string>
     <string name="action_weather_refresh">刷新</string>
-    <string name="action_image_refresh">刷新</string>
+    <string name="action_image_refresh">换一批</string>
     <string name="action_image_expand_collection">添加收藏</string>
     <string name="action_collection_clear_news">清除新闻</string>
     <string name="action_collection_clear_image">清除图片</string>
+    <string name="action_channel_library_initial">初始化</string>
 </resources>

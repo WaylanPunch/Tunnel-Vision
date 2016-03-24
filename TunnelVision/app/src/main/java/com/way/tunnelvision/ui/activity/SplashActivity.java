@@ -10,6 +10,7 @@ import com.way.tunnelvision.adapter.SplashViewPagerAdapter;
 import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.base.MainApp;
 import com.way.tunnelvision.entity.service.DatabaseUtil;
+import com.way.tunnelvision.entity.service.HeaderImageService;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
 import com.way.tunnelvision.util.LogUtil;
@@ -44,6 +45,8 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        int delay = 5 * 60 * 1000;
+        HeaderImageService.addNotification(delay, "通知", "测试消息", "测试内容");
         LogUtil.d(TAG, "onCreate debug, start");
         try {
             DatabaseUtil.initDataBase(this);

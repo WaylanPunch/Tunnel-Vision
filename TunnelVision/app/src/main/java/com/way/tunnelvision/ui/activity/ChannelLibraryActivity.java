@@ -1,11 +1,12 @@
 package com.way.tunnelvision.ui.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,7 +28,7 @@ public class ChannelLibraryActivity extends BaseActivity {
 
     private int resultCode = 0;
 
-//    private SQLiteDatabase db;
+    //    private SQLiteDatabase db;
 //    private DaoMaster daoMaster;
 //    private DaoSession daoSession;
 //    private ChannelDao channelDao;
@@ -38,7 +39,7 @@ public class ChannelLibraryActivity extends BaseActivity {
     //private ChannelChosenAdapter channelChosenAdapter;
     private ChannelUnchosenAdapter channelUnchosenAdapter;
 
-    private FloatingActionButton fab;
+    //private FloatingActionButton fab;
     //private ListView lv_chosenList;
     private RecyclerView rv_unchosenList;
 
@@ -49,7 +50,13 @@ public class ChannelLibraryActivity extends BaseActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tb_channel_library_toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         initListData();
         initView();
     }
@@ -58,6 +65,7 @@ public class ChannelLibraryActivity extends BaseActivity {
     private void initView() {
         LogUtil.d(TAG, "initView debug, start");
         try {
+            /*
             fab = (FloatingActionButton) findViewById(R.id.fab_channel_liabrary_initialize);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -70,12 +78,12 @@ public class ChannelLibraryActivity extends BaseActivity {
 
 
             });
+            */
 
             //lv_chosenList = (ListView) findViewById(R.id.lv_channel_library_chosen);
             rv_unchosenList = (RecyclerView) findViewById(R.id.rv_channel_library_unchosen);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             rv_unchosenList.setLayoutManager(layoutManager);
-
 
 
             LogUtil.d(TAG, "initView debug, Channel Items Count = " + channelModelsUnchosen.size());
@@ -93,7 +101,7 @@ public class ChannelLibraryActivity extends BaseActivity {
                         @Override
                         public boolean canDismiss(int position) {
                             ChannelModel channelItem = channelModelsUnchosen.get(position);
-                            if (0 == channelItem.getChannelChosen()){
+                            if (0 == channelItem.getChannelChosen()) {
                                 return false;
                             }
                             return true;
@@ -134,7 +142,7 @@ public class ChannelLibraryActivity extends BaseActivity {
                                 @Override
                                 public void onTouch(int index) {
                                     //showDialog(String.format("Click item %d", index));
-                                    Toast.makeText(ChannelLibraryActivity.this,"Swipe to Subscribe Channel!",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ChannelLibraryActivity.this, "Swipe to Subscribe Channel!", Toast.LENGTH_SHORT).show();
                                 }
                             })
                     .create();
@@ -146,13 +154,12 @@ public class ChannelLibraryActivity extends BaseActivity {
     }
 
 
-
     private void initListData() {
         LogUtil.d(TAG, "initListData debug, start");
         try {
             channelDaoHelper = ChannelDaoHelper.getInstance();
             Long rowCount = channelDaoHelper.getTotalCount();
-            if(rowCount>0){
+            if (rowCount > 0) {
                 channelModelsUnchosen = channelDaoHelper.getAllData();
                 LogUtil.d(TAG, "initListData debug, ChannelModels COUNT = " + rowCount + "," + channelModelsUnchosen.size());
             }
@@ -214,6 +221,28 @@ public class ChannelLibraryActivity extends BaseActivity {
         LogUtil.d(TAG, "initDataTableChannel debug, end");
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_channel_library, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_channel_library_initial) {
+            try {
+                initDataTableChannel();
+                initListData();
+                channelUnchosenAdapter.notifyDataSetChanged();
+            } catch (Exception e) {
+                LogUtil.e(TAG, "onOptionsItemSelected error, action_channel_library_initial", e);
+                return false;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onBackPressed() {

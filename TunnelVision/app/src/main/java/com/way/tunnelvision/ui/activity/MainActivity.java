@@ -111,9 +111,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public HeaderDesign getHeaderDesign(int position) {
                 ChannelModel channelModel = channelModels.get(position);
-                if(headerImageModels.size() == channelModels.size()) {
+                if (headerImageModels != null && headerImageModels.size() == channelModels.size()) {
                     return HeaderDesign.fromColorResAndUrl(R.color.colorPrimary, headerImageModels.get(position).getUrl());
-                }else {
+                } else {
                     return HeaderDesign.fromColorResAndUrl(R.color.colorPrimary, Constants.NEWS.HEADER_IMAGE_DEFAULT);
                 }
             }

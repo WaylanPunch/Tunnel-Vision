@@ -12,7 +12,7 @@
         <item name="android:actionMenuTextAppearance">@style/MenuTextStyle</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowActionBar">false</item>
-
+        <item name="android:fitsSystemWindows">true</item>
         <!-- Material Theme -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -27,6 +27,11 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ToolBarStyle" parent="Theme.AppCompat">
+        <item name="android:actionBarSize">?attr/actionBarSize</item>
+        <item name="actionMenuTextColor">@android:color/black</item>
+    </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>

@@ -64,7 +64,7 @@ public class HeaderImageService extends Service {
         LogUtil.d(TAG, "onStartCommand debug, start");
         try {
             long period = 12 * 60 * 60 * 1000; //12小时一个周期
-            //long period = 5 * 60 * 1000; //2分钟一个周期
+            //long period = 5 * 60 * 1000; //5分钟一个周期
             int delay = intent.getIntExtra("delayTime", 0);
             if (null == timer) {
                 timer = new Timer();

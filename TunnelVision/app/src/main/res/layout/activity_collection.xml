@@ -5,19 +5,30 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.activity.CollectionActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways" />
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:minHeight="?attr/actionBarSize"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:paddingEnd="0dp"
+            app:paddingStart="0dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleMarginStart="0dp" />
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
@@ -41,8 +52,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
-        android:visibility="gone"
         android:src="@drawable/ic_vector_refresh"
+        android:visibility="gone"
         app:borderWidth="0dp"
         app:layout_behavior="com.way.tunnelvision.ui.widget.ScrollingFABBehavior" />
 </android.support.design.widget.CoordinatorLayout>
