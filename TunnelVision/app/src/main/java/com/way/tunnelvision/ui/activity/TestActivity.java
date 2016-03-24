@@ -7,6 +7,7 @@ import android.widget.Button;
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.entity.impl.HeaderImageModelImpl;
 import com.way.tunnelvision.entity.model.HeaderImageModel;
+import com.way.tunnelvision.entity.service.HeaderImageDaoHelper;
 import com.way.tunnelvision.entity.service.HeaderImageService;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.LogUtil;
@@ -20,6 +21,7 @@ public class TestActivity extends BaseActivity {
     Button btnStart;
     Button btnStop;
     Button btnImage;
+    Button btnQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class TestActivity extends BaseActivity {
         btnStart = (Button) findViewById(R.id.btn_test_startservice);
         btnStop = (Button) findViewById(R.id.btn_test_stopservice);
         btnImage = (Button) findViewById(R.id.btn_test_getimage);
+        btnQuery = (Button) findViewById(R.id.btn_test_querydata);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +71,21 @@ public class TestActivity extends BaseActivity {
                     });
                 } catch (Exception e) {
                     LogUtil.e(TAG, "btnImage.setOnClickListener error", e);
+                }
+            }
+        });
+
+        btnQuery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HeaderImageDaoHelper headerImageDaoHelper = HeaderImageDaoHelper.getInstance();
+                Long COUNT = headerImageDaoHelper.getTotalCount();
+                LogUtil.d(TAG, "btnQuery.setOnClickListener debug, HeaderImageModels COUNT = " + COUNT);
+                if (COUNT > 0) {
+                    List<HeaderImageModel> headerImageModels = headerImageDaoHelper.getAllDataByNumber(5);
+                    if (headerImageModels != null && headerImageModels.size() > 0) {
+                        LogUtil.d(TAG, "btnQuery.setOnClickListener debug, HeaderImageModels Sub COUNT = " + headerImageModels.size());
+                    }
                 }
             }
         });

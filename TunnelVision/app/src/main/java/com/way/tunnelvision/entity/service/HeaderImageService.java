@@ -63,8 +63,8 @@ public class HeaderImageService extends Service {
     public int onStartCommand(final Intent intent, int flags, int startId) {
         LogUtil.d(TAG, "onStartCommand debug, start");
         try {
-            //long period = 24 * 60 * 60 * 1000; //24小时一个周期
-            long period = 5 * 60 * 1000; //2分钟一个周期
+            long period = 12 * 60 * 60 * 1000; //12小时一个周期
+            //long period = 5 * 60 * 1000; //2分钟一个周期
             int delay = intent.getIntExtra("delayTime", 0);
             if (null == timer) {
                 timer = new Timer();
@@ -78,30 +78,37 @@ public class HeaderImageService extends Service {
                     headerImageModelImpl.loadHeaderImageList(new HeaderImageModelImpl.OnLoadHeaderImageListListener() {
                         @Override
                         public void onSuccess(List<HeaderImageModel> list) {
+                            if (list != null && list.size() > 0) {
+                                LogUtil.d(TAG, "onStartCommand debug, HeaderImageModels COUNT = " + list.size());
+                                HeaderImageDaoHelper headerImageDaoHelper = HeaderImageDaoHelper.getInstance();
+                                headerImageDaoHelper.deleteAll();
+                                for (HeaderImageModel item : list) {
+                                    headerImageDaoHelper.addData(item);
+                                }
 
+                                NotificationManager mn = (NotificationManager) HeaderImageService.this.getSystemService(NOTIFICATION_SERVICE);
+                                Notification.Builder builder = new Notification.Builder(HeaderImageService.this);
+                                Intent notificationIntent = new Intent(HeaderImageService.this, MainActivity.class);//点击跳转位置
+                                PendingIntent contentIntent = PendingIntent.getActivity(HeaderImageService.this, 0, notificationIntent, 0);
+                                builder.setContentIntent(contentIntent);
+                                builder.setSmallIcon(R.mipmap.ic_launcher);
+                                builder.setTicker(intent.getStringExtra("tickerText")); //测试通知栏标题
+                                builder.setContentText(intent.getStringExtra("contentText")); //下拉通知啦内容
+                                builder.setContentTitle(intent.getStringExtra("contentTitle"));//下拉通知栏标题
+                                builder.setAutoCancel(true);
+                                builder.setDefaults(Notification.DEFAULT_ALL);
+                                Notification notification = builder.build();
+                                mn.notify((int) System.currentTimeMillis(), notification);
+                            }
                         }
 
                         @Override
                         public void onFailure(String msg, Exception e) {
-
+                            LogUtil.e(TAG, "onStartCommand error, " + msg, e);
                         }
                     });
 
 
-
-                    NotificationManager mn = (NotificationManager) HeaderImageService.this.getSystemService(NOTIFICATION_SERVICE);
-                    Notification.Builder builder = new Notification.Builder(HeaderImageService.this);
-                    Intent notificationIntent = new Intent(HeaderImageService.this, MainActivity.class);//点击跳转位置
-                    PendingIntent contentIntent = PendingIntent.getActivity(HeaderImageService.this, 0, notificationIntent, 0);
-                    builder.setContentIntent(contentIntent);
-                    builder.setSmallIcon(R.mipmap.ic_launcher);
-                    builder.setTicker(intent.getStringExtra("tickerText")); //测试通知栏标题
-                    builder.setContentText(intent.getStringExtra("contentText")); //下拉通知啦内容
-                    builder.setContentTitle(intent.getStringExtra("contentTitle"));//下拉通知栏标题
-                    builder.setAutoCancel(true);
-                    builder.setDefaults(Notification.DEFAULT_ALL);
-                    Notification notification = builder.build();
-                    mn.notify((int) System.currentTimeMillis(), notification);
                 }
             }, delay, period);
         } catch (Exception e) {

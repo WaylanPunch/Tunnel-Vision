@@ -62,6 +62,17 @@ public class HeaderImageDaoHelper implements GreenDaoHelperInterface {
         return null;
     }
 
+    public List getAllDataByNumber(int number) {
+        if(headerImageDao != null) {
+            if(number < getTotalCount()){
+                QueryBuilder<HeaderImageModel> qb = headerImageDao.queryBuilder();
+                qb.orderAsc(HeaderImageDao.Properties.Id);// 排序依据
+                return qb.list().subList(0, number);
+            }            
+        }
+        return null;
+    }
+
     public List getAllDataByGUID(String selection, String orderby) {
         if(headerImageDao != null) {
             QueryBuilder<HeaderImageModel> qb = headerImageDao.queryBuilder();

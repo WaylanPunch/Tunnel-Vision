@@ -24,7 +24,9 @@ import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.NewsViewPagerAdapter;
 import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.entity.model.ChannelModel;
+import com.way.tunnelvision.entity.model.HeaderImageModel;
 import com.way.tunnelvision.entity.service.ChannelDaoHelper;
+import com.way.tunnelvision.entity.service.HeaderImageDaoHelper;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
 import com.way.tunnelvision.util.LogUtil;
@@ -44,6 +46,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 //    private ChannelDao channelDao;
 //    private Cursor cursor;
     private ChannelDaoHelper channelDaoHelper;
+    //private HeaderImageDaoHelper headerImageDaoHelper;
 
     private MaterialViewPager mMaterialViewPager;
 
@@ -51,6 +54,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
 
+    private List<HeaderImageModel> headerImageModels = new ArrayList<>();
     private List<ChannelModel> channelModels = new ArrayList<>();
     private NewsViewPagerAdapter newsViewPagerAdapter;
 //    private int FIRST_TIME_NEWS = 0;
@@ -107,27 +111,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public HeaderDesign getHeaderDesign(int position) {
                 ChannelModel channelModel = channelModels.get(position);
-                return HeaderDesign.fromColorResAndUrl(
-                        R.color.colorPrimary,
-                        Constants.NEWS.HEADER_IMAGE_DEFAULT);
-//                switch (position) {
-//                    case 0:
-//                        return HeaderDesign.fromColorResAndUrl(
-//                                R.color.colorPrimary,
-//                                "http://i4.tietuku.com/3590bb53f5752fe9.jpg");
-//                    case 1:
-//                        return HeaderDesign.fromColorResAndUrl(
-//                                R.color.colorPrimary,
-//                                "http://i11.tietuku.com/e2718fdc58c721f2.jpg");
-//                    default:
-//                        return HeaderDesign.fromColorResAndUrl(
-//                                R.color.colorPrimary,
-//                                "http://i11.tietuku.com/d308b9a56f1c91b8.jpg");
-//                }
-
-                //execute others actions if needed (ex : modify your header logo)
-
-                //return null;
+                if(headerImageModels.size() == channelModels.size()) {
+                    return HeaderDesign.fromColorResAndUrl(R.color.colorPrimary, headerImageModels.get(position).getUrl());
+                }else {
+                    return HeaderDesign.fromColorResAndUrl(R.color.colorPrimary, Constants.NEWS.HEADER_IMAGE_DEFAULT);
+                }
             }
         });
 
@@ -151,15 +139,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         channelModels.clear();
         ///*
         try {
+
             if (null == channelDaoHelper) {
                 channelDaoHelper = ChannelDaoHelper.getInstance();
             }
             long totalCount = channelDaoHelper.getTotalCount();
-            ;
             LogUtil.d(TAG, "initChannelData debug, Total Count = " + totalCount);
-
             channelModels = channelDaoHelper.getAllDataByChosen();
             LogUtil.d(TAG, "initChannelData debug, Chosen Count = " + channelModels.size());
+
+            HeaderImageDaoHelper headerImageDaoHelper = HeaderImageDaoHelper.getInstance();
+            headerImageModels = headerImageDaoHelper.getAllDataByNumber(channelModels.size());
         } catch (Exception e) {
             LogUtil.e(TAG, "initChannelData error", e);
         }

@@ -22,7 +22,7 @@ public class HeaderImageModelImpl {
         OkHttpUtil.ResultCallback<String> loadHeaderImageCallback = new OkHttpUtil.ResultCallback<String>() {
             @Override
             public void onSuccess(String response) {
-                List<HeaderImageModel> headerImageModels = JsoupUtil.getHeaderImageItems2(response);
+                List<HeaderImageModel> headerImageModels = JsoupUtil.getHeaderImageItems(response);
                 listener.onSuccess(headerImageModels);
             }
 

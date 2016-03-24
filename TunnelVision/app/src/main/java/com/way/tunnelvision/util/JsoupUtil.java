@@ -22,19 +22,23 @@ public class JsoupUtil {
         throw new AssertionError();
     }
 
-
-    public static List<HeaderImageModel> getHeaderImageItems2(String xml) {
+    /**
+     * 将XML文件转化成实体类
+     * @param xml
+     * @return
+     */
+    public static List<HeaderImageModel> getHeaderImageItems(String xml) {
         List<HeaderImageModel> itemsList = new ArrayList<HeaderImageModel>();
 
         if (!StringUtil.isBlank(xml) && !StringUtil.isEmpty(xml)) {
-            LogUtil.d(TAG, "getHeaderImageItems2 debug, XML != NULL");
+            LogUtil.d(TAG, "getHeaderImageItems debug, XML != NULL");
             try {
                 org.jsoup.nodes.Document document = Jsoup.parse(xml,"",new Parser(new XmlTreeBuilder()));
                 if (document != null) {
-                    LogUtil.d(TAG, "getHeaderImageItems2 debug, Document != NULL");
+                    LogUtil.d(TAG, "getHeaderImageItems debug, Document != NULL");
                     Elements items = document.select("item");
                     if (items != null && items.size() > 0) {
-                        LogUtil.d(TAG, "getHeaderImageItems2 debug, Elements != NULL, COUNT = " + items.size());
+                        LogUtil.d(TAG, "getHeaderImageItems debug, Elements != NULL, COUNT = " + items.size());
                         for (Element item : items) {
                             String title = item.select(Constants.RSSFEED.HEADER_IMAGE_TAG_TITLE).text();
                             String link = item.select(Constants.RSSFEED.HEADER_IMAGE_TAG_LINK).text();
@@ -48,16 +52,16 @@ public class JsoupUtil {
                             if (!StringUtil.isBlank(lengthStr) && !StringUtil.isEmpty(lengthStr)) {
                                 length = Long.parseLong(lengthStr);
                             }
-                            //LogUtil.d(TAG, "getHeaderImageItems2 debug, url = " + url);
-                            //LogUtil.d(TAG, "getHeaderImageItems2 debug, length = " + lengthStr);
-                            //LogUtil.d(TAG, "getHeaderImageItems2 debug, type = " + type);
+                            //LogUtil.d(TAG, "getHeaderImageItems debug, url = " + url);
+                            //LogUtil.d(TAG, "getHeaderImageItems debug, length = " + lengthStr);
+                            //LogUtil.d(TAG, "getHeaderImageItems debug, type = " + type);
                             HeaderImageModel model = new HeaderImageModel(null, title, link, description, url, length, type, guid, pubDate);
                             itemsList.add(model);
                         }
                     }
                 }
             } catch (Exception e) {
-                LogUtil.e(TAG, "getHeaderImageItems2 error", e);
+                LogUtil.e(TAG, "getHeaderImageItems error", e);
                 e.printStackTrace();
             }
         }
@@ -66,99 +70,5 @@ public class JsoupUtil {
         return itemsList;
     }
 
-    /*
-    public static List<HeaderImageModel> getHeaderImageItems(String rss_feed_xml) {
-        List<HeaderImageModel> itemsList = new ArrayList<HeaderImageModel>();
 
-        // check if RSS XML fetched or not
-        if (rss_feed_xml != null) {
-            // successfully fetched rss xml
-            // parse the xml
-            try {
-                Document doc = getDomElement(rss_feed_xml);
-                NodeList nodeList = doc.getElementsByTagName("item");
-                for (int i = 0; i < nodeList.getLength(); i++) {
-                    Element item = (Element) nodeList.item(i);
-                    String title = getValue(item, Constants.RSSFEED.HEADER_IMAGE_TAG_TITLE);
-
-                    HeaderImageModel model = new HeaderImageModel(null, "", "", "", "", null, "", "", "");
-                    itemsList.add(model);
-                }
-            } catch (Exception e) {
-                // Check log for errors
-                e.printStackTrace();
-            }
-        }
-
-        // return item list
-        return itemsList;
-    }
-    */
-
-    /**
-     * Getting XML DOM element
-     *
-     * @param xml string
-     */
-    /*
-    private static Document getDomElement(String xml) {
-        Document doc = null;
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        try {
-
-            DocumentBuilder db = dbf.newDocumentBuilder();
-
-            InputSource is = new InputSource();
-            is.setCharacterStream(new StringReader(xml));
-            doc = (Document) db.parse(is);
-
-        } catch (ParserConfigurationException e) {
-            Log.e("Error: ", e.getMessage());
-            return null;
-        } catch (SAXException e) {
-            Log.e("Error: ", e.getMessage());
-            return null;
-        } catch (IOException e) {
-            Log.e("Error: ", e.getMessage());
-            return null;
-        }
-
-        return doc;
-    }
-    */
-
-    /**
-     * Getting node value
-     *
-     * @param elem element
-     */
-    /*
-    private static String getElementValue(Node elem) {
-        Node child;
-        if (elem != null) {
-            if (elem.hasChildNodes()) {
-                for (child = elem.getFirstChild(); child != null; child = child
-                        .getNextSibling()) {
-                    if (child.getNodeType() == Node.TEXT_NODE || (child.getNodeType() == Node.CDATA_SECTION_NODE)) {
-                        return child.getNodeValue();
-                    }
-                }
-            }
-        }
-        return "";
-    }
-    */
-
-    /**
-     * Getting node value
-     *
-     * @param item node
-     * @param str  string
-     */
-    /*
-    private static String getValue(Element item, String str) {
-        NodeList n = item.getElementsByTagName(str);
-        return getElementValue(n.item(0));
-    }
-    */
 }
