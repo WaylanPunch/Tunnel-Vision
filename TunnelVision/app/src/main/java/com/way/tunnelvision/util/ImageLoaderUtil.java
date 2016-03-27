@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.entity.model.ImageModel;
 
 /**
  * Created by pc on 2016/3/1.
@@ -63,5 +65,50 @@ public class ImageLoaderUtil {
         void onSuccess(Bitmap bitmap);
 
         void onFailure(String msg, Exception e);
+    }
+
+
+    public static void downloadImageToStorage(ImageModel imageModel, final Context context){
+        if (null != imageModel) {
+            String imageUrl = imageModel.getSourceurl();
+            String imageThumbUrl = imageModel.getThumburl();
+            LogUtil.d(TAG, "downloadImageToStorage debug, Image Source Url = " + imageUrl);
+            LogUtil.d(TAG, "downloadImageToStorage debug, Image Thumb Url = " + imageThumbUrl);
+            int lastIndexSlash = 0;
+            if (imageThumbUrl.contains("/")) {
+                lastIndexSlash = imageThumbUrl.lastIndexOf("/");
+            } else {
+                if (imageThumbUrl.contains("\\")) {
+                    lastIndexSlash = imageThumbUrl.lastIndexOf("\\");
+                }
+            }
+            final String fileName = imageThumbUrl.substring(lastIndexSlash + 1, imageThumbUrl.length());
+            int lastIndexDot = 0;
+            lastIndexDot = fileName.lastIndexOf(".");
+            String fileExtension = fileName.substring(lastIndexDot, fileName.length());
+            LogUtil.d(TAG, "downloadImageToStorage debug, Image Name = " + fileName);
+            LogUtil.d(TAG, "downloadImageToStorage debug, Image Format = " + fileExtension);
+
+            ImageLoaderUtil.downloadImage(imageUrl, new ImageLoaderUtil.OnDownloadImageListener() {
+
+                @Override
+                public void onSuccess(Bitmap bitmap) {
+                    if (null != bitmap) {
+                        LogUtil.d(TAG, "downloadImageToStorage debug, bitmap != NULL");
+                        String imageFullPath = ImageUtil.saveBitmapToExternalStorage(bitmap, fileName);
+                        //saveBitmap(bitmap);
+                        Toast.makeText(context, "下载成功，保存到" + imageFullPath, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, "下载失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(String msg, Exception e) {
+                    LogUtil.e(TAG, "downloadImageToStorage error", e);
+                    Toast.makeText(context, "下载失败", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

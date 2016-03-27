@@ -138,11 +138,12 @@ public class ImageUtil {
     }
 
 
-    public static void saveBitmapToExternalStorage(Bitmap bm, String fileName) {
+    public static String saveBitmapToExternalStorage(Bitmap bm, String fileName) {
         String picFolder = MainApp.getExternalStoragePicFolder();
+        String picFullPath = "";
         if (null != picFolder) {
             LogUtil.d(TAG, "saveBitmapToExternalStorage debug, Pictures Folder = " + picFolder);
-            String picFullPath = picFolder + File.separator + fileName;
+            picFullPath = picFolder + File.separator + fileName;
             LogUtil.d(TAG, "saveBitmapToExternalStorage debug, Pictures Full Path = " + picFullPath);
             File file = new File(picFullPath);
 //        if (file.exists())
@@ -161,5 +162,6 @@ public class ImageUtil {
                 LogUtil.e(TAG, "saveBitmap error", e);
             }
         }
+        return picFullPath;
     }
 }

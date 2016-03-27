@@ -1,6 +1,5 @@
 package com.way.tunnelvision.ui.activity;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,7 +15,6 @@ import com.way.tunnelvision.entity.model.ImageModel;
 import com.way.tunnelvision.entity.service.ImageDaoHelper;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ImageLoaderUtil;
-import com.way.tunnelvision.util.ImageUtil;
 import com.way.tunnelvision.util.LogUtil;
 
 public class ImageExpandActivity extends BaseActivity {
@@ -53,30 +51,8 @@ public class ImageExpandActivity extends BaseActivity {
         imageModel = getIntent().getParcelableExtra(Constants.ACTIVITY_PARAMETER);
         if (null != imageModel) {
             imageTitle = imageModel.getTitle();
-            imageUrl = imageModel.getSourceurl();
-            imageThumbUrl = imageModel.getThumburl();
-            LogUtil.d(TAG, "onCreate debug, Image Title = " + imageModel.getTitle());
-            LogUtil.d(TAG, "onCreate debug, Image Source Url = " + imageUrl);
-            LogUtil.d(TAG, "onCreate debug, Image Thumb Url = " + imageThumbUrl);
-            LogUtil.d(TAG, "onCreate debug, Image Height = " + imageModel.getHeight());
-            LogUtil.d(TAG, "onCreate debug, Image Width = " + imageModel.getWidth());
-            LogUtil.d(TAG, "onCreate debug, Image IsCollection = " + imageModel.getIsCollection());
-            int lastIndexSlash = 0;
-            if (imageThumbUrl.contains("/")) {
-                lastIndexSlash = imageThumbUrl.lastIndexOf("/");
-            } else {
-                if (imageThumbUrl.contains("\\")) {
-                    lastIndexSlash = imageThumbUrl.lastIndexOf("\\");
-                }
-            }
-            fileName = imageThumbUrl.substring(lastIndexSlash + 1, imageThumbUrl.length());
-            int lastIndexDot = 0;
-            lastIndexDot = fileName.lastIndexOf(".");
-            fileExtension = fileName.substring(lastIndexDot, fileName.length());
-            LogUtil.d(TAG, "onCreate debug, Image Name = " + fileName);
-            LogUtil.d(TAG, "onCreate debug, Image Format = " + fileExtension);
+            toolbar.setTitle(imageTitle);
         }
-        toolbar.setTitle(imageTitle);
 
         initView();
     }
@@ -93,6 +69,8 @@ public class ImageExpandActivity extends BaseActivity {
         iv_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ImageLoaderUtil.downloadImageToStorage(imageModel, ImageExpandActivity.this);
+                /*
                 pb_progress.setVisibility(View.VISIBLE);
                 //pb_progress.show
                 ImageLoaderUtil.downloadImage(imageUrl, new ImageLoaderUtil.OnDownloadImageListener() {
@@ -101,7 +79,7 @@ public class ImageExpandActivity extends BaseActivity {
                     public void onSuccess(Bitmap bitmap) {
                         if (null != bitmap) {
                             LogUtil.d(TAG, "onCreate debug, bitmap != NULL");
-                            ImageUtil.saveBitmapToExternalStorage(bitmap, fileName);
+                            String imageFullPath = ImageUtil.saveBitmapToExternalStorage(bitmap, fileName);
                             //saveBitmap(bitmap);
                             Toast.makeText(ImageExpandActivity.this, "下载成功", Toast.LENGTH_SHORT).show();
                         } else {
@@ -116,6 +94,7 @@ public class ImageExpandActivity extends BaseActivity {
                         Toast.makeText(ImageExpandActivity.this, "下载失败", Toast.LENGTH_SHORT).show();
                     }
                 });
+                */
             }
         });
     }

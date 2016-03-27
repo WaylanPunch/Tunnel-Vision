@@ -12,19 +12,20 @@
         android:id="@+id/iv_image_item_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dip"
         android:layout_gravity="start|center_horizontal"
         android:background="@drawable/ic_drawer_header_background"
         android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/tv_image_item_title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start|top"
+        android:layout_width="match_parent"
+        android:layout_height="24dip"
+        android:layout_gravity="start|bottom"
         android:gravity="start|center_vertical"
         android:padding="4dip"
         android:text="title"
-        android:textColor="@color/grayLight" />
+        android:textColor="@color/colorPrimary" />
 
     <ImageView
         android:id="@+id/iv_image_item_download"

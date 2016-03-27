@@ -1,7 +1,6 @@
 package com.way.tunnelvision.ui.activity;
 
 import android.annotation.TargetApi;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -22,7 +21,6 @@ import com.way.tunnelvision.entity.impl.ImageModelImpl;
 import com.way.tunnelvision.entity.model.ImageModel;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ImageLoaderUtil;
-import com.way.tunnelvision.util.ImageUtil;
 import com.way.tunnelvision.util.LogUtil;
 
 import java.util.ArrayList;
@@ -152,6 +150,8 @@ public class ImageActivity extends BaseActivity {
         @Override
         public void onDownloadClick(View view, int position) {
             ImageModel imageModel = imageModels.get(position);
+            ImageLoaderUtil.downloadImageToStorage(imageModel, ImageActivity.this);
+            /*
             if (null != imageModel) {
                 String imageUrl = imageModel.getSourceurl();
                 String imageThumbUrl = imageModel.getThumburl();
@@ -178,9 +178,9 @@ public class ImageActivity extends BaseActivity {
                     public void onSuccess(Bitmap bitmap) {
                         if (null != bitmap) {
                             LogUtil.d(TAG, "onImageDownloadClickListener debug, bitmap != NULL");
-                            ImageUtil.saveBitmapToExternalStorage(bitmap, fileName);
+                            String imageFullPath = ImageUtil.saveBitmapToExternalStorage(bitmap, fileName);
                             //saveBitmap(bitmap);
-                            Toast.makeText(ImageActivity.this, "下载成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ImageActivity.this, "下载成功，保存到" + imageFullPath, Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(ImageActivity.this, "下载失败", Toast.LENGTH_SHORT).show();
                         }
@@ -193,6 +193,7 @@ public class ImageActivity extends BaseActivity {
                     }
                 });
             }
+            */
         }
     };
 

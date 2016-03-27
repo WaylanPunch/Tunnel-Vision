@@ -9,13 +9,14 @@
         android:id="@+id/tb_image_expand_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/transparent"
+        android:background="@color/colorPrimary"
         android:fitsSystemWindows="true" />
 
     <ImageView
         android:id="@+id/iv_image_expand_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_gravity="center"
         android:scaleType="centerCrop" />
 
