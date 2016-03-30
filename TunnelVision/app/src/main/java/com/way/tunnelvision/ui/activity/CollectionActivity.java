@@ -9,18 +9,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.way.tunnelvision.R;
-import com.way.tunnelvision.entity.service.ImageDaoHelper;
-import com.way.tunnelvision.entity.service.NewsDaoHelper;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.ui.fragment.CollectionFragment;
-import com.way.tunnelvision.util.LogUtil;
 import com.way.tunnelvision.util.SystemUtil;
 
 import java.util.ArrayList;
@@ -99,6 +93,7 @@ public class CollectionActivity extends BaseActivity {
         }
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -130,4 +125,5 @@ public class CollectionActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    */
 }

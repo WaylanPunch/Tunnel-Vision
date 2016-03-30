@@ -13,7 +13,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:name=".base.MainApp"
@@ -80,13 +80,19 @@
             android:name=".ui.activity.ImageExpandActivity"
             android:label="@string/title_activity_image_expand" />
 
-        <service android:name=".entity.service.HeaderImageService" android:enabled="true" android:process="system">
+        <service
+            android:name=".entity.service.HeaderImageService"
+            android:enabled="true"
+            android:process="system">
             <intent-filter>
                 <action android:name="com.way.tunnelvision.entity.service.HeaderImageService" />
             </intent-filter>
         </service>
 
-        <activity android:name=".ui.activity.TestActivity"></activity>
+        <activity android:name=".ui.activity.TestActivity" />
+        <activity
+            android:name=".ui.activity.BackgroundActivity"
+            android:label="@string/title_activity_background"></activity>
     </application>
 
 </manifest>

@@ -46,7 +46,7 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
 
         int delay = 5 * 60 * 1000;
-        HeaderImageService.addNotification(delay, "通知", "测试消息", "测试内容");
+        HeaderImageService.addNotification(delay, "通知", "有新的背景图", "您可以点击设置背景图");
         LogUtil.d(TAG, "onCreate debug, start");
         try {
             DatabaseUtil.initDataBase(this);

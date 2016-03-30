@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.way.tunnelvision.R;
 import com.way.tunnelvision.adapter.ImageAdapter;
@@ -122,15 +123,24 @@ public class CollectionFragment extends Fragment {
                 newsCollectionAdapter.setOnItemLongClickListener(new NewsCollectionAdapter.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(View view, int position) {
-                        NewsModel newsItem = newsModels.get(position);
+                        final NewsModel newsItem = newsModels.get(position);
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         //AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
                         builder.setTitle(getString(R.string.text_dialog_title));
-                        builder.setMessage(getString(R.string.text_dialog_collect_info));
+                        builder.setMessage("点击确定即可取消收藏");
                         builder.setPositiveButton(getString(R.string.text_dialog_ok), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                try {
+                                    NewsDaoHelper newsDaoHelper = NewsDaoHelper.getInstance();
+                                    newsDaoHelper.deleteData(newsItem);
+                                    Toast.makeText(getActivity(),"删除成功",Toast.LENGTH_SHORT).show();
+                                    newsModels.remove(newsItem);
+                                    newsCollectionAdapter.notifyDataSetChanged();
+                                }catch (Exception e){
+                                    LogUtil.e(TAG, "newsCollectionAdapter.setOnItemLongClickListener error", e);
+                                    Toast.makeText(getActivity(),"删除失败",Toast.LENGTH_SHORT).show();
+                                }
                                 dialog.dismiss();
                             }
                         });
@@ -158,6 +168,40 @@ public class CollectionFragment extends Fragment {
                         intent.putExtra(Constants.ACTIVITY_PARAMETER, imageModel);
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.create_zoomin, R.anim.create_zoomout);
+                    }
+                });
+                imageAdapter.setOnItemLongClickListener(new ImageAdapter.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(View view, int position) {
+                        final ImageModel imageItem = imageModels.get(position);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        //AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+                        builder.setTitle(getString(R.string.text_dialog_title));
+                        builder.setMessage("点击确定即可取消收藏");
+                        builder.setPositiveButton(getString(R.string.text_dialog_ok), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+                                    ImageDaoHelper imageDaoHelper = ImageDaoHelper.getInstance();
+                                    imageDaoHelper.deleteData(imageItem);
+                                    Toast.makeText(getActivity(),"删除成功",Toast.LENGTH_SHORT).show();
+                                    imageModels.remove(imageItem);
+                                    imageAdapter.notifyDataSetChanged();
+                                }catch (Exception e){
+                                    LogUtil.e(TAG, "imageAdapter.setOnItemLongClickListener error", e);
+                                    Toast.makeText(getActivity(),"删除失败",Toast.LENGTH_SHORT).show();
+                                }
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.setNegativeButton(getString(R.string.text_dialog_cancel), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        builder.show();
+                        return false;
                     }
                 });
                 imageAdapter.setOnDownloadClickListener(new ImageAdapter.OnDownloadClickListener() {

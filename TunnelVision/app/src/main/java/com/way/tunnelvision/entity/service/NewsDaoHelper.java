@@ -46,6 +46,12 @@ public class NewsDaoHelper implements GreenDaoHelperInterface {
         }
     }
 
+    public void deleteData(NewsModel newsModel) {
+        if(newsDao != null && newsModel != null) {
+            newsDao.delete(newsModel);
+        }
+    }
+
     @Override
     public NewsModel getDataById(Long id) {
         if(newsDao != null && -1 != id) {

@@ -239,7 +239,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             //MENU_ITEM_CHOSEN_INDEX = 3;
         } else if (id == R.id.nav_menu_item_settings) {
             LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_settings index = " + 4);
-            openActivity(SettingsActivity.class);
+            openActivity(BackgroundActivity.class);
             //MENU_ITEM_CHOSEN_INDEX = 4;
         } else if (id == R.id.nav_menu_item_exit) {
             LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_exit index = " + 5);

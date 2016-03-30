@@ -29,6 +29,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     private int mMaxHeight;
 
     private OnItemClickListener mOnItemClickListener;
+    private OnItemLongClickListener mOnItemLongClickListener;
     private OnDownloadClickListener mOnDownloadClickListener;
 
     public ImageAdapter(Context context) {
@@ -85,12 +86,19 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.mOnItemClickListener = onItemClickListener;
     }
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+        this.mOnItemLongClickListener = onItemLongClickListener;
+    }
     public void setOnDownloadClickListener(OnDownloadClickListener onDownloadClickListener) {
         this.mOnDownloadClickListener = onDownloadClickListener;
     }
 
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
+    }
+
+    public interface OnItemLongClickListener {
+        boolean onItemLongClick(View view, int position);
     }
 
     public interface OnDownloadClickListener {
@@ -114,6 +122,15 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
                     if (mOnItemClickListener != null) {
                         mOnItemClickListener.onItemClick(v, position);
                     }
+                }
+            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (mOnItemLongClickListener != null) {
+                        return mOnItemLongClickListener.onItemLongClick(v, position);
+                    }
+                    return false;
                 }
             });
             mImage_download.setOnClickListener(new View.OnClickListener() {

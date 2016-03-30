@@ -95,6 +95,17 @@ public class HeaderImageDaoHelper implements GreenDaoHelperInterface {
         return count > 0 ? true : false;
     }
 
+    public boolean hasEntity(HeaderImageModel headerImageModel) {
+        if(headerImageDao == null || headerImageModel == null) {
+            return false;
+        }
+
+        QueryBuilder<HeaderImageModel> qb = headerImageDao.queryBuilder();
+        qb.where(HeaderImageDao.Properties.HEADERIMAGE_GUID.eq(headerImageModel.getGuid()));
+        long count = qb.buildCount().count();
+        return count > 0 ? true : false;
+    }
+
     @Override
     public long getTotalCount() {
         if(headerImageDao == null) {

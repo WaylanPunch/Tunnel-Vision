@@ -46,6 +46,12 @@ public class ImageDaoHelper implements GreenDaoHelperInterface {
         }
     }
 
+    public void deleteData(ImageModel imageModel) {
+        if(imageDao != null && imageModel != null) {
+            imageDao.delete(imageModel);
+        }
+    }
+
     @Override
     public ImageModel getDataById(Long id) {
         if(imageDao != null && -1 != id) {

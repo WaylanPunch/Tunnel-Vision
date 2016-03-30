@@ -31,6 +31,7 @@ public class MainApp extends Application {
     private static String externalStoragePath = null;
     private static String externalStorageFolder = null;
     private static String externalStoragePicFolder = null;
+    private static String externalStorageCrashFolder = null;
 
     @Override
     public void onCreate() {
@@ -50,8 +51,9 @@ public class MainApp extends Application {
             externalStoragePath = getSDPath();
             externalStorageFolder = externalStoragePath + File.separator + packageName;
             externalStoragePicFolder = externalStorageFolder + File.separator + "Pictures";
+            externalStorageCrashFolder = externalStorageFolder + File.separator + "Crash";
             if (null != externalStoragePath) {
-                createPackagePath(externalStorageFolder, externalStoragePicFolder);
+                createPackagePath();
             }
         } catch (Exception e) {
             LogUtil.e(TAG, "onCreate error", e);
@@ -131,21 +133,24 @@ public class MainApp extends Application {
         return externalStoragePath;
     }
 
-    private static void createPackagePath(String packpath, String packPicPath) {
+    private static void createPackagePath() {
         try {
-            File file = new File(packpath);
+            File file = new File(externalStorageFolder);
             if (!file.exists()) {
                 file.mkdir();
-                LogUtil.d(TAG, "getSDPath debug, Path Not Exists");
+                LogUtil.d(TAG, "getSDPath debug, Folder Not Exists");
             }
 
-            File filePic = new File(packPicPath);
+            File filePic = new File(externalStoragePicFolder);
             if (!filePic.exists()) {
                 filePic.mkdir();
-                LogUtil.d(TAG, "getSDPath debug, Pictures Path Not Exists");
+                LogUtil.d(TAG, "getSDPath debug, Pictures Folder Not Exists");
             }
-            LogUtil.d(TAG, "getSDPath debug, Package Path = " + packpath);
-            LogUtil.d(TAG, "getSDPath debug, Package Pictures Path = " + packPicPath);
+            File fileCrash = new File(externalStorageCrashFolder);
+            if (!fileCrash.exists()) {
+                fileCrash.mkdir();
+                LogUtil.d(TAG, "getSDPath debug, Crash Folder Not Exists");
+            }
         } catch (Exception e) {
             LogUtil.e(TAG, "createPackagePath error", e);
         }
@@ -170,6 +175,14 @@ public class MainApp extends Application {
         }
         return externalStoragePicFolder;
     }
-
+    public static String getExternalStorageCrashFolder() {
+        if (null == externalStorageCrashFolder) {
+            if (null == externalStorageFolder) {
+                externalStorageFolder = getExternalStorageFolder();
+            }
+            externalStorageCrashFolder = externalStorageFolder + File.separator + "Crash";
+        }
+        return externalStorageCrashFolder;
+    }
 
 }
