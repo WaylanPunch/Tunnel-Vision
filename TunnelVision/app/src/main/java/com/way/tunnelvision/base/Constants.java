@@ -7,7 +7,7 @@ public class Constants {
     //SharedPreferences
     public static final String PREFERENCE_NAME = "TunnelVisionPrefs";
     public static final String PREFERENCE_KEY_FIRST_ENTER = "First_Enter";
-    public static final String PREFERENCE_KEY_DATABASE_VERSION_CURRENT = "Database_Version_Current";
+    //public static final String PREFERENCE_KEY_DATABASE_VERSION_CURRENT = "Database_Version_Current";
 
     //Key of Activity Bundle
     public static final String NEWSFRAGMENT_PARAMETER = "ChannelModel";
@@ -16,8 +16,8 @@ public class Constants {
 
     //SQLite Database
     public static final String  DATABASE_NAME = "TunnelVisionDB";
-    public static final int SCHEMA_VERSION = 1000;
-    public static final int SCHEMA_VERSION_NEW = 1001;
+    public static final int SCHEMA_VERSION = 1011;
+    //public static final int SCHEMA_VERSION_NEW = 1001;
 
     //Bugly监控追踪
     public static final String  BUGLY_APPID = "900018056";
@@ -80,7 +80,8 @@ public class Constants {
 
         //标题图片
         public static final String HEADER_IMAGE_SOURCE = "http://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss";
-        public static final String HEADER_IMAGE_DEFAULT = "http://img2.ph.126.net/V9FofHGlVia0G5Fxk9owLg==/6631375628955284885.jpg";
+        public static final String HEADER_IMAGE_DEFAULT = "http://img0.ph.126.net/Hcnpoc0xeWdihdNzpY1l2g==/201817558402165569.jpg";
+                //"https://raw.githubusercontent.com/WaylanPunch/Tunnel-Vision/master/Images/default_header_image.jpg";
     }
 
     public class RSSFEED {

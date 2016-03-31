@@ -6,9 +6,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.way.tunnelvision.base.Constants;
-import com.way.tunnelvision.base.MainApp;
 import com.way.tunnelvision.util.LogUtil;
-import com.way.tunnelvision.util.PreferencesUtil;
 
 import de.greenrobot.dao.AbstractDaoMaster;
 import de.greenrobot.dao.identityscope.IdentityScopeType;
@@ -64,7 +62,7 @@ public class DaoMaster extends AbstractDaoMaster {
         public void onCreate(SQLiteDatabase db) {
             LogUtil.i(TAG, "Creating tables for schema version " + Constants.SCHEMA_VERSION);
             createAllTables(db, false);
-            PreferencesUtil.putInt(MainApp.getContext(), Constants.PREFERENCE_KEY_DATABASE_VERSION_CURRENT, Constants.SCHEMA_VERSION);
+            //PreferencesUtil.putInt(MainApp.getContext(), Constants.PREFERENCE_KEY_DATABASE_VERSION_CURRENT, Constants.SCHEMA_VERSION);
         }
     }
 
@@ -82,7 +80,7 @@ public class DaoMaster extends AbstractDaoMaster {
                 LogUtil.i(TAG, "Upgrading schema from version " + oldVersion + " to " + newVersion + " by dropping all tables");
                 dropAllTables(db, true);
                 onCreate(db);
-                PreferencesUtil.putInt(MainApp.getContext(), Constants.PREFERENCE_KEY_DATABASE_VERSION_CURRENT, newVersion);
+                //PreferencesUtil.putInt(MainApp.getContext(), Constants.PREFERENCE_KEY_DATABASE_VERSION_CURRENT, newVersion);
             }
         }
     }

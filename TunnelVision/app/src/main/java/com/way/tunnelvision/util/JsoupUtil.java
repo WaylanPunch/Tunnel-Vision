@@ -55,7 +55,7 @@ public class JsoupUtil {
                             //LogUtil.d(TAG, "getHeaderImageItems debug, url = " + url);
                             //LogUtil.d(TAG, "getHeaderImageItems debug, length = " + lengthStr);
                             //LogUtil.d(TAG, "getHeaderImageItems debug, type = " + type);
-                            HeaderImageModel model = new HeaderImageModel(null, title, link, description, url, length, type, guid, pubDate);
+                            HeaderImageModel model = new HeaderImageModel(null, title, link, description, url, length, type, guid, pubDate, 2);
                             itemsList.add(model);
                         }
                     }

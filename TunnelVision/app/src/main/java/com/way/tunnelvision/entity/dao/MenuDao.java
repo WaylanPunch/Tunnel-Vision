@@ -47,7 +47,7 @@ public class MenuDao extends AbstractDao<MenuModel, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists ? "IF NOT EXISTS " : "";
         db.execSQL("CREATE TABLE " + constraint + "\"" + TABLENAME + "\" (" + //
-                "\"" + COLUMNNAME_ID + "\" INTEGER PRIMARY KEY ," + // 0: id
+                "\"" + COLUMNNAME_ID + "\" INTEGER PRIMARY KEY AUTOINCREMENT," + // 0: id
                 "\"" + COLUMNNAME_GUID + "\" TEXT NOT NULL ," + // 1: guid
                 "\"" + COLUMNNAME_TITLE + "\" TEXT NOT NULL," + // 2: title
                 "\"" + COLUMNNAME_LINK + "\" TEXT NOT NULL);"); // 3: link

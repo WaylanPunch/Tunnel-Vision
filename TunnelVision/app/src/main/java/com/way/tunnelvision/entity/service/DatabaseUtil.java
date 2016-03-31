@@ -3,10 +3,9 @@ package com.way.tunnelvision.entity.service;
 import android.content.Context;
 
 import com.way.tunnelvision.base.Constants;
-import com.way.tunnelvision.base.MainApp;
 import com.way.tunnelvision.entity.model.ChannelModel;
+import com.way.tunnelvision.entity.model.HeaderImageModel;
 import com.way.tunnelvision.util.LogUtil;
-import com.way.tunnelvision.util.PreferencesUtil;
 
 /**
  * Created by pc on 2016/2/25.
@@ -23,15 +22,15 @@ public class DatabaseUtil {
         LogUtil.d(TAG, "initDataBase debug, start");
         ChannelDaoHelper channelDaoHelper = ChannelDaoHelper.getInstance();
 
-        int currentVersion = PreferencesUtil.getInt(MainApp.getContext(), Constants.PREFERENCE_KEY_DATABASE_VERSION_CURRENT);
-        if (currentVersion < Constants.SCHEMA_VERSION_NEW) {
-            MainApp.getDevOpenHelper().onUpgrade(MainApp.getSQLiteDatabase(), Constants.SCHEMA_VERSION, Constants.SCHEMA_VERSION_NEW);
-        }
+        //int currentVersion = PreferencesUtil.getInt(MainApp.getContext(), Constants.PREFERENCE_KEY_DATABASE_VERSION_CURRENT);
+        //if (currentVersion < Constants.SCHEMA_VERSION_NEW) {
+        //MainApp.getDevOpenHelper().onUpgrade(MainApp.getSQLiteDatabase(), Constants.SCHEMA_VERSION, Constants.SCHEMA_VERSION_NEW);
+        //}
 
-        long rowCount = channelDaoHelper.getTotalCount();
-        LogUtil.d(TAG, "initDataBase debug, Row Count = " + rowCount);
+        long channelTotalCount = channelDaoHelper.getTotalCount();
+        LogUtil.d(TAG, "initDataBase debug, Channel Row Count = " + channelTotalCount);
         try {
-            if (rowCount == 0) {
+            if (channelTotalCount == 0) {
                 String headline_guid = Constants.NEWS.TOP_ID;
                 String headline_title = Constants.NEWS.TOP_TITLE;
                 String headline_name = Constants.NEWS.TOP_NAME;
@@ -67,6 +66,27 @@ public class DatabaseUtil {
                 int joke_chosen = 1;
                 ChannelModel joke_channel = new ChannelModel(null, joke_guid, joke_title, joke_name, joke_link, joke_type, joke_chosen);
                 channelDaoHelper.addData(joke_channel);
+            }
+        } catch (Exception e) {
+            LogUtil.e(TAG, "initDataBase error", e);
+        }
+
+        HeaderImageDaoHelper headerImageDaoHelper = HeaderImageDaoHelper.getInstance();
+        long headerImageTotalCount = headerImageDaoHelper.getTotalCount();
+        LogUtil.d(TAG, "initDataBase debug, Header Image Row Count = " + headerImageTotalCount);
+        try {
+            if (headerImageTotalCount == 0) {
+                String title = "Earth Art in Northwestern Australia";
+                String link = "http://www.nasa.gov/image-feature/earth-art-in-northwestern-australia";
+                String description = "During an International Space Station flyover of Australia, NASA astronaut Jeff Williams captured a colorful image of the coast and shared it with his social media followers on March 29, 2016, writing, &quot;The unique terrain of the northwestern Australian coast.&quot;";
+                String url = "http://www.nasa.gov/sites/default/files/thumbnails/image/12909467_553362454846586_5546587330991507170_o.jpg";
+                long length = 354172;
+                String type = "image/jpeg";
+                String guid = "http://www.nasa.gov/image-feature/earth-art-in-northwestern-australia";
+                String pubDate = "Wed, 30 Mar 2016 11:20 EDT";
+                int chosen = 0;
+                HeaderImageModel headerImageModel = new HeaderImageModel(null, title, link, description, url, length, type, guid, pubDate, chosen);
+                headerImageDaoHelper.addData(headerImageModel);
             }
         } catch (Exception e) {
             LogUtil.e(TAG, "initDataBase error", e);

@@ -56,13 +56,13 @@ public class ImageDao extends AbstractDao<ImageModel, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists ? "IF NOT EXISTS " : "";
         db.execSQL("CREATE TABLE " + constraint + "\"" + TABLENAME + "\" (" + //
-                "\"" + COLUMNNAME_ID + "\" INTEGER PRIMARY KEY," + // 0: id
+                "\"" + COLUMNNAME_ID + "\" INTEGER PRIMARY KEY AUTOINCREMENT," + // 0: id
                 "\"" + COLUMNNAME_TITLE + "\" TEXT NOT NULL," + // 1: title
                 "\"" + COLUMNNAME_THUMBURL + "\" TEXT," + // 2: thumburl
                 "\"" + COLUMNNAME_SOURCEURL + "\" TEXT," + // 3: sourceurl
                 "\"" + COLUMNNAME_HEIGHT + "\" INTEGER," + // 4: height
                 "\"" + COLUMNNAME_WIDTH + "\" INTEGER," + // 5: width
-                "\"" + COLUMNNAME_ISCOLLECTION + "\" INTEGER);"); // 6: iscollection
+                "\"" + COLUMNNAME_ISCOLLECTION + "\" INTEGER DEFAULT 0);"); // 6: iscollection
     }
 
     /**

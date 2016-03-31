@@ -85,7 +85,7 @@ public class HeaderImageService extends Service {
                                 if(headerImageDaoHelper.hasEntity(firstItem)){
                                     LogUtil.d(TAG, "onStartCommand debug, No Need to Update");
                                 } else {
-                                    headerImageDaoHelper.deleteAll();
+                                    headerImageDaoHelper.deleteAllButDefault();
                                     for (HeaderImageModel item : list) {
                                         headerImageDaoHelper.addData(item);
                                     }

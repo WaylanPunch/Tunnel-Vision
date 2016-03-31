@@ -56,13 +56,13 @@ public class ChannelDao extends AbstractDao<ChannelModel, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists ? "IF NOT EXISTS " : "";
         db.execSQL("CREATE TABLE " + constraint + "\"" + TABLENAME + "\" (" + //
-                "\"" + COLUMNNAME_ID + "\" INTEGER PRIMARY KEY," + // 0: id
+                "\"" + COLUMNNAME_ID + "\" INTEGER PRIMARY KEY AUTOINCREMENT," + // 0: id
                 "\"" + COLUMNNAME_GUID + "\" TEXT NOT NULL," + // 1: guid
                 "\"" + COLUMNNAME_TITLE + "\" TEXT NOT NULL," + // 2: title
                 "\"" + COLUMNNAME_NAME + "\" TEXT NOT NULL," + // 3: name
                 "\"" + COLUMNNAME_LINK + "\" TEXT NOT NULL," + // 4: link
                 "\"" + COLUMNNAME_TYPE + "\" INTEGER NOT NULL," + // 5: type
-                "\"" + COLUMNNAME_CHOSEN + "\" INTEGER NOT NULL);"); // 6: chosen
+                "\"" + COLUMNNAME_CHOSEN + "\" INTEGER DEFAULT 2);"); // 6: chosen
     }
 
     /**

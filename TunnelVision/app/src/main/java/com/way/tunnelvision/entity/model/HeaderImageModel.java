@@ -42,6 +42,8 @@ public class HeaderImageModel implements Parcelable {
      */
     private String pubDate;
 
+    private int chosen;//0默认, 1选择, 2未选择
+
     public Long getId() {
         return id;
     }
@@ -114,6 +116,14 @@ public class HeaderImageModel implements Parcelable {
         this.pubDate = pubDate;
     }
 
+    public int getChosen() {
+        return this.chosen;
+    }
+
+    public void setChosen(int chosen) {
+        this.chosen = chosen;
+    }
+
     public HeaderImageModel() {
     }
 
@@ -121,7 +131,7 @@ public class HeaderImageModel implements Parcelable {
         this.id = id;
     }
 
-    public HeaderImageModel(Long id, String title, String link, String description, String url, Long length, String type, String guid, String pubDate) {
+    public HeaderImageModel(Long id, String title, String link, String description, String url, Long length, String type, String guid, String pubDate, int chosen) {
         this.id = id;
         this.title = title;
         this.link = link;
@@ -131,6 +141,7 @@ public class HeaderImageModel implements Parcelable {
         this.type = type;
         this.guid = guid;
         this.pubDate = pubDate;
+        this.chosen = chosen;
     }
 
 
@@ -150,6 +161,7 @@ public class HeaderImageModel implements Parcelable {
         dest.writeString(this.type);
         dest.writeString(this.guid);
         dest.writeString(this.pubDate);
+        dest.writeInt(this.chosen);
     }
 
     protected HeaderImageModel(Parcel in) {
@@ -162,9 +174,10 @@ public class HeaderImageModel implements Parcelable {
         this.type = in.readString();
         this.guid = in.readString();
         this.pubDate = in.readString();
+        this.chosen = in.readInt();
     }
 
-    public static final Parcelable.Creator<HeaderImageModel> CREATOR = new Parcelable.Creator<HeaderImageModel>() {
+    public static final Creator<HeaderImageModel> CREATOR = new Creator<HeaderImageModel>() {
         public HeaderImageModel createFromParcel(Parcel source) {
             return new HeaderImageModel(source);
         }

@@ -62,7 +62,7 @@ public class NewsDetailDao extends AbstractDao<NewsDetailModel, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists ? "IF NOT EXISTS " : "";
         db.execSQL("CREATE TABLE " + constraint + "\"" + TABLENAME + "\" (" + //
-                "\"" + COLUMNNAME_ID + "\" INTEGER PRIMARY KEY," + // 0: id
+                "\"" + COLUMNNAME_ID + "\" INTEGER PRIMARY KEY AUTOINCREMENT," + // 0: id
                 "\"" + COLUMNNAME_DOCID + "\" TEXT," + // 1: docid
                 "\"" + COLUMNNAME_TITLE + "\" TEXT NOT NULL," + // 2: title
                 "\"" + COLUMNNAME_SOURCE + "\" TEXT," + // 3: source
@@ -70,7 +70,7 @@ public class NewsDetailDao extends AbstractDao<NewsDetailModel, Long> {
                 "\"" + COLUMNNAME_PTIME + "\" TEXT," + // 5: ptime
                 "\"" + COLUMNNAME_COVER + "\" TEXT," + // 6: cover
                 "\"" + COLUMNNAME_IMGARRAY + "\" TEXT," + // 7: imgarray
-                "\"" + COLUMNNAME_ISCOLLECTION + "\" INTEGER);"); // 8: isCollection
+                "\"" + COLUMNNAME_ISCOLLECTION + "\" INTEGER DEFAULT 0);"); // 8: isCollection
     }
 
     /**

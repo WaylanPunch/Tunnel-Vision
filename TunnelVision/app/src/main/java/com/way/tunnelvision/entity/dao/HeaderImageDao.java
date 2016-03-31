@@ -24,6 +24,7 @@ public class HeaderImageDao extends AbstractDao<HeaderImageModel, Long> {
     public static final String COLUMNNAME_TYPE = "HEADERIMAGETYPE";
     public static final String COLUMNNAME_GUID = "HEADERIMAGEGUID";
     public static final String COLUMNNAME_PUBDATE = "HEADERIMAGEPUBDATE";
+    public static final String COLUMNNAME_CHOSEN = "HEADERIMAGECHOSEN";
 
     private static final String PROPERTYNAME_ID = "id";
     private static final String PROPERTYNAME_TITLE = "title";
@@ -34,6 +35,7 @@ public class HeaderImageDao extends AbstractDao<HeaderImageModel, Long> {
     private static final String PROPERTYNAME_TYPE = "type";
     private static final String PROPERTYNAME_GUID = "guid";
     private static final String PROPERTYNAME_PUBDATE = "pubDate";
+    private static final String PROPERTYNAME_CHOSEN = "chosen";
 
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, PROPERTYNAME_ID, true, COLUMNNAME_ID);
@@ -45,6 +47,7 @@ public class HeaderImageDao extends AbstractDao<HeaderImageModel, Long> {
         public final static Property HEADERIMAGE_TYPE = new Property(6, String.class, PROPERTYNAME_TYPE, false, COLUMNNAME_TYPE);
         public final static Property HEADERIMAGE_GUID = new Property(7, String.class, PROPERTYNAME_GUID, false, COLUMNNAME_GUID);
         public final static Property HEADERIMAGE_PUBDATE = new Property(8, String.class, PROPERTYNAME_PUBDATE, false, COLUMNNAME_PUBDATE);
+        public final static Property HEADERIMAGE_CHOSEN = new Property(9, Integer.class, PROPERTYNAME_CHOSEN, false, COLUMNNAME_CHOSEN);
     }
 
     public HeaderImageDao(DaoConfig config) {
@@ -62,7 +65,7 @@ public class HeaderImageDao extends AbstractDao<HeaderImageModel, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists ? "IF NOT EXISTS " : "";
         db.execSQL("CREATE TABLE " + constraint + "\"" + TABLENAME + "\" (" + //
-                "\"" + COLUMNNAME_ID + "\" INTEGER PRIMARY KEY," +      // 0: id
+                "\"" + COLUMNNAME_ID + "\" INTEGER PRIMARY KEY AUTOINCREMENT," +      // 0: id
                 "\"" + COLUMNNAME_TITLE + "\" TEXT NOT NULL," +         // 1: title
                 "\"" + COLUMNNAME_LINK + "\" TEXT," +                   // 2: link
                 "\"" + COLUMNNAME_DESCRIPTION + "\" TEXT," +            // 3: description
@@ -70,7 +73,8 @@ public class HeaderImageDao extends AbstractDao<HeaderImageModel, Long> {
                 "\"" + COLUMNNAME_LENGTH + "\" INTEGER," +              // 5: length
                 "\"" + COLUMNNAME_TYPE + "\" TEXT," +                   // 6: type
                 "\"" + COLUMNNAME_GUID + "\" TEXT," +                   // 7: guid
-                "\"" + COLUMNNAME_PUBDATE + "\" TEXT);");               // 8: pubDate
+                "\"" + COLUMNNAME_PUBDATE + "\" TEXT," +                // 8: pubDate
+                "\"" + COLUMNNAME_CHOSEN + "\" INTEGER DEFAULT 2);");   // 9: chosen
     }
 
     /**
@@ -92,7 +96,8 @@ public class HeaderImageDao extends AbstractDao<HeaderImageModel, Long> {
                 cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5),      // length
                 cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6),    // type
                 cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7),    // guid
-                cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8)     // pubDate
+                cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8),    // pubDate
+                cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9)        // chosen
         );
         return entity;
     }
@@ -113,6 +118,7 @@ public class HeaderImageDao extends AbstractDao<HeaderImageModel, Long> {
         entity.setType(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));            // type
         entity.setGuid(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));            // guid
         entity.setPubDate(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));         // pubDate
+        entity.setChosen(cursor.isNull(offset + 9) ? null : cursor.getInt(offset + 9));             // chosen
     }
 
     @Override
@@ -162,6 +168,11 @@ public class HeaderImageDao extends AbstractDao<HeaderImageModel, Long> {
         String pubDate = entity.getPubDate();           // pubDate
         if (pubDate != null) {
             stmt.bindString(9, pubDate);
+        }
+
+        int chosen = entity.getChosen();                // chosen
+        if (chosen > -1) {
+            stmt.bindLong(10, chosen);
         }
     }
 

@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.base.MainApp;
 import com.way.tunnelvision.entity.model.HeaderImageModel;
 import com.way.tunnelvision.util.ImageLoaderUtil;
 
@@ -74,7 +76,17 @@ public class BackgroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         ViewHolderBackground viewHolderBackground = (ViewHolderBackground) holder;
         viewHolderBackground.itemPosition = position;
         viewHolderBackground.tv_title.setText(imageItem.getTitle());
-        //viewHolderBackground.tv_setting.setText(imageItem.getSource());
+        int chosen = imageItem.getChosen();
+        if(chosen == 0) {
+            viewHolderBackground.cb_setting.setChecked(true);
+            viewHolderBackground.cb_setting.setEnabled(false);
+            viewHolderBackground.fl_bottom.setBackgroundColor(MainApp.getContext().getResources().getColor(R.color.gray));
+            viewHolderBackground.tv_title.setTextColor(MainApp.getContext().getResources().getColor(R.color.white));
+        }else if (chosen == 1){
+            viewHolderBackground.cb_setting.setChecked(true);
+        }else {
+            viewHolderBackground.cb_setting.setChecked(false);
+        }
         ImageLoaderUtil.display(mContext, viewHolderBackground.iv_img, imageItem.getUrl());
     }
 
@@ -83,6 +95,7 @@ public class BackgroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         ImageView iv_img;
         TextView tv_title;
         CheckBox cb_setting;
+        FrameLayout fl_bottom;
         int itemPosition;
 
         public ViewHolderBackground(View itemView) {
@@ -90,6 +103,7 @@ public class BackgroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             iv_img = (ImageView) itemView.findViewById(R.id.iv_background_item_img);
             tv_title = (TextView) itemView.findViewById(R.id.tv_background_item_title);
             cb_setting = (CheckBox) itemView.findViewById(R.id.cb_background_item_setting);
+            fl_bottom = (FrameLayout) itemView.findViewById(R.id.fl_background_bottom_container);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

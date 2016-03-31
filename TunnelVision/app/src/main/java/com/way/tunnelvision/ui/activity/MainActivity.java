@@ -111,8 +111,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             @Override
             public HeaderDesign getHeaderDesign(int position) {
                 ChannelModel channelModel = channelModels.get(position);
-                if (headerImageModels != null && headerImageModels.size() == channelModels.size()) {
-                    return HeaderDesign.fromColorResAndUrl(R.color.colorPrimary, headerImageModels.get(position).getUrl());
+                if (headerImageModels != null) {
+                    if(headerImageModels.size() > 1) {
+                        return HeaderDesign.fromColorResAndUrl(R.color.colorPrimary, headerImageModels.get(1).getUrl());
+                    } else {
+                        return HeaderDesign.fromColorResAndUrl(R.color.colorPrimary, headerImageModels.get(0).getUrl());
+                    }
                 } else {
                     return HeaderDesign.fromColorResAndUrl(R.color.colorPrimary, Constants.NEWS.HEADER_IMAGE_DEFAULT);
                 }
@@ -149,7 +153,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             LogUtil.d(TAG, "initChannelData debug, Chosen Count = " + channelModels.size());
 
             HeaderImageDaoHelper headerImageDaoHelper = HeaderImageDaoHelper.getInstance();
-            headerImageModels = headerImageDaoHelper.getAllDataByNumber(channelModels.size());
+            headerImageModels = headerImageDaoHelper.getDataByDefautAndChosen();
         } catch (Exception e) {
             LogUtil.e(TAG, "initChannelData error", e);
         }
