@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -76,15 +75,19 @@ public class BackgroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         ViewHolderBackground viewHolderBackground = (ViewHolderBackground) holder;
         viewHolderBackground.itemPosition = position;
         viewHolderBackground.tv_title.setText(imageItem.getTitle());
+        viewHolderBackground.cb_setting.setTag(imageItem);
         int chosen = imageItem.getChosen();
-        if(chosen == 0) {
-            viewHolderBackground.cb_setting.setChecked(true);
-            viewHolderBackground.cb_setting.setEnabled(false);
-            viewHolderBackground.fl_bottom.setBackgroundColor(MainApp.getContext().getResources().getColor(R.color.gray));
+        if (chosen == 0) {
+            //viewHolderBackground.cb_setting.setChecked(true);
+            //viewHolderBackground.cb_setting.setEnabled(false);
+            //viewHolderBackground.cb_setting.setClickable(false);
+            viewHolderBackground.cb_setting.setVisibility(View.GONE);
+            //viewHolderBackground.fl_bottom.setBackgroundColor(MainApp.getContext().getResources().getColor(R.color.gray));
+            viewHolderBackground.tv_title.setText("默认");
             viewHolderBackground.tv_title.setTextColor(MainApp.getContext().getResources().getColor(R.color.white));
-        }else if (chosen == 1){
+        } else if (chosen == 1) {
             viewHolderBackground.cb_setting.setChecked(true);
-        }else {
+        } else {
             viewHolderBackground.cb_setting.setChecked(false);
         }
         ImageLoaderUtil.display(mContext, viewHolderBackground.iv_img, imageItem.getUrl());
@@ -114,11 +117,11 @@ public class BackgroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 }
             });
 
-            cb_setting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            cb_setting.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                public void onClick(View v) {
                     if (mOnItemCheckedChangeListener != null) {
-                        mOnItemCheckedChangeListener.onItemCheckedChange(buttonView, isChecked, itemPosition);
+                        mOnItemCheckedChangeListener.onItemCheckedChange(v, itemPosition);
                     }
                 }
             });
@@ -130,6 +133,6 @@ public class BackgroundAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public interface OnItemCheckedChangeListener {
-        void onItemCheckedChange(CompoundButton view, boolean isChecked, int position);
+        void onItemCheckedChange(View view, int position);
     }
 }

@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.CompoundButton;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.way.tunnelvision.R;
@@ -57,31 +57,55 @@ public class BackgroundActivity extends BaseActivity {
             headerImages = new ArrayList<>();
         }
         backgroundAdapter = new BackgroundAdapter(BackgroundActivity.this, headerImages);
+        recyclerView.setAdapter(backgroundAdapter);
+        backgroundAdapter.notifyDataSetChanged();
+
         backgroundAdapter.setOnItemClickListener(new BackgroundAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 HeaderImageModel item = headerImages.get(position);
-                if(item.getChosen() == 0){
+                if (item.getChosen() == 0) {
                     Toast.makeText(BackgroundActivity.this, "默认背景", Toast.LENGTH_SHORT).show();
                 }
             }
         });
         backgroundAdapter.setOnItemCheckedChangeListener(new BackgroundAdapter.OnItemCheckedChangeListener() {
             @Override
-            public void onItemCheckedChange(CompoundButton view, boolean isChecked, int position) {
+            public void onItemCheckedChange(View view, int position) {
                 LogUtil.d(TAG, "onCreate debug, onItemCheckedChange, Position = " + position);
-                HeaderImageModel item = headerImages.get(position);
-                if (isChecked) {
-                    //CHECK_INDEX = position;
-                    //item.setChosen(1);
-                } else {
-                    //CHECK_INDEX = 0;
-                    //item.setChosen(2);
+                try {
+                    CheckBox cb = (CheckBox) view;
+                    HeaderImageModel item = (HeaderImageModel) cb.getTag();
+                    if (cb.isChecked()) {
+                        item.setChosen(1);
+                    }
+                    if (cb.isChecked()) {
+                        if (CHECK_INDEX != 0) {
+                            HeaderImageModel oldItem = headerImages.get(CHECK_INDEX);
+                            oldItem.setChosen(2);
+                            headerImageDaoHelper.updateData(oldItem);
+                        }
+                        item.setChosen(1);
+                        headerImageDaoHelper.updateData(item);
+                        CHECK_INDEX = position;
+                    } else {
+                        item.setChosen(2);
+                        headerImageDaoHelper.updateData(item);
+                        CHECK_INDEX = 0;
+                    }
+                    if (headerImages == null) {
+                        headerImages = new ArrayList<>();
+                    } else {
+                        headerImages.clear();
+                    }
+                    headerImages = headerImageDaoHelper.getAllDataByNumber(10);
+                    backgroundAdapter.setContents(headerImages);
+                    backgroundAdapter.notifyDataSetChanged();
+                } catch (Exception e) {
+                    LogUtil.e(TAG, "onCreate error, onItemCheckedChange", e);
                 }
             }
         });
-        recyclerView.setAdapter(backgroundAdapter);
-        backgroundAdapter.notifyDataSetChanged();
     }
 
     private void initData() {
@@ -96,7 +120,7 @@ public class BackgroundActivity extends BaseActivity {
         headerImages = headerImageDaoHelper.getAllDataByNumber(10);
         if (headerImages != null && headerImages.size() > 0) {
             LogUtil.d(TAG, "initData debug, HeaderImages COUNT = " + headerImages.size());
-        }else {
+        } else {
             LogUtil.d(TAG, "initData debug, HeaderImages == NULL");
         }
     }

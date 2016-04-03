@@ -40,6 +40,12 @@ public class HeaderImageDaoHelper implements GreenDaoHelperInterface {
         }
     }
 
+    public void updateData(HeaderImageModel bean){
+        if (headerImageDao != null && bean != null) {
+            headerImageDao.update(bean);
+        }
+    }
+
     @Override
     public void deleteData(Long id) {
         if (headerImageDao != null && -1 != id) {

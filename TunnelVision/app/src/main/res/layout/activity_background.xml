@@ -20,4 +20,5 @@
         android:layout_marginTop="?attr/actionBarSize">
 
     </android.support.v7.widget.RecyclerView>
+
 </RelativeLayout>

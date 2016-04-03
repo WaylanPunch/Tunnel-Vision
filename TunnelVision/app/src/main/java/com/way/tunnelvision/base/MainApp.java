@@ -31,7 +31,7 @@ public class MainApp extends Application {
     private static String externalStoragePath = null;
     private static String externalStorageFolder = null;
     private static String externalStoragePicFolder = null;
-    private static String externalStorageCrashFolder = null;
+    private static String externalStorageLogFolder = null;
 
     @Override
     public void onCreate() {
@@ -51,7 +51,7 @@ public class MainApp extends Application {
             externalStoragePath = getSDPath();
             externalStorageFolder = externalStoragePath + File.separator + packageName;
             externalStoragePicFolder = externalStorageFolder + File.separator + "Pictures";
-            externalStorageCrashFolder = externalStorageFolder + File.separator + "Crash";
+            externalStorageLogFolder = externalStorageFolder + File.separator + "Logs";
             if (null != externalStoragePath) {
                 createPackagePath();
             }
@@ -146,10 +146,10 @@ public class MainApp extends Application {
                 filePic.mkdir();
                 LogUtil.d(TAG, "getSDPath debug, Pictures Folder Not Exists");
             }
-            File fileCrash = new File(externalStorageCrashFolder);
-            if (!fileCrash.exists()) {
-                fileCrash.mkdir();
-                LogUtil.d(TAG, "getSDPath debug, Crash Folder Not Exists");
+            File fileLogs = new File(externalStorageLogFolder);
+            if (!fileLogs.exists()) {
+                fileLogs.mkdir();
+                LogUtil.d(TAG, "getSDPath debug, Logs Folder Not Exists");
             }
         } catch (Exception e) {
             LogUtil.e(TAG, "createPackagePath error", e);
@@ -175,14 +175,14 @@ public class MainApp extends Application {
         }
         return externalStoragePicFolder;
     }
-    public static String getExternalStorageCrashFolder() {
-        if (null == externalStorageCrashFolder) {
+    public static String getExternalStorageLogsFolder() {
+        if (null == externalStorageLogFolder) {
             if (null == externalStorageFolder) {
                 externalStorageFolder = getExternalStorageFolder();
             }
-            externalStorageCrashFolder = externalStorageFolder + File.separator + "Crash";
+            externalStorageLogFolder = externalStorageFolder + File.separator + "Logs";
         }
-        return externalStorageCrashFolder;
+        return externalStorageLogFolder;
     }
 
 }
