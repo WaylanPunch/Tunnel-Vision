@@ -9,10 +9,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.RelativeLayout;
 
 import com.way.tunnelvision.R;
+import com.way.tunnelvision.base.Constants;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
 import com.way.tunnelvision.util.LogUtil;
 
+import kll.dod.rtk.AdManager;
 import kll.dod.rtk.st.SplashView;
 import kll.dod.rtk.st.SpotDialogListener;
 import kll.dod.rtk.st.SpotManager;
@@ -34,6 +36,8 @@ public class AdDisplayActivity extends BaseActivity {
         mContext = this;
 
         //DatabaseUtil.initDataBase(this);
+        //YouMi广告初始化SDK
+        AdManager.getInstance(mContext).init(Constants.YouMi_ID, Constants.YouMi_KEY);
 
         //设置开屏广告
         setupSplashAd();

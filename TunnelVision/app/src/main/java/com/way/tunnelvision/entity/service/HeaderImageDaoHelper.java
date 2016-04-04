@@ -73,7 +73,7 @@ public class HeaderImageDaoHelper implements GreenDaoHelperInterface {
         if (headerImageDao != null) {
             if (number < getTotalCount()) {
                 QueryBuilder<HeaderImageModel> qb = headerImageDao.queryBuilder();
-                qb.orderAsc(HeaderImageDao.Properties.HEADERIMAGE_CHOSEN);// 排序依据
+                qb.orderAsc(HeaderImageDao.Properties.Id);// 排序依据
                 return qb.list().subList(0, number);
             }
         }

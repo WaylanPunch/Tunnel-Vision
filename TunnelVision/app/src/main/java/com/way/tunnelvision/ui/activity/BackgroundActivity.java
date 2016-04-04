@@ -27,7 +27,7 @@ public class BackgroundActivity extends BaseActivity {
 
     private Toolbar toolbar;
     private RecyclerView recyclerView;
-    private int CHECK_INDEX = 0;
+    private static int CHECK_ITEM_ID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,26 +73,31 @@ public class BackgroundActivity extends BaseActivity {
             @Override
             public void onItemCheckedChange(View view, int position) {
                 LogUtil.d(TAG, "onCreate debug, onItemCheckedChange, Position = " + position);
+                LogUtil.d(TAG, "onCreate debug, onItemCheckedChange, Old CHECK_ITEM_ID = " + CHECK_ITEM_ID);
                 try {
                     CheckBox cb = (CheckBox) view;
-                    HeaderImageModel item = (HeaderImageModel) cb.getTag();
+                    HeaderImageModel newItem = (HeaderImageModel) cb.getTag();
                     if (cb.isChecked()) {
-                        item.setChosen(1);
-                    }
-                    if (cb.isChecked()) {
-                        if (CHECK_INDEX != 0) {
-                            HeaderImageModel oldItem = headerImages.get(CHECK_INDEX);
-                            oldItem.setChosen(2);
-                            headerImageDaoHelper.updateData(oldItem);
+                        LogUtil.d(TAG, "onCreate debug, onItemCheckedChange, CheckBox Is Checked.");
+                        if (CHECK_ITEM_ID != 0) {
+                            HeaderImageModel oldItem = headerImages.get(CHECK_ITEM_ID);//getItemByIdFromData(CHECK_ITEM_ID);
+                            if(oldItem != null) {
+                                oldItem.setChosen(2);
+                                headerImageDaoHelper.updateData(oldItem);
+                                headerImages.set(CHECK_ITEM_ID, oldItem);
+                            }
                         }
-                        item.setChosen(1);
-                        headerImageDaoHelper.updateData(item);
-                        CHECK_INDEX = position;
+                        newItem.setChosen(1);
+                        headerImageDaoHelper.updateData(newItem);
+                        CHECK_ITEM_ID = position;//newItem.getId();
                     } else {
-                        item.setChosen(2);
-                        headerImageDaoHelper.updateData(item);
-                        CHECK_INDEX = 0;
+                        LogUtil.d(TAG, "onCreate debug, onItemCheckedChange, CheckBox Is Unchecked.");
+                        newItem.setChosen(2);
+                        headerImageDaoHelper.updateData(newItem);
+                        CHECK_ITEM_ID = 0;
                     }
+                    headerImages.set(position, newItem);
+                    /*
                     if (headerImages == null) {
                         headerImages = new ArrayList<>();
                     } else {
@@ -100,6 +105,7 @@ public class BackgroundActivity extends BaseActivity {
                     }
                     headerImages = headerImageDaoHelper.getAllDataByNumber(10);
                     backgroundAdapter.setContents(headerImages);
+                    */
                     backgroundAdapter.notifyDataSetChanged();
                 } catch (Exception e) {
                     LogUtil.e(TAG, "onCreate error, onItemCheckedChange", e);
@@ -120,9 +126,31 @@ public class BackgroundActivity extends BaseActivity {
         headerImages = headerImageDaoHelper.getAllDataByNumber(10);
         if (headerImages != null && headerImages.size() > 0) {
             LogUtil.d(TAG, "initData debug, HeaderImages COUNT = " + headerImages.size());
+            for(int i=0; i<headerImages.size(); i++){
+                if(headerImages.get(i).getChosen() == 1) {
+                    CHECK_ITEM_ID = i;//headerImages.get(i).getId();
+                }
+            }
+            LogUtil.d(TAG, "initData debug, CHECK_ITEM_ID = " + CHECK_ITEM_ID);
         } else {
             LogUtil.d(TAG, "initData debug, HeaderImages == NULL");
         }
+    }
+
+    private HeaderImageModel getItemByIdFromData(long id){
+        //HeaderImageModel item = null;
+        try {
+            for(HeaderImageModel item1:headerImages){
+                if(item1.getId() == id){
+                    LogUtil.d(TAG, "getItemByIdFromData debug, return Item ID = " + id);
+                    return item1;
+                }
+            }
+        } catch (Exception e) {
+            LogUtil.e(TAG, "getItemByIdFromData error", e);
+        }
+        LogUtil.d(TAG, "getItemByIdFromData debug, return Item = NULL");
+        return null;
     }
 
 }

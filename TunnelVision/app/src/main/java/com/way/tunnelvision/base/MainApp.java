@@ -13,8 +13,6 @@ import com.way.tunnelvision.util.LogUtil;
 
 import java.io.File;
 
-import kll.dod.rtk.AdManager;
-
 /**
  * Created by pc on 2016/1/13.
  */
@@ -45,7 +43,7 @@ public class MainApp extends Application {
             //腾讯Tencent Bugly
             CrashReport.initCrashReport(mContext, Constants.BUGLY_APPID, false);
             //YouMi广告初始化SDK
-            AdManager.getInstance(mContext).init(Constants.YouMi_ID, Constants.YouMi_KEY);
+            //AdManager.getInstance(mContext).init(Constants.YouMi_ID, Constants.YouMi_KEY);
 
             packageName = getPackageName();
             externalStoragePath = getSDPath();
