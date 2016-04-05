@@ -44,12 +44,18 @@ public class MainApp extends Application {
             CrashReport.initCrashReport(mContext, Constants.BUGLY_APPID, false);
             //YouMi广告初始化SDK
             //AdManager.getInstance(mContext).init(Constants.YouMi_ID, Constants.YouMi_KEY);
+            //AdManager.getInstance(mContext).setEnableDebugLog(true);
 
             packageName = getPackageName();
+            LogUtil.d(TAG, "onCreate debug, PackageName = " + packageName);
             externalStoragePath = getSDPath();
+            LogUtil.d(TAG, "onCreate debug, External Storage Path = " + externalStoragePath);
             externalStorageFolder = externalStoragePath + File.separator + packageName;
+            LogUtil.d(TAG, "onCreate debug, External Storage Folder = " + externalStorageFolder);
             externalStoragePicFolder = externalStorageFolder + File.separator + "Pictures";
+            LogUtil.d(TAG, "onCreate debug, External Storage Pic Folder = " + externalStoragePicFolder);
             externalStorageLogFolder = externalStorageFolder + File.separator + "Logs";
+            LogUtil.d(TAG, "onCreate debug, External Storage Log Folder = " + externalStorageLogFolder);
             if (null != externalStoragePath) {
                 createPackagePath();
             }
@@ -133,21 +139,25 @@ public class MainApp extends Application {
 
     private static void createPackagePath() {
         try {
+            LogUtil.d(TAG, "createPackagePath debug, External Storage Folder = " + externalStorageFolder);
             File file = new File(externalStorageFolder);
             if (!file.exists()) {
                 file.mkdir();
-                LogUtil.d(TAG, "getSDPath debug, Folder Not Exists");
+                LogUtil.d(TAG, "createPackagePath debug, Folder Not Exists");
             }
 
+            LogUtil.d(TAG, "createPackagePath debug, External Storage Pic Folder = " + externalStoragePicFolder);
             File filePic = new File(externalStoragePicFolder);
             if (!filePic.exists()) {
-                filePic.mkdir();
-                LogUtil.d(TAG, "getSDPath debug, Pictures Folder Not Exists");
+                filePic.mkdirs();
+                LogUtil.d(TAG, "createPackagePath debug, Pictures Folder Not Exists");
             }
+
+            LogUtil.d(TAG, "createPackagePath debug, External Storage Log Folder = " + externalStorageLogFolder);
             File fileLogs = new File(externalStorageLogFolder);
             if (!fileLogs.exists()) {
-                fileLogs.mkdir();
-                LogUtil.d(TAG, "getSDPath debug, Logs Folder Not Exists");
+                fileLogs.mkdirs();
+                LogUtil.d(TAG, "createPackagePath debug, Logs Folder Not Exists");
             }
         } catch (Exception e) {
             LogUtil.e(TAG, "createPackagePath error", e);

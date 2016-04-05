@@ -92,4 +92,6 @@
     <string name="action_channel_library_initial">Initialization</string>
     <string name="title_activity_image_expand">Image Detail</string>
     <string name="title_activity_background">Background</string>
+    <string name="title_activity_about">About</string>
+    <string name="menu_title_about">About</string>
 </resources>

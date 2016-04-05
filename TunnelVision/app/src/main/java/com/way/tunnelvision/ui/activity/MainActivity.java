@@ -245,8 +245,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_settings index = " + 4);
             openActivity(BackgroundActivity.class);
             //MENU_ITEM_CHOSEN_INDEX = 4;
-        } else if (id == R.id.nav_menu_item_exit) {
-            LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_exit index = " + 5);
+        } else if (id == R.id.nav_menu_item_about) {
+            LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_about index = " + 5);
+            openActivity(AboutActivity.class);
+            //MENU_ITEM_CHOSEN_INDEX = 4;
+        }
+        else if (id == R.id.nav_menu_item_exit) {
+            LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_exit index = " + 6);
             //MENU_ITEM_CHOSEN_INDEX = 5;
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             //AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
