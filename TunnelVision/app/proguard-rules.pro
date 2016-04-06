@@ -20,3 +20,4 @@
 -keepclassmembers class kll.dod.rtk.libs.adsbase.js.base.JsInterface_Impl {
     *;
 }
+-obfuscationdictionary dictionary.txt

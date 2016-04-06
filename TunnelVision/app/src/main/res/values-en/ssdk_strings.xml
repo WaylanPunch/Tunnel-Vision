@@ -13,6 +13,7 @@
     <string name="ssdk_kakaotalk_client_inavailable">KakaoTalk client not exists or the version is too low</string>
     <string name="ssdk_kakaostory_client_inavailable">KakaoStory client not exists or the version is too low</string>
     <string name="ssdk_whatsapp_client_inavailable">WhatsApp client not exists or the version is too low</string>
+	<string name="ssdk_baidutieba_client_inavailable">Baidu Tieba client not exists or the version is too low</string>
     <string name="ssdk_laiwang_client_inavailable">Laiwangs client not exists or the version is too low</string>
     <string name="ssdk_alipay_client_inavailable">Alipay client not exists or the version is too low</string>
     <string name="ssdk_facebookmessenger_client_inavailable">Facebookmessenger client not exists or the version is too low</string>
@@ -24,6 +25,7 @@
 	<string name="ssdk_wechatmoments">WeChat Moments</string>
 	<string name="ssdk_wechatfavorite">WeChat Favorites</string>
 	<string name="ssdk_facebook">Facebook</string>
+	<string name="ssdk_baidutieba">Baidu Tieba</string>
 	<string name="ssdk_twitter">Twitter</string>
 	<string name="ssdk_renren">Renren</string>
 	<string name="ssdk_kaixin">Kaixin</string>
@@ -65,6 +67,7 @@
     <string name="ssdk_laiwangmoments">Laiwang Moments</string>
     <string name="ssdk_alipay">Alipay</string>
 
+	<string name="ssdk_share_to_baidutieba">Share To Baidu Tieba</string>
 	<string name="ssdk_share_to_qzone">Share To QZone</string>
 	<string name="ssdk_share_to_qq">Share To QQ</string>
 	<string name="ssdk_mingdao_share_content">Share webpage</string>
