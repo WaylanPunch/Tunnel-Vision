@@ -9,4 +9,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.way.tunnelvision.ui.activity.AboutActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_about_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:fitsSystemWindows="true">
+
+    </android.support.v7.widget.Toolbar>
+    <WebView
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/wv_about_content"
+        android:layout_marginTop="?attr/actionBarSize" />
 </RelativeLayout>

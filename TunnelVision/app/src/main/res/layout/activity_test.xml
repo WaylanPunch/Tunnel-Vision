@@ -40,4 +40,12 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/btn_test_getimage"
         android:text="Query Data" />
+
+    <Button
+        android:id="@+id/btn_test_share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btn_test_querydata"
+        android:text="Share" />
 </RelativeLayout>
