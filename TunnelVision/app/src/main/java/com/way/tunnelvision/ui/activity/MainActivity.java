@@ -3,8 +3,6 @@ package com.way.tunnelvision.ui.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -200,8 +198,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             return true;
         } else if (id == R.id.action_share) {
             //openActivity(TestActivity.class);
-            //showShare(this, null, true);
-            showShare();
+            showShare(this, null, true);
+            //showShare();
             return true;
         }
         return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
@@ -320,6 +318,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
 
     private void showShare() {
+        LogUtil.d(TAG, "showShare debug, Default");
         ShareSDK.initSDK(this);
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
@@ -355,7 +354,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * @param platformToShare  指定直接分享平台名称（一旦设置了平台名称，则九宫格将不会显示）
      * @param showContentEdit  是否显示编辑页
      */
-    public static void showShare(Context context, String platformToShare, boolean showContentEdit) {
+    public void showShare(Context context, String platformToShare, boolean showContentEdit) {
+        LogUtil.d(TAG, "showShare debug, 3 Parameters");
         OnekeyShare oks = new OnekeyShare();
         oks.setSilent(!showContentEdit);
         if (platformToShare != null) {
@@ -368,31 +368,31 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         // 在自动授权时可以禁用SSO方式
         oks.disableSSOWhenAuthorize();
         //oks.setAddress("12345678901"); //分享短信的号码和邮件的地址
-        oks.setTitle("ShareSDK--Title");
-        oks.setTitleUrl("http://mob.com");
-        oks.setText("ShareSDK--文本");
-        //oks.setImagePath("/sdcard/test-pic.jpg");  //分享sdcard目录下的图片
-        oks.setImageUrl(randomPic()[0]);
-        oks.setUrl("http://www.mob.com"); //微信不绕过审核分享链接
+        oks.setTitle("Tunnel Vision");
+        oks.setTitleUrl("http://fir.im/lad8");
+        oks.setText("我发现一个优秀的APP，分享给大家，希望你们也喜欢！");
+        oks.setImagePath("file:///android_asset/ic_launcher.png");  //分享sdcard目录下的图片
+        //oks.setImageUrl(randomPic()[0]);
+        oks.setUrl("http://fir.im/lad8"); //微信不绕过审核分享链接
         //oks.setFilePath("/sdcard/test-pic.jpg");  //filePath是待分享应用程序的本地路劲，仅在微信（易信）好友和Dropbox中使用，否则可以不提供
-        oks.setComment("分享"); //我对这条分享的评论，仅在人人网和QQ空间使用，否则可以不提供
-        oks.setSite("ShareSDK");  //QZone分享完之后返回应用时提示框上显示的名称
-        oks.setSiteUrl("http://mob.com");//QZone分享参数
-        oks.setVenueName("ShareSDK");
-        oks.setVenueDescription("This is a beautiful place!");
+        oks.setComment("美翻了╮(╯_╰)╭"); //我对这条分享的评论，仅在人人网和QQ空间使用，否则可以不提供
+        oks.setSite("fir.im");  //QZone分享完之后返回应用时提示框上显示的名称
+        oks.setSiteUrl("http://fir.im/lad8");//QZone分享参数
+        oks.setVenueName("下载地址");
+        oks.setVenueDescription("扫描二维码下载，或用手机浏览器输入这个网址:  http://fir.im/lad8");
         // 将快捷分享的操作结果将通过OneKeyShareCallback回调
         //oks.setCallback(new OneKeyShareCallback());
         // 去自定义不同平台的字段内容
         //oks.setShareContentCustomizeCallback(new ShareContentCustomizeDemo());
         // 在九宫格设置自定义的图标
-        Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
-        String label = "ShareSDK";
-        View.OnClickListener listener = new View.OnClickListener() {
-            public void onClick(View v) {
+        //Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
+        //String label = "ShareSDK";
+        //View.OnClickListener listener = new View.OnClickListener() {
+            //public void onClick(View v) {
 
-            }
-        };
-        oks.setCustomerLogo(logo, label, listener);
+            //}
+        //};
+        //oks.setCustomerLogo(logo, label, listener);
 
         // 为EditPage设置一个背景的View
         //oks.setEditPageBackground(getPage());

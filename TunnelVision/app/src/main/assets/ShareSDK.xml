@@ -61,9 +61,9 @@
     <SinaWeibo
         Id="1"
         SortId="1"
-        AppKey="568898243"
-        AppSecret="38a4f8204cc784f81f9f0daaf31e02e3"
-        RedirectUrl="http://www.sharesdk.cn"
+        AppKey="2438714221"
+        AppSecret="064341f1bfa7d2b78090b3d24ce12034"
+        RedirectUrl="http://fir.im/lad8"
         ShareByAppClient="true"
         Enable="true" />
 
@@ -77,8 +77,8 @@
     <QZone
         Id="3"
         SortId="3"
-        AppId="100371282"
-        AppKey="aed9b0303e3ed1e27bae87c33761161d"
+        AppId="1105316728"
+        AppKey="bxEcRvwdlRdRqeEI"
         Enable="true" />
     
     <!-- 
@@ -120,8 +120,8 @@
 	<QQ
         Id="7"
         SortId="7"
-        AppId="100371282"
-        AppKey="aed9b0303e3ed1e27bae87c33761161d"
+        AppId="1105316728"
+        AppKey="bxEcRvwdlRdRqeEI"
         ShareByAppClient="true"
         Enable="true" />
     
