@@ -17,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.desmond.ripple.RippleCompat;
 import com.github.florent37.materialviewpager.MaterialViewPager;
@@ -32,7 +34,10 @@ import com.way.tunnelvision.onekeyshare.OnekeyShare;
 import com.way.tunnelvision.onekeyshare.OnekeyShareTheme;
 import com.way.tunnelvision.ui.base.BaseActivity;
 import com.way.tunnelvision.util.ActivityCollector;
+import com.way.tunnelvision.util.ImageLoaderUtil;
 import com.way.tunnelvision.util.LogUtil;
+import com.way.tunnelvision.util.PreferencesUtil;
+import com.way.tunnelvision.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +47,7 @@ import cn.sharesdk.framework.ShareSDK;
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     private final String TAG = MainActivity.class.getName();
 
-    private int requestCode;
+    private static int requestCode;
 
     //About the Database
 //    private SQLiteDatabase db;
@@ -58,6 +63,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private DrawerLayout mDrawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
+    private ImageView headerFigureIcon;
+    private TextView headerUsername;
 
     private List<HeaderImageModel> headerImageModels = new ArrayList<>();
     private List<ChannelModel> channelModels = new ArrayList<>();
@@ -104,6 +111,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mDrawer.setDrawerListener(mDrawerToggle);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_main_menu);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        headerFigureIcon = (ImageView) headerView.findViewById(R.id.iv_nav_header_icon);
+        headerUsername = (TextView) headerView.findViewById(R.id.tv_nav_header_username);
+        headerFigureIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //openActivity(QQAuthActivity.class);
+                requestCode = 3;
+                openActivityForResult(QQAuthActivity.class, requestCode);
+            }
+        });
+
+        initNavMenuHeader();
 
         //FIRST_TIME_NEWS = 1;
         initChannelData();
@@ -140,6 +160,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     //Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+    }
+
+    private void initNavMenuHeader() {
+        LogUtil.d(TAG, "initNavMenuHeader debug");
+        String nickName = PreferencesUtil.getString(MainActivity.this,Constants.QQ_AUTH_NICKNAME);
+        String gender = PreferencesUtil.getString(MainActivity.this,Constants.QQ_AUTH_GENDER);
+        String figureurl_qq_2 = PreferencesUtil.getString(MainActivity.this,Constants.QQ_AUTH_FIGUREURL);
+        if(!StringUtil.isEmpty(nickName)) {
+            LogUtil.d(TAG, "initNavMenuHeader debug, Data != NULL");
+            headerUsername.setText(nickName);
+            ImageLoaderUtil.display(MainActivity.this,headerFigureIcon,figureurl_qq_2);
+        }else {
+            LogUtil.d(TAG, "initNavMenuHeader debug, Data == NULL");
+            headerUsername.setText("昵称");
+            headerFigureIcon.setImageResource(android.R.drawable.sym_def_app_icon);
+            //ImageLoaderUtil.display(MainActivity.this,headerFigureIcon,figureurl_qq_2);
         }
     }
 
@@ -208,6 +245,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     // 回调方法，从第二个页面回来的时候会执行这个方法
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        LogUtil.d(TAG, "onActivityResult debug, requestCode = " + requestCode);
+        LogUtil.d(TAG, "onActivityResult debug, resultCode = " + resultCode);
         // 根据上面发送过去的请求吗来区别
         switch (requestCode) {
             case 0:
@@ -215,6 +254,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case 2:
                 //mText02.setText(change02);
+                break;
+            case 3:
+                //QQ授权登录
+                String nickName = PreferencesUtil.getString(MainActivity.this,Constants.QQ_AUTH_NICKNAME);
+                String gender = PreferencesUtil.getString(MainActivity.this,Constants.QQ_AUTH_GENDER);
+                String figureurl_qq_2 = PreferencesUtil.getString(MainActivity.this,Constants.QQ_AUTH_FIGUREURL);
+                if(!StringUtil.isEmpty(nickName)) {
+                    headerUsername.setText(nickName);
+                    ImageLoaderUtil.display(MainActivity.this,headerFigureIcon,figureurl_qq_2);
+                }else {
+                    headerUsername.setText("昵称");
+                    headerFigureIcon.setImageResource(android.R.drawable.sym_def_app_icon);
+                    //ImageLoaderUtil.display(MainActivity.this,headerFigureIcon,figureurl_qq_2);
+                }
                 break;
             default:
                 break;
@@ -371,8 +424,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         oks.setTitle("Tunnel Vision");
         oks.setTitleUrl("http://fir.im/lad8");
         oks.setText("我发现一个优秀的APP，分享给大家，希望你们也喜欢！");
-        oks.setImagePath("file:///android_asset/ic_launcher.png");  //分享sdcard目录下的图片
+        //oks.setImagePath("file:///android_asset/ic_launcher.png");  //分享sdcard目录下的图片
         //oks.setImageUrl(randomPic()[0]);
+        oks.setImageUrl("http://img1.ph.126.net/1FOK-RQAQutcl40oyYW7mg==/4830955025385448867.png");
         oks.setUrl("http://fir.im/lad8"); //微信不绕过审核分享链接
         //oks.setFilePath("/sdcard/test-pic.jpg");  //filePath是待分享应用程序的本地路劲，仅在微信（易信）好友和Dropbox中使用，否则可以不提供
         oks.setComment("美翻了╮(╯_╰)╭"); //我对这条分享的评论，仅在人人网和QQ空间使用，否则可以不提供
@@ -412,35 +466,4 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         oks.show(context);
     }
 
-    public static String[] randomPic() {
-        String url = "http://git.oschina.net/alexyu.yxj/MyTmpFiles/raw/master/kmk_pic_fld/";
-        String urlSmall = "http://git.oschina.net/alexyu.yxj/MyTmpFiles/raw/master/kmk_pic_fld/small/";
-        String[] pics = new String[] {
-                "120.JPG",
-                "127.JPG",
-                "130.JPG",
-                "18.JPG",
-                "184.JPG",
-                "22.JPG",
-                "236.JPG",
-                "237.JPG",
-                "254.JPG",
-                "255.JPG",
-                "263.JPG",
-                "265.JPG",
-                "273.JPG",
-                "37.JPG",
-                "39.JPG",
-                "IMG_2219.JPG",
-                "IMG_2270.JPG",
-                "IMG_2271.JPG",
-                "IMG_2275.JPG",
-                "107.JPG"
-        };
-        int index = (int) (System.currentTimeMillis() % pics.length);
-        return new String[] {
-                url + pics[index],
-                urlSmall + pics[index]
-        };
-    }
 }

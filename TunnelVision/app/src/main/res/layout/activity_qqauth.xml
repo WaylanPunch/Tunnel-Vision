@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/grayLight"
+    tools:context=".ui.activity.QQAuthActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_qqauth_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:fitsSystemWindows="true">
+
+    </android.support.v7.widget.Toolbar>
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_margin="8dip"
+    android:layout_height="200dip">
+    <ImageView
+        android:id="@+id/iv_qqauth_figureicon"
+        android:layout_width="120dip"
+        android:layout_height="120dip"
+        android:layout_gravity="center"
+        android:src="@android:drawable/sym_def_app_icon"/>
+    <TextView
+    android:id="@+id/tv_qqauth_nickname"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+        android:layout_margin="8dip"
+    android:layout_gravity="center_horizontal|bottom"
+    android:text="UserName"
+        android:textColor="@color/gray"/>
+</android.support.v7.widget.CardView>
+
+    <Button
+        android:id="@+id/btn_qqauth_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/selector_splash_button"
+        android:text="QQ授权登录" />
+
+</LinearLayout>

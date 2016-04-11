@@ -27,6 +27,11 @@ public class Constants {
     public static final String YouMi_ID = "2b60c18b7e10fab4";
     public static final String YouMi_KEY = "46f38e0e7ac8754e";
 
+    public static final String QQ_OPEN_APP_ID = "1105316728";
+    public static final String QQ_OPEN_APP_KEY = "bxEcRvwdlRdRqeEI";
+    public static final String QQ_AUTH_NICKNAME = "qq_auth_nickname";
+    public static final String QQ_AUTH_GENDER = "qq_auth_gender";
+    public static final String QQ_AUTH_FIGUREURL = "qq_auth_figureurl";
 
     /**
      * Description : 接口API的URL
