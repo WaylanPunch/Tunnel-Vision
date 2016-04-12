@@ -31,41 +31,231 @@ public class DatabaseUtil {
         LogUtil.d(TAG, "initDataBase debug, Channel Row Count = " + channelTotalCount);
         try {
             if (channelTotalCount == 0) {
-                String headline_guid = Constants.NEWS.TOP_ID;
-                String headline_title = Constants.NEWS.TOP_TITLE;
-                String headline_name = Constants.NEWS.TOP_NAME;
-                String headline_link = Constants.NEWS.TOP_URL;
-                int headline_type = Constants.NEWS.NEWS_TYPE_TOP;
-                int headline_chosen = 0;
-                ChannelModel headline_channel = new ChannelModel(null, headline_guid, headline_title, headline_name, headline_link, headline_type, headline_chosen);
-                channelDaoHelper.addData(headline_channel);
-
-                String nba_guid = Constants.NEWS.NBA_ID;
-                String nba_title = Constants.NEWS.NBA_TITLE;
-                String nba_name = Constants.NEWS.NBA_NAME;
-                String nba_link = Constants.NEWS.NBA_ID;
-                int nba_type = Constants.NEWS.NEWS_TYPE_NBA;
-                int nba_chosen = 1;
-                ChannelModel nba_channel = new ChannelModel(null, nba_guid, nba_title, nba_name, nba_link, nba_type, nba_chosen);
-                channelDaoHelper.addData(nba_channel);
-
-                String car_guid = Constants.NEWS.CAR_ID;
-                String car_title = Constants.NEWS.CAR_TITLE;
-                String car_name = Constants.NEWS.CAR_NAME;
-                String car_link = Constants.NEWS.CAR_ID;
-                int car_type = Constants.NEWS.NEWS_TYPE_CARS;
-                int car_chosen = 1;
-                ChannelModel car_channel = new ChannelModel(null, car_guid, car_title, car_name, car_link, car_type, car_chosen);
-                channelDaoHelper.addData(car_channel);
-
-                String joke_guid = Constants.NEWS.JOKE_ID;
-                String joke_title = Constants.NEWS.JOKE_TITLE;
-                String joke_name = Constants.NEWS.JOKE_NAME;
-                String joke_link = Constants.NEWS.JOKE_ID;
-                int joke_type = Constants.NEWS.NEWS_TYPE_JOKES;
-                int joke_chosen = 1;
-                ChannelModel joke_channel = new ChannelModel(null, joke_guid, joke_title, joke_name, joke_link, joke_type, joke_chosen);
-                channelDaoHelper.addData(joke_channel);
+                ChannelModel channel;
+                channel = new ChannelModel(null,
+                        Constants.NEWS.TOP_ID,
+                        Constants.NEWS.TOP_TITLE,
+                        Constants.NEWS.TOP_NAME,
+                        Constants.NEWS.TOP_URL,
+                        Constants.NEWS.NEWS_TYPE_TOP,
+                        0);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.NBA_ID,
+                        Constants.NEWS.NBA_TITLE,
+                        Constants.NEWS.NBA_NAME,
+                        Constants.NEWS.NBA_ID,
+                        Constants.NEWS.NEWS_TYPE_NBA,
+                        1);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.CAR_ID,
+                        Constants.NEWS.CAR_TITLE,
+                        Constants.NEWS.CAR_NAME,
+                        Constants.NEWS.CAR_ID,
+                        Constants.NEWS.NEWS_TYPE_CARS,
+                        1);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.JOKE_ID,
+                        Constants.NEWS.JOKE_TITLE,
+                        Constants.NEWS.JOKE_NAME,
+                        Constants.NEWS.JOKE_ID,
+                        Constants.NEWS.NEWS_TYPE_JOKES,
+                        1);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.FOOTBALL_ID,
+                        Constants.NEWS.FOOTBALL_TITLE,
+                        Constants.NEWS.FOOTBALL_NAME,
+                        Constants.NEWS.FOOTBALL_ID,
+                        Constants.NEWS.NEWS_TYPE_FOOTBALL,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.ENTERTAINMENT_ID,
+                        Constants.NEWS.ENTERTAINMENT_TITLE,
+                        Constants.NEWS.ENTERTAINMENT_NAME,
+                        Constants.NEWS.ENTERTAINMENT_ID,
+                        Constants.NEWS.NEWS_TYPE_ENTERTAINMENT,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.SPORTS_ID,
+                        Constants.NEWS.SPORTS_TITLE,
+                        Constants.NEWS.SPORTS_NAME,
+                        Constants.NEWS.SPORTS_ID,
+                        Constants.NEWS.NEWS_TYPE_SPORTS,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.FINANCE_ID,
+                        Constants.NEWS.FINANCE_TITLE,
+                        Constants.NEWS.FINANCE_NAME,
+                        Constants.NEWS.FINANCE_ID,
+                        Constants.NEWS.NEWS_TYPE_FINANCE,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.SCIENCE_ID,
+                        Constants.NEWS.SCIENCE_TITLE,
+                        Constants.NEWS.SCIENCE_NAME,
+                        Constants.NEWS.SCIENCE_ID,
+                        Constants.NEWS.NEWS_TYPE_SCIENCE,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.MOVIE_ID,
+                        Constants.NEWS.MOVIE_TITLE,
+                        Constants.NEWS.MOVIE_NAME,
+                        Constants.NEWS.MOVIE_ID,
+                        Constants.NEWS.NEWS_TYPE_MOVIE,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.GAME_ID,
+                        Constants.NEWS.GAME_TITLE,
+                        Constants.NEWS.GAME_NAME,
+                        Constants.NEWS.GAME_ID,
+                        Constants.NEWS.NEWS_TYPE_GAME,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.FASHION_ID,
+                        Constants.NEWS.FASHION_TITLE,
+                        Constants.NEWS.FASHION_NAME,
+                        Constants.NEWS.FASHION_ID,
+                        Constants.NEWS.NEWS_TYPE_FASHION,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.EMOTION_ID,
+                        Constants.NEWS.EMOTION_TITLE,
+                        Constants.NEWS.EMOTION_NAME,
+                        Constants.NEWS.EMOTION_ID,
+                        Constants.NEWS.NEWS_TYPE_EMOTION,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.HITS_ID,
+                        Constants.NEWS.HITS_TITLE,
+                        Constants.NEWS.HITS_NAME,
+                        Constants.NEWS.HITS_ID,
+                        Constants.NEWS.NEWS_TYPE_HITS,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.RADIO_ID,
+                        Constants.NEWS.RADIO_TITLE,
+                        Constants.NEWS.RADIO_NAME,
+                        Constants.NEWS.RADIO_ID,
+                        Constants.NEWS.NEWS_TYPE_RADIO,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.DIGITAL_ID,
+                        Constants.NEWS.DIGITAL_TITLE,
+                        Constants.NEWS.DIGITAL_NAME,
+                        Constants.NEWS.DIGITAL_ID,
+                        Constants.NEWS.NEWS_TYPE_DIGITAL,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.MOBILE_ID,
+                        Constants.NEWS.MOBILE_TITLE,
+                        Constants.NEWS.MOBILE_NAME,
+                        Constants.NEWS.MOBILE_ID,
+                        Constants.NEWS.NEWS_TYPE_MOBILE,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.LOTTERY_ID,
+                        Constants.NEWS.LOTTERY_TITLE,
+                        Constants.NEWS.LOTTERY_NAME,
+                        Constants.NEWS.LOTTERY_ID,
+                        Constants.NEWS.NEWS_TYPE_LOTTERY,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.EDUCATION_ID,
+                        Constants.NEWS.EDUCATION_TITLE,
+                        Constants.NEWS.EDUCATION_NAME,
+                        Constants.NEWS.EDUCATION_ID,
+                        Constants.NEWS.NEWS_TYPE_EDUCATION,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.FORUM_ID,
+                        Constants.NEWS.FORUM_TITLE,
+                        Constants.NEWS.FORUM_NAME,
+                        Constants.NEWS.FORUM_ID,
+                        Constants.NEWS.NEWS_TYPE_FORUM,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.TRAVEL_ID,
+                        Constants.NEWS.TRAVEL_TITLE,
+                        Constants.NEWS.TRAVEL_NAME,
+                        Constants.NEWS.TRAVEL_ID,
+                        Constants.NEWS.NEWS_TYPE_TRAVEL,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.PHONE_ID,
+                        Constants.NEWS.PHONE_TITLE,
+                        Constants.NEWS.PHONE_NAME,
+                        Constants.NEWS.PHONE_ID,
+                        Constants.NEWS.NEWS_TYPE_PHONE,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.BLOG_ID,
+                        Constants.NEWS.BLOG_TITLE,
+                        Constants.NEWS.BLOG_NAME,
+                        Constants.NEWS.BLOG_ID,
+                        Constants.NEWS.NEWS_TYPE_BLOG,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.SOCIETY_ID,
+                        Constants.NEWS.SOCIETY_TITLE,
+                        Constants.NEWS.SOCIETY_NAME,
+                        Constants.NEWS.SOCIETY_ID,
+                        Constants.NEWS.NEWS_TYPE_SOCIETY,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.HOUSE_ID,
+                        Constants.NEWS.HOUSE_TITLE,
+                        Constants.NEWS.HOUSE_NAME,
+                        Constants.NEWS.HOUSE_ID,
+                        Constants.NEWS.NEWS_TYPE_HOUSE,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.BABY_ID,
+                        Constants.NEWS.BABY_TITLE,
+                        Constants.NEWS.BABY_NAME,
+                        Constants.NEWS.BABY_ID,
+                        Constants.NEWS.NEWS_TYPE_BABY,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.CBA_ID,
+                        Constants.NEWS.CBA_TITLE,
+                        Constants.NEWS.CBA_NAME,
+                        Constants.NEWS.CBA_ID,
+                        Constants.NEWS.NEWS_TYPE_CBA,
+                        2);
+                channelDaoHelper.addData(channel);
+                channel = new ChannelModel(null,
+                        Constants.NEWS.MILITARY_ID,
+                        Constants.NEWS.MILITARY_TITLE,
+                        Constants.NEWS.MILITARY_NAME,
+                        Constants.NEWS.MILITARY_ID,
+                        Constants.NEWS.NEWS_TYPE_MILITARY,
+                        2);
+                channelDaoHelper.addData(channel);
             }
         } catch (Exception e) {
             LogUtil.e(TAG, "initDataBase error", e);
