@@ -69,7 +69,7 @@ public class Constants {
         public static final String JOKE_TITLE = "笑话";
         public static final String JOKE_NAME = "joke";
         public static final int NEWS_TYPE_JOKES = 3;
-        // nba
+        // NBA
         public static final String NBA_ID = "T1348649145984";
         public static final String NBA_TITLE = "NBA";
         public static final String NBA_NAME = "nba";

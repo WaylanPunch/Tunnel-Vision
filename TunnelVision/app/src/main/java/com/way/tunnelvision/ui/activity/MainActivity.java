@@ -137,7 +137,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             public HeaderDesign getHeaderDesign(int position) {
                 ChannelModel channelModel = channelModels.get(position);
                 if (headerImageModels != null) {
-                    if(headerImageModels.size() > 1) {
+                    if (headerImageModels.size() > 1) {
                         return HeaderDesign.fromColorResAndUrl(R.color.colorPrimary, headerImageModels.get(1).getUrl());
                     } else {
                         return HeaderDesign.fromColorResAndUrl(R.color.colorPrimary, headerImageModels.get(0).getUrl());
@@ -165,14 +165,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void initNavMenuHeader() {
         LogUtil.d(TAG, "initNavMenuHeader debug");
-        String nickName = PreferencesUtil.getString(MainActivity.this,Constants.QQ_AUTH_NICKNAME);
-        String gender = PreferencesUtil.getString(MainActivity.this,Constants.QQ_AUTH_GENDER);
-        String figureurl_qq_2 = PreferencesUtil.getString(MainActivity.this,Constants.QQ_AUTH_FIGUREURL);
-        if(!StringUtil.isEmpty(nickName)) {
+        String nickName = PreferencesUtil.getString(MainActivity.this, Constants.QQ_AUTH_NICKNAME);
+        String gender = PreferencesUtil.getString(MainActivity.this, Constants.QQ_AUTH_GENDER);
+        String figureurl_qq_2 = PreferencesUtil.getString(MainActivity.this, Constants.QQ_AUTH_FIGUREURL);
+        if (!StringUtil.isEmpty(nickName)) {
             LogUtil.d(TAG, "initNavMenuHeader debug, Data != NULL");
             headerUsername.setText(nickName);
-            ImageLoaderUtil.display(MainActivity.this,headerFigureIcon,figureurl_qq_2);
-        }else {
+            ImageLoaderUtil.display(MainActivity.this, headerFigureIcon, figureurl_qq_2);
+        } else {
             LogUtil.d(TAG, "initNavMenuHeader debug, Data == NULL");
             headerUsername.setText("昵称");
             headerFigureIcon.setImageResource(android.R.drawable.sym_def_app_icon);
@@ -192,8 +192,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             long totalCount = channelDaoHelper.getTotalCount();
             LogUtil.d(TAG, "initChannelData debug, Total Count = " + totalCount);
             channelModels = channelDaoHelper.getAllDataByChosen();
-            LogUtil.d(TAG, "initChannelData debug, Chosen Count = " + channelModels.size());
-
+            if (channelModels != null && channelModels.size() > 0) {
+                LogUtil.d(TAG, "initChannelData debug, Chosen Count = " + channelModels.size());
+                for (ChannelModel chl : channelModels) {
+                    LogUtil.d(TAG, "initChannelData debug, Chosen Channel Title = " + chl.getChannelTitle() + ", Link = " + chl.getChannelLink());
+                }
+            }
             HeaderImageDaoHelper headerImageDaoHelper = HeaderImageDaoHelper.getInstance();
             headerImageModels = headerImageDaoHelper.getDataByDefautAndChosen();
         } catch (Exception e) {
@@ -257,13 +261,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case 3:
                 //QQ授权登录
-                String nickName = PreferencesUtil.getString(MainActivity.this,Constants.QQ_AUTH_NICKNAME);
-                String gender = PreferencesUtil.getString(MainActivity.this,Constants.QQ_AUTH_GENDER);
-                String figureurl_qq_2 = PreferencesUtil.getString(MainActivity.this,Constants.QQ_AUTH_FIGUREURL);
-                if(!StringUtil.isEmpty(nickName)) {
+                String nickName = PreferencesUtil.getString(MainActivity.this, Constants.QQ_AUTH_NICKNAME);
+                String gender = PreferencesUtil.getString(MainActivity.this, Constants.QQ_AUTH_GENDER);
+                String figureurl_qq_2 = PreferencesUtil.getString(MainActivity.this, Constants.QQ_AUTH_FIGUREURL);
+                if (!StringUtil.isEmpty(nickName)) {
                     headerUsername.setText(nickName);
-                    ImageLoaderUtil.display(MainActivity.this,headerFigureIcon,figureurl_qq_2);
-                }else {
+                    ImageLoaderUtil.display(MainActivity.this, headerFigureIcon, figureurl_qq_2);
+                } else {
                     headerUsername.setText("昵称");
                     headerFigureIcon.setImageResource(android.R.drawable.sym_def_app_icon);
                     //ImageLoaderUtil.display(MainActivity.this,headerFigureIcon,figureurl_qq_2);
@@ -309,8 +313,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_about index = " + 5);
             openActivity(AboutActivity.class);
             //MENU_ITEM_CHOSEN_INDEX = 4;
-        }
-        else if (id == R.id.nav_menu_item_exit) {
+        } else if (id == R.id.nav_menu_item_exit) {
             LogUtil.d(TAG, "onNavigationItemSelected debug, nav_menu_item_exit index = " + 6);
             //MENU_ITEM_CHOSEN_INDEX = 5;
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -404,8 +407,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * 演示调用ShareSDK执行分享
      *
      * @param context
-     * @param platformToShare  指定直接分享平台名称（一旦设置了平台名称，则九宫格将不会显示）
-     * @param showContentEdit  是否显示编辑页
+     * @param platformToShare 指定直接分享平台名称（一旦设置了平台名称，则九宫格将不会显示）
+     * @param showContentEdit 是否显示编辑页
      */
     public void showShare(Context context, String platformToShare, boolean showContentEdit) {
         LogUtil.d(TAG, "showShare debug, 3 Parameters");
@@ -442,9 +445,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
         //String label = "ShareSDK";
         //View.OnClickListener listener = new View.OnClickListener() {
-            //public void onClick(View v) {
+        //public void onClick(View v) {
 
-            //}
+        //}
         //};
         //oks.setCustomerLogo(logo, label, listener);
 
