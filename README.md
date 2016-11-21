@@ -15,8 +15,6 @@
 
 ## 2.使用的开源项目
 
----
-
 - [MaterialViewPager](https://github.com/florent37/MaterialViewPager)
 - [PrettyTime](https://github.com/ocpsoft/prettytime)
 - [TencentBugly](http://bugly.qq.com/)
@@ -31,7 +29,10 @@
 
 ### 2.1.MaterialViewPager数据存储和实时通信服务
 
- Material Design ViewPager easy to use library. 一个美观的Material Design风格ViewPager控件，支持Header动态背景。 
+> Material Design ViewPager easy to use library. 
+
+*一个美观的Material Design风格ViewPager控件，支持Header动态背景。* 
+
 ![MaterialViewPager](https://raw.githubusercontent.com/florent37/MaterialViewPager/master/screenshots/screenshot_2_small.png)
 
 ### 2.2.PrettyTime时间格式
@@ -42,24 +43,22 @@
 
 ### 2.3.TencentBugly异常监测
 
-*腾讯Bugly，为移动开发者提供专业的异常上报，运营统计和内测分发解决方案，帮助开发者快速发现并解决异常，同时掌握产品运营动态，及时跟进用户反馈。专业、全面的异常监控和解决方案，可以让您及时发现应用的异常，并通
-
-过丰富的现场信息帮您快速定位和解决问题。*
+*腾讯Bugly，为移动开发者提供专业的异常上报，运营统计和内测分发解决方案，帮助开发者快速发现并解决异常，同时掌握产品运营动态，及时跟进用户反馈。专业、全面的异常监控和解决方案，可以让您及时发现应用的异常，并通过丰富的现场信息帮您快速定位和解决问题。*
 
 ### 2.4.XRecyclerView第三方RecyclerView控件
 
-a RecyclerView that implements pullrefresh , loadingmore and header featrues.you can use it like a standard RecyclerView. you don't need to implement a special adapter . 实现了下拉刷新
+> a RecyclerView that implements pullrefresh , loadingmore and header featrues.you can use it like a standard RecyclerView. you don't need to implement a special adapter . 
 
-和上拉加载功能以及添加Header属性，还可以更改刷新或加载样式，可以像原生RecyclerView控件一样使用。
+*实现了下拉刷新和上拉加载功能以及添加Header属性，还可以更改刷新或加载样式，可以像原生RecyclerView控件一样使用。*
 
 ![XRecyclerView](https://raw.githubusercontent.com/jianghejie/XRecyclerView/master/art/demo.gif)
 ![XRecyclerView](https://raw.githubusercontent.com/jianghejie/XRecyclerView/master/art/ballpulse.gif)
 
 ### 2.5.jsoup Java HTML Parser
 
-jsoup is a Java library for working with real-world HTML. It provides a very convenient API for extracting and manipulating data, using the best of DOM, CSS, and jquery-like methods. 
+> jsoup is a Java library for working with real-world HTML. It provides a very convenient API for extracting and manipulating data, using the best of DOM, CSS, and jquery-like methods. 
 
-jsoup是一个用于解析HTML文件的Java库。它提供了一系列的接口，利用文档对象模型（DOM）、层叠样式表（CSS）和类似jquery的方法抽取和操作数据。
+*jsoup是一个用于解析HTML文件的Java库。它提供了一系列的接口，利用文档对象模型（DOM）、层叠样式表（CSS）和类似jquery的方法抽取和操作数据。*
 
 Example：
 获取Wikipedia主页，转换成DOM对象，从新闻区选取标题信息存入Elements对象中：
@@ -69,9 +68,9 @@ Example：
 
 ### 2.6.greenDAO Android对象关系映射（ORM）库
 
-greenDAO is a light & fast ORM for Android that maps objects to SQLite databases. Being highly optimized for Android, greenDAO offers great performance and consumes minimal 
+> greenDAO is a light & fast ORM for Android that maps objects to SQLite databases. Being highly optimized for Android, greenDAO offers great performance and consumes minimal memory. 
 
-memory. greenDAO是一款可以轻便快速的映射对象到SQLite数据库的Android对象关系映射（ORM）库。 greenDAO针对Android作了高度优化，有非常好的性能和极少的内存消耗。
+*greenDAO是一款可以轻便快速的映射对象到SQLite数据库的Android对象关系映射（ORM）库。 greenDAO针对Android作了高度优化，有非常好的性能和极少的内存消耗。*
 
 ![greenDAO-orm](http://greenrobot.org/wordpress/wp-content/uploads/greenDAO-orm-320.png)
 
@@ -96,27 +95,27 @@ memory. greenDAO是一款可以轻便快速的映射对象到SQLite数据库的A
 Gradle：
 
 	repositories {
-  mavenCentral() // jcenter() works as well because it pulls from Maven Central
-}
+  		mavenCentral() // jcenter() works as well because it pulls from Maven Central
+	}
 
-dependencies {
-  compile 'com.github.bumptech.glide:glide:3.7.0'
-  compile 'com.android.support:support-v4:19.1.0'
-}
+	dependencies {
+	  compile 'com.github.bumptech.glide:glide:3.7.0'
+	  compile 'com.android.support:support-v4:19.1.0'
+	}
 
 Example：
 
-Glide.with(context)
-    .load(“/user/profile/photo/path”)
-    .asBitmap()
-    .toBytes()
-    .centerCrop()
-    .into(new SimpleTarget<byte[]>(250, 250) {
-        @Override
-        public void onResourceReady(byte[] data, GlideAnimation anim) {
-            // Post your bytes to a background thread and upload them here.
-        }
-    });
+	Glide.with(context)
+	    .load(“/user/profile/photo/path”)
+	    .asBitmap()
+	    .toBytes()
+	    .centerCrop()
+	    .into(new SimpleTarget<byte[]>(250, 250) {
+	        @Override
+	        public void onResourceReady(byte[] data, GlideAnimation anim) {
+	            // Post your bytes to a background thread and upload them here.
+	        }
+	    });
 
 ### 2.8.Gson Json格式转换
 
@@ -124,17 +123,15 @@ Glide.with(context)
 
 ### 2.9.OkHttp Http工具类
 
-*OkHttp是 Square 开源的 http 工具类。一款优秀的HTTP框架，它支持get请求和post请求，支持基于Http的文件上传和下载，支持加载图片，支持下载文件透明的GZIP压缩，支持响应缓存避免重复的网络请求，支持使用连接池
-
-来降低响应延迟问题。*
+*OkHttp是 Square 开源的 http 工具类。一款优秀的HTTP框架，它支持get请求和post请求，支持基于Http的文件上传和下载，支持加载图片，支持下载文件透明的GZIP压缩，支持响应缓存避免重复的网络请求，支持使用连接池来降低响应延迟问题。*
 
 ### 2.10.Youmi广告
 
-有米广告平台最大的特色在于能够为企业广告主提供精准的广告投放，让广告按广告主设定的投放目标在合适的时间到达合适地点的受众手中，并让广告在手机上变得生动有趣，引人关注。平台还提供详实的广告统计功能，广告数据清晰透明，方便广告主了解广告效果、开发者了解收入情况。
+*有米广告平台最大的特色在于能够为企业广告主提供精准的广告投放，让广告按广告主设定的投放目标在合适的时间到达合适地点的受众手中，并让广告在手机上变得生动有趣，引人关注。平台还提供详实的广告统计功能，广告数据清晰透明，方便广告主了解广告效果、开发者了解收入情况。*
 
 ### 2.11.ShareSDK社会化分享
 
-ShareSDK是一种社会化分享组件，为Android APP提供社会化功能，集成了一些常用的类库和接口，缩短开发者的开发时间，还有社会化统计分析管理后台。
+*ShareSDK是一种社会化分享组件，为Android APP提供社会化功能，集成了一些常用的类库和接口，缩短开发者的开发时间，还有社会化统计分析管理后台。*
 
 ---
 
